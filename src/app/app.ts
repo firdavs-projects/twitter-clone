@@ -1,4 +1,4 @@
-import { IApp } from '../types/app';
+import { IApp } from './services/types';
 
 class App implements IApp {
     private static _instance: App;
