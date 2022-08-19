@@ -1,3 +1,4 @@
+import header from './components/header/headerTemplate';
 import { IApp } from './services/types';
 
 class App implements IApp {
@@ -11,6 +12,7 @@ class App implements IApp {
     }
 
     public start() {
+        header();
     }
 }
 
