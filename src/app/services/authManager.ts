@@ -25,7 +25,6 @@ export class AuthManager {
         this.isLogin = false;
         if (isLogin) { // token
             this.isLogin = isLogin; // true
-            // this.router.listen()
         }
         this.setRouter();
     }
