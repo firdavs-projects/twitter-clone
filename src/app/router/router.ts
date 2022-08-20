@@ -8,8 +8,6 @@ class Router implements IRouter {
 
     private current: string | null;
 
-    private isListenCalled: boolean = false;
-
     private intervalId: ReturnType<typeof setInterval> | null;
 
     constructor(options: IRouterOptions) {
@@ -24,9 +22,7 @@ class Router implements IRouter {
         this.current = null;
         this.intervalId = null;
 
-        console.log(this.isListenCalled);
-        !this.isListenCalled && this.listen();
-        this.isListenCalled = true;
+        this.listen();
     }
 
     addPath(path: RegExp, callback: () => void, isAuth: boolean | null): void {
