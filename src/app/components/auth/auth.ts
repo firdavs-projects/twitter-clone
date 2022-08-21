@@ -14,16 +14,20 @@ class Auth {
 
     public getTemplate(isRegisterRoute: boolean): HTMLElement {
         this.rootNode.textContent = '';
-        isRegisterRoute && this.rootNode.insertAdjacentHTML('beforeend', authTemplate('firstName', 'text', 'First name'));
-        isRegisterRoute && this.rootNode.insertAdjacentHTML('beforeend', authTemplate('lastName', 'text', 'Last name'));
+        const authForm = document.createElement('div');
+        authForm.classList.add('authForm');
 
-        this.rootNode.insertAdjacentHTML('beforeend', authTemplate('username', 'text', 'User name'));
-        this.rootNode.insertAdjacentHTML('beforeend', authTemplate('password', 'password', 'Password'));
+        isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('firstName', 'text', 'First name'));
+        isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('lastName', 'text', 'Last name'));
 
-        const btnWrapper = Node.setChild(this.rootNode, 'div');
+        authForm.insertAdjacentHTML('beforeend', authTemplate('username', 'text', 'User name'));
+        authForm.insertAdjacentHTML('beforeend', authTemplate('password', 'password', 'Password'));
+
+        const btnWrapper = Node.setChild(authForm, 'div');
+        this.rootNode.append(authForm);
 
         if (isRegisterRoute) {
-            const btn = new Button(btnWrapper, 'registration');
+            const btn = new Button(btnWrapper, 'Registration');
             btn.onclick(async () => {
                 console.log('registration...');
                 const inputUserName = document.getElementById('username') as HTMLInputElement;
@@ -45,7 +49,7 @@ class Auth {
                     } else {
                         console.log('Incorrect data');
                         errorElement ? errorElement.remove() : null;
-                        this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
+                        authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
                     }
                 } catch (error) {
                     console.log(error);
@@ -54,7 +58,7 @@ class Auth {
             })
 
         } else {
-            const btn = new Button(btnWrapper, 'login');
+            const btn = new Button(btnWrapper, 'Login');
             btn.onclick(async () => {
                 console.log('logining...');
                 const inputUserName = document.getElementById('username') as HTMLInputElement;
@@ -68,7 +72,7 @@ class Auth {
                     } else {
                         console.log(`Incorrect username or password`);
                         errorElement ? errorElement.remove() : null;
-                        this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
+                        authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
                     }
                 } catch (error) {
                     console.log(error);
