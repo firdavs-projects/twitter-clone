@@ -3,6 +3,14 @@ body {
     padding: 0;
     margin: 0;
 }
-.wrapper {
-    border: 1px solid rgba(46, 139, 86, 0.486);
+
+
+/***************start auth page**************/
+.auth {
+    
 }
+#error-auth-message {
+    color: red;
+}
+
+/***************end auth page**************/

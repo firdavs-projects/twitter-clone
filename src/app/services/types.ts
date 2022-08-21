@@ -20,3 +20,15 @@ export type TUser = {
     avatar?: string;
     username: string;
 };
+
+export interface ILoginBody {
+    username: string;
+    password: string;
+};
+
+export interface IRegistrationBody {
+    username: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+};
