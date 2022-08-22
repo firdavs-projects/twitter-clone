@@ -3,6 +3,7 @@ import Button from "../Button";
 import authManager from "../../services/authManager";
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
+import { setLocalStorage } from '../../services/localStorage';
 
 class Auth {
     private rootNode: HTMLElement;
@@ -44,6 +45,7 @@ class Auth {
                     });
 
                     if (data.token) {
+                        setLocalStorage(data.token);
                         console.log(`user has been created`);
                         authManager.navigate('/', true);
                     } else {
@@ -67,6 +69,7 @@ class Auth {
                 try {
                     const data = await getLogin({ username: inputUserName.value, password: inputPassword.value });
                     if (data.token) {
+                        setLocalStorage(data.token);
                         authManager.navigate('/', true);
                         console.log(`login successful`);
                     } else {

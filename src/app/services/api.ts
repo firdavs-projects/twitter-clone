@@ -1,6 +1,6 @@
 import { ILoginBody, IRegistrationBody } from './types';
-import {routes} from "./routes";
-import {ApiMethods} from "./constants";
+import { routes } from "./routes";
+import { ApiMethods } from "./constants";
 
 export const getLogin = async (body: ILoginBody) => {
     return (
