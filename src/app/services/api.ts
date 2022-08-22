@@ -1,6 +1,6 @@
-import { ILoginBody, IRegistrationBody } from './types';
-import {routes} from "./routes";
-import {ApiMethods} from "./constants";
+import { IEditBody, ILoginBody, IRegistrationBody } from './types';
+import { routes } from './routes';
+import { ApiMethods } from './constants';
 
 export const getLogin = async (body: ILoginBody) => {
     return (
@@ -26,9 +26,31 @@ export const getRegistration = async (body: IRegistrationBody) => {
     ).json();
 };
 
+export const getAllUserTweets = async () => {
+    return (
+        await fetch(routes.myTweets, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+            },
+        })
+    ).json();
+};
 
-
-
+export const editPost = async (id: string, body: IEditBody) => {
+    console.log(routes.tweetById(id));
+    return (
+        await fetch(routes.tweetById(id), {
+            method: ApiMethods.PUT,
+            body: JSON.stringify(body),
+            headers: {
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+            },
+        })
+    ).json();
+};
 
 // export const getLogin = (body: ILoginBody) =>
 //     new Promise<void>(async (resolve, reject) => {

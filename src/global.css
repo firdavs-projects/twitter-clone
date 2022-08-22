@@ -61,3 +61,79 @@ button:hover {
 }
 
 /***************end auth page**************/
+
+/***************start profile  page**************/
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #1da0f25b;
+  padding: 25px;
+  background-color: #ffffffc9;
+  border-radius: 5px;
+  max-width: 800px;
+  width: 60%;
+}
+
+.image-part {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1DA1F2;
+  border-radius: 20px;
+  font-size: 20px;
+  color: white;
+}
+
+.data-part {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: auto;
+}
+
+.post-data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-login, .post-date {
+  color: rgb(83, 100, 113);
+}
+
+.post-edit {
+  display: none;
+}
+
+.edit .post-text {
+  display: none;
+}
+
+.edit .post-edit {
+  display: block;
+}
+
+.post-input {
+  border: 1px solid rgba(128, 128, 128, 0.397);
+  padding-left: 10px;
+  color: grey;
+  background-color: white;
+  border-radius: 5px;
+}

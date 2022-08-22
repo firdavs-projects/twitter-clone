@@ -1,6 +1,5 @@
 export class AuthModel {
-    constructor() {
-    }
+    constructor() {}
 }
 
 export default new AuthModel();

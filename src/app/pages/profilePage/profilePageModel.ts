@@ -1,5 +1,3 @@
-class ProfilePageModel {
-
-}
+class ProfilePageModel {}
 
 export default ProfilePageModel;

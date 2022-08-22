@@ -1,8 +1,8 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import Node from '../../components/Node';
-import Button from "../../components/Button";
-import authManager from "../../services/authManager";
+import Button from '../../components/Button';
+import authManager from '../../services/authManager';
 
 class MainPageView {
     private rootNode: HTMLElement;
@@ -25,10 +25,10 @@ class MainPageView {
         const main = new Node(this.rootNode, 'main', 'main');
         main.node.insertAdjacentHTML('beforeend', 'Hello World! Main Page');
         const btnWrapper = Node.setChild(this.rootNode, 'div');
-        const btn = new Button(btnWrapper,'logout test')
+        const btn = new Button(btnWrapper, 'logout test');
         btn.onclick(() => {
             authManager.navigate('/login', false);
-        })
+        });
     }
 }
 

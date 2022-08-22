@@ -1,6 +1,6 @@
 import { authTemplate, createAuthError } from './template';
-import Button from "../Button";
-import authManager from "../../services/authManager";
+import Button from '../Button';
+import authManager from '../../services/authManager';
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
 
@@ -40,7 +40,7 @@ class Auth {
                         username: inputUserName.value,
                         password: inputPassword.value,
                         firstName: inputFirstName.value,
-                        lastName: inputLastName.value
+                        lastName: inputLastName.value,
                     });
 
                     if (data.userId) {
@@ -54,9 +54,7 @@ class Auth {
                 } catch (error) {
                     console.log(error);
                 }
-
-            })
-
+            });
         } else {
             const btn = new Button(btnWrapper, 'Login');
             btn.onclick(async () => {
@@ -77,7 +75,7 @@ class Auth {
                 } catch (error) {
                     console.log(error);
                 }
-            })
+            });
         }
         return this.rootNode;
     }

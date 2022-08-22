@@ -1,6 +1,6 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
-import Node from "../../components/Node";
+import userProfile from '../../components/userProfile/userProfile';
 
 class ProfilePageView {
     private rootNode: HTMLElement;
@@ -27,8 +27,20 @@ class ProfilePageView {
     }
 
     private createProfileLayout() {
-        const main = new Node(this.rootNode, 'main', 'profile');
-        main.node.insertAdjacentHTML('beforeend', 'Hello Profile Page!');
+        userProfile.showPosts();
+        this.rootNode.append(userProfile.rootNode);
+        document.addEventListener('click', (e) => {
+            const button = <HTMLElement>e.target;
+            if (button.classList.contains('edit-post')) {
+                userProfile.editPost(<string>button.dataset.id);
+            }
+        });
+        document.addEventListener('click', (e) => {
+            const button = <HTMLElement>e.target;
+            if (button.classList.contains('save-button')) {
+                userProfile.savePost(<string>button.dataset.id);
+            }
+        });
     }
 
     private createFooter(): void {
