@@ -31,12 +31,12 @@ class Config {
             {
                 path: / /,
                 callback: () => this.mainPageController.createPage(),
-                isAuth: true, // TODO turn on
+                isAuth: true,
             },
             {
                 path: /profile/,
                 callback: () => this.profilePageController.createPage(),
-                isAuth: true, // TODO turn on
+                isAuth: true,
             },
         ];
     }

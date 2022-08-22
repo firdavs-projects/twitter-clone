@@ -1,13 +1,11 @@
 import { ILoginBody, IRegistrationBody } from './types';
-
-const baseUrl = 'https://twitter-clone-api.onrender.com/';
-const loginUrl = `${baseUrl}api/auth/login`;
-const registrationUrl = `${baseUrl}api/auth/register`;
+import {routes} from "./routes";
+import {ApiMethods} from "./constants";
 
 export const getLogin = async (body: ILoginBody) => {
     return (
-        await fetch(loginUrl, {
-            method: 'POST',
+        await fetch(routes.login, {
+            method: ApiMethods.POST,
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
@@ -18,8 +16,8 @@ export const getLogin = async (body: ILoginBody) => {
 
 export const getRegistration = async (body: IRegistrationBody) => {
     return (
-        await fetch(registrationUrl, {
-            method: 'POST',
+        await fetch(routes.registration, {
+            method: ApiMethods.POST,
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
