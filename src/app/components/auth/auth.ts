@@ -43,7 +43,7 @@ class Auth {
                         lastName: inputLastName.value
                     });
 
-                    if (data.userId) {
+                    if (data.token) {
                         console.log(`user has been created`);
                         authManager.navigate('/', true);
                     } else {
@@ -66,7 +66,7 @@ class Auth {
                 const errorElement = document.getElementById('error-auth-message');
                 try {
                     const data = await getLogin({ username: inputUserName.value, password: inputPassword.value });
-                    if (data.userId) {
+                    if (data.token) {
                         authManager.navigate('/', true);
                         console.log(`login successful`);
                     } else {
