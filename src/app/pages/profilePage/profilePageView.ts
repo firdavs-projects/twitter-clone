@@ -27,7 +27,7 @@ class ProfilePageView {
     }
 
     private createProfileLayout() {
-        userProfile.showPosts();
+        userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
         document.addEventListener('click', (e) => {
             const button = <HTMLElement>e.target;

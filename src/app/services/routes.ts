@@ -3,6 +3,7 @@ import { baseUrl } from './constants';
 export const routes = {
     login: `${baseUrl}/auth/login`,
     registration: `${baseUrl}/auth/register`,
+    user: `${baseUrl}/profile/me`,
 
     allTweets: baseUrl + '/tweet/all',
     myTweets: baseUrl + '/tweet',

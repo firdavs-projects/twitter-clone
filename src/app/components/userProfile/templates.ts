@@ -1,4 +1,17 @@
 class UserProfileTemplates {
+    public createUser = (name: string, lastName: string, username: string, id: string, date: string) => {
+        return `<div class="user-container" id="${id}">
+        <div class="head-part">
+          <div class="image-part">${name.slice(0, 1).toUpperCase()}</div>
+          <button class="edit-user-button" data-id="${id}">Edit profile</button>
+        </div>
+        <div class="user-data">
+          <div class="user-name">${name} ${lastName}</div>
+          <div class="user-login">${username}</div>
+          <div class="post-date">Joined ${date}</div>
+        </div>`;
+    };
+
     public createPostForm = (
         name: string,
         surname: string,

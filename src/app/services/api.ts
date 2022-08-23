@@ -38,6 +38,18 @@ export const getAllUserTweets = async () => {
     ).json();
 };
 
+export const getUser = async () => {
+    return (
+        await fetch(routes.user, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+            },
+        })
+    ).json();
+};
+
 export const editPost = async (id: string, body: IEditBody) => {
     console.log(routes.tweetById(id));
     return (

@@ -1,4 +1,4 @@
-import { editPost, getAllUserTweets } from '../../services/api';
+import { editPost, getUser } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
@@ -13,13 +13,37 @@ class UserProfile {
         this.rootNode.className = 'user-profile';
     }
 
-    public async showPosts(): Promise<void> {
+    public async showPage(): Promise<void> {
         this.rootNode.innerHTML = '';
-        const data = await getAllUserTweets();
+        await this.showUser();
+        await this.showPosts();
+    }
+
+    public async showUser(): Promise<void> {
+        const data = await getUser();
+        this.rootNode.innerHTML += template.createUser(
+            data.firstName,
+            data.lastName,
+            data.username,
+            data._id,
+            this.showDate(data.date)
+        );
+    }
+
+    public async showPosts(): Promise<void> {
+        const data = await getUser();
         const postsContainer = new Node(this.rootNode, 'div', 'post-container').node;
+        Node.setChild(postsContainer, 'div', 'post-heading', 'Tweets');
         this.rootNode.append(postsContainer);
         data.tweets.forEach((el: IUserTweet) => {
-            const form = template.createPostForm('ddd', 'ddfdsafd', 'ddddd', this.showDate(el.date), el.text, el._id);
+            const form = template.createPostForm(
+                data.firstName,
+                data.lastName,
+                data.username,
+                this.showDate(el.date),
+                el.text,
+                el._id
+            );
             postsContainer.innerHTML += form;
         });
     }
