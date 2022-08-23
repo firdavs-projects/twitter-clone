@@ -1,6 +1,7 @@
 import { IEditBody, ILoginBody, IRegistrationBody } from './types';
 import { routes } from './routes';
 import { ApiMethods } from './constants';
+import { getLocalStorage } from './localStorage';
 
 export const getLogin = async (body: ILoginBody) => {
     return (
@@ -39,26 +40,26 @@ export const getAllUserTweets = async () => {
 };
 
 export const getUser = async () => {
+    const token = getLocalStorage();
     return (
         await fetch(routes.user, {
             method: ApiMethods.GET,
             headers: {
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+                Authorization: `Bearer ${token}`,
             },
         })
     ).json();
 };
 
 export const editPost = async (id: string, body: IEditBody) => {
-    console.log(routes.tweetById(id));
+    const token = getLocalStorage();
     return (
         await fetch(routes.tweetById(id), {
             method: ApiMethods.PUT,
             body: JSON.stringify(body),
             headers: {
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
             },
         })
     ).json();

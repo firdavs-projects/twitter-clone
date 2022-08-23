@@ -69,11 +69,10 @@ class UserProfile {
         const post = <HTMLElement>document.getElementById(`${id}`);
         post.classList.remove('edit');
         const input = post.querySelector('.post-input') as HTMLInputElement;
-        const text = post.querySelector('.post-text') as HTMLElement;
-        let textData = text.textContent as string;
-        textData = input.value as string;
-        console.log(textData);
-        await editPost(id, { text: textData });
+        const textEl = post.querySelector('.post-text') as HTMLElement;
+        const text = input.value as string;
+        textEl.textContent = text;
+        await editPost(id, { text });
     }
 }
 
