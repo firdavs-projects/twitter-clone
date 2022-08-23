@@ -1,6 +1,8 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
-import userProfile from '../../components/userProfile/userProfile';
+import UserProfile from '../../components/userProfile/userProfile';
+
+const userProfile = new UserProfile();
 
 class ProfilePageView {
     private rootNode: HTMLElement;
@@ -26,21 +28,28 @@ class ProfilePageView {
         this.rootNode.append(header.getTemplate());
     }
 
+    private callbackBuilder(callback: (...args: string[]) => void, className: string, e: Event) {
+        const element = <HTMLElement>e.target;
+        if (element && (<Element>element).classList.contains(className)) {
+            callback(className, <string>element.dataset.id);
+        }
+    }
+
     private createProfileLayout() {
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
-        document.addEventListener('click', (e) => {
-            const button = <HTMLElement>e.target;
-            if (button.classList.contains('edit-post')) {
-                userProfile.editPost(<string>button.dataset.id);
-            }
-        });
-        document.addEventListener('click', (e) => {
-            const button = <HTMLElement>e.target;
-            if (button.classList.contains('save-button')) {
-                userProfile.savePost(<string>button.dataset.id);
-            }
-        });
+        document.addEventListener('click', (e: Event) =>
+            this.callbackBuilder(userProfile.editPost.bind(userProfile), 'edit-post', e)
+        );
+        document.addEventListener('click', (e: Event) =>
+            this.callbackBuilder(userProfile.editPost.bind(userProfile), 'save-button', e)
+        );
+        document.addEventListener('click', (e: Event) =>
+            this.callbackBuilder(userProfile.editProfile.bind(userProfile), 'edit-user-button', e)
+        );
+        document.addEventListener('click', (e: Event) =>
+            this.callbackBuilder(userProfile.editProfile.bind(userProfile), 'save-profile-button', e)
+        );
     }
 
     private createFooter(): void {

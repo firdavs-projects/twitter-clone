@@ -46,3 +46,10 @@ export interface IUserTweet {
     __v: number;
     _id: string;
 }
+
+export interface IUserData {
+    username: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+}

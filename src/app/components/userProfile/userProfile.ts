@@ -1,4 +1,4 @@
-import { editPost, getUser } from '../../services/api';
+import { editPost, getUser, saveProfileInfo } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
@@ -51,29 +51,47 @@ class UserProfile {
     public showDate(dateString: string) {
         const postDate = new Date(dateString);
         const dateNow = Date.now();
-        console.log(dateNow - postDate.getTime());
         return dateNow - postDate.getTime() < 8.64e7
             ? `${('0' + (postDate.getHours() + 1)).slice(-2)}:${('0' + (postDate.getMinutes() + 1)).slice(-2)}`
             : `${postDate.getDate()}.${('0' + (postDate.getMonth() + 1)).slice(-2)}.${postDate.getFullYear()}`;
     }
 
-    public editPost(id: string) {
+    public async editPost(className: string, id: string) {
         const post = <HTMLElement>document.getElementById(`${id}`);
-        post.classList.add('edit');
-        const input = post.querySelector('.post-input') as HTMLInputElement;
-        const text = post.querySelector('.post-text') as HTMLElement;
-        input.value = text.textContent as string;
-    }
-
-    public async savePost(id: string) {
-        const post = <HTMLElement>document.getElementById(`${id}`);
-        post.classList.remove('edit');
+        post.classList.toggle('edit');
         const input = post.querySelector('.post-input') as HTMLInputElement;
         const textEl = post.querySelector('.post-text') as HTMLElement;
-        const text = input.value as string;
-        textEl.textContent = text;
-        await editPost(id, { text });
+        if (className === 'edit-post') {
+            input.value = textEl.textContent as string;
+        } else if (className === 'save-button') {
+            const text = input.value as string;
+            textEl.textContent = text;
+            await editPost(id, { text });
+        }
+    }
+
+    public async editProfile(className: string): Promise<void> {
+        const user = await getUser();
+        const inputUsername = document.querySelector('.edit-username') as HTMLInputElement;
+        const inputName = document.querySelector('.edit-name') as HTMLInputElement;
+        const inputLastName = document.querySelector('.edit-surname') as HTMLInputElement;
+        const inputPhone = document.querySelector('.edit-phone') as HTMLInputElement;
+        if (className === 'edit-user-button') {
+            inputUsername.value = user.username;
+            inputName.value = user.firstName;
+            inputLastName.value = user.lastName;
+            inputPhone.value = user.phone || '';
+        }
+        if (className === 'save-profile-button') {
+            await saveProfileInfo({
+                username: inputUsername.value,
+                firstName: inputName.value,
+                lastName: inputLastName.value,
+                phone: inputPhone.value,
+            });
+            this.showPage();
+        }
     }
 }
 
-export default new UserProfile();
+export default UserProfile;

@@ -68,6 +68,10 @@ button:hover {
   gap: 10px;
 }
 
+.user-container {
+  background-color: #F5F8FA;
+}
+
 .post-form {
   display: flex;
   flex-direction: row;
