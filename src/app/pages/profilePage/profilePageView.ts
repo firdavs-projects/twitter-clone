@@ -35,6 +35,13 @@ class ProfilePageView {
         }
     }
 
+    private idCallback(callback: (id: string) => void, className: string, e: Event) {
+        const element = <HTMLElement>e.target;
+        if (element && (<Element>element).classList.contains(className)) {
+            callback(<string>element.dataset.id);
+        }
+    }
+
     private createProfileLayout() {
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
@@ -49,6 +56,9 @@ class ProfilePageView {
         );
         document.addEventListener('click', (e: Event) =>
             this.callbackBuilder(userProfile.editProfile.bind(userProfile), 'save-profile-button', e)
+        );
+        document.addEventListener('click', (e: Event) =>
+            this.idCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e)
         );
     }
 

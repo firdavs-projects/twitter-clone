@@ -1,4 +1,4 @@
-import { editPost, getUser, saveProfileInfo } from '../../services/api';
+import { deletePost, editPost, getUser, saveProfileInfo } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
@@ -32,6 +32,8 @@ class UserProfile {
 
     public async showPosts(): Promise<void> {
         const data = await getUser();
+        const container = document.querySelector('.post-container');
+        container?.remove();
         const postsContainer = new Node(this.rootNode, 'div', 'post-container').node;
         Node.setChild(postsContainer, 'div', 'post-heading', 'Tweets');
         this.rootNode.append(postsContainer);
@@ -68,6 +70,11 @@ class UserProfile {
             textEl.textContent = text;
             await editPost(id, { text });
         }
+    }
+
+    public async deletePost(id: string) {
+        await deletePost(id);
+        this.showPosts();
     }
 
     public async editProfile(className: string): Promise<void> {
