@@ -1,7 +1,9 @@
-import { authTemplate } from './template';
+import { authTemplate, createAuthError } from './template';
 import Button from "../Button";
 import authManager from "../../services/authManager";
 import Node from '../Node';
+import { getLogin, getRegistration } from '../../services/api';
+import { setLocalStorage } from '../../services/localStorage';
 
 class Auth {
     private rootNode: HTMLElement;
@@ -13,18 +15,73 @@ class Auth {
 
     public getTemplate(isRegisterRoute: boolean): HTMLElement {
         this.rootNode.textContent = '';
-        isRegisterRoute && this.rootNode.insertAdjacentHTML('beforeend', authTemplate('firstName', 'text', 'Имя'));
-        isRegisterRoute && this.rootNode.insertAdjacentHTML('beforeend', authTemplate('lastName', 'text', 'Фамилия'));
+        const authForm = document.createElement('div');
+        authForm.classList.add('authForm');
 
-        this.rootNode.insertAdjacentHTML('beforeend', authTemplate('username', 'text', 'Имя пользователя'));
-        this.rootNode.insertAdjacentHTML('beforeend', authTemplate('password', 'password', 'Пароль'));
+        isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('firstName', 'text', 'First name'));
+        isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('lastName', 'text', 'Last name'));
 
-        const btnWrapper = Node.setChild(this.rootNode, 'div');
-        const btn = new Button(btnWrapper,'login test')
-        btn.onclick(() => {
-            authManager.navigate('/', true);
-        })
+        authForm.insertAdjacentHTML('beforeend', authTemplate('username', 'text', 'User name'));
+        authForm.insertAdjacentHTML('beforeend', authTemplate('password', 'password', 'Password'));
 
+        const btnWrapper = Node.setChild(authForm, 'div');
+        this.rootNode.append(authForm);
+
+        if (isRegisterRoute) {
+            const btn = new Button(btnWrapper, 'Registration');
+            btn.onclick(async () => {
+                console.log('registration...');
+                const inputUserName = document.getElementById('username') as HTMLInputElement;
+                const inputPassword = document.getElementById('password') as HTMLInputElement;
+                const inputFirstName = document.getElementById('firstName') as HTMLInputElement;
+                const inputLastName = document.getElementById('lastName') as HTMLInputElement;
+                const errorElement = document.getElementById('error-auth-message');
+                try {
+                    const data = await getRegistration({
+                        username: inputUserName.value,
+                        password: inputPassword.value,
+                        firstName: inputFirstName.value,
+                        lastName: inputLastName.value
+                    });
+
+                    if (data.token) {
+                        setLocalStorage(data.token);
+                        console.log(`user has been created`);
+                        authManager.navigate('/', true);
+                    } else {
+                        console.log('Incorrect data');
+                        errorElement ? errorElement.remove() : null;
+                        authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+            })
+
+        } else {
+            const btn = new Button(btnWrapper, 'Login');
+            btn.onclick(async () => {
+                console.log('logining...');
+                const inputUserName = document.getElementById('username') as HTMLInputElement;
+                const inputPassword = document.getElementById('password') as HTMLInputElement;
+                const errorElement = document.getElementById('error-auth-message');
+                try {
+                    const data = await getLogin({ username: inputUserName.value, password: inputPassword.value });
+                    if (data.token) {
+                        setLocalStorage(data.token);
+                        authManager.navigate('/', true);
+                        console.log(`login successful`);
+                    } else {
+                        console.log(`Incorrect username or password`);
+                        errorElement ? errorElement.remove() : null;
+                        authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            })
+        }
         return this.rootNode;
     }
 }

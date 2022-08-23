@@ -1,8 +1,59 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 body {
     font-family: sans-serif;
     padding: 0;
     margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.wrapper {
-    border: 1px solid rgba(46, 139, 86, 0.486);
+button {
+    border: 0;
+    min-width: 70px;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: #1DA1F2;
+    color: white;
 }
+button:hover {
+    cursor: pointer;
+}
+
+/***************start auth page**************/
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F8FA;
+    padding: 15px;
+}
+
+.authForm {
+    border: 1px solid #1da0f25b;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px;
+    background-color: #ffffffc9;
+    border-radius: 5px;
+}
+.authForm input {
+    width: 340px;
+    height: 30px;
+    border: 1px solid rgba(128, 128, 128, 0.397);
+    padding-left: 10px;
+    color: grey;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#error-auth-message {
+    color: red;
+}
+
+/***************end auth page**************/
