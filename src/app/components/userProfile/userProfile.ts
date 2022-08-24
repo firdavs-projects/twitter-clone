@@ -1,4 +1,4 @@
-import { deletePost, editPost, getUser, saveProfileInfo } from '../../services/api';
+import { addLike, deleteLike, deletePost, editPost, getTweetById, getUser, saveProfileInfo } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
@@ -51,6 +51,11 @@ class UserProfile {
                 el.tweets.length !== 0 ? el.tweets.length.toString() : ''
             );
             postsContainer.innerHTML += form;
+            const post = postsContainer.lastChild as HTMLElement;
+            const likeImg = post.querySelector('.like-image') as HTMLElement;
+            if (el.likes.includes(data._id)) {
+                likeImg.classList.add('active');
+            }
         });
     }
 
@@ -101,6 +106,24 @@ class UserProfile {
                 phone: inputPhone.value,
             });
             this.showPage();
+        }
+    }
+
+    public async toggleLike(id: string, e: Event) {
+        const user = await getUser();
+        const tweet = await getTweetById(id);
+        const likeImg = <HTMLElement>e.target;
+        const postForm = document.getElementById(id) as HTMLElement;
+        const likeCounter = postForm.querySelector('.like-counter') as HTMLElement;
+        if (tweet.tweet.likes.includes(user._id)) {
+            likeImg.classList.remove('active');
+            deleteLike(id);
+            const newCounter = (Number(<string>likeCounter.innerHTML) - 1).toString();
+            likeCounter.innerHTML = newCounter !== '0' ? newCounter : '';
+        } else {
+            likeImg.classList.add('active');
+            addLike(id);
+            likeCounter.innerHTML = (Number(<string>likeCounter.innerHTML) + 1).toString();
         }
     }
 }

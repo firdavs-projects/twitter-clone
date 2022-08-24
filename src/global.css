@@ -185,6 +185,7 @@
 
 .like-container, .comment-container {
   display: flex;
+  align-items: center;
   gap: 5px;
   width: 70px;
 }
@@ -209,3 +210,15 @@
   padding: 0 25px;
 }
 
+.like-image {
+  cursor: pointer;
+}
+
+.like-image.active {
+  fill: rgb(231, 69, 96);
+  stroke: rgb(231, 69, 96);
+}
+
+path {
+  pointer-events: none;
+}

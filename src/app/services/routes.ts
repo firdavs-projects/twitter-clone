@@ -11,4 +11,5 @@ export const routes = {
     tweetsByUserId: (id: string | number) => baseUrl + '/tweet/user/' + id,
 
     tweetById: (id: string | number) => baseUrl + '/tweet/' + id,
+    likeByPostId: (id: string | number) => baseUrl + '/tweet/' + id + '/like',
 };

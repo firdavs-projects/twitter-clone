@@ -51,6 +51,18 @@ export const getUser = async () => {
     ).json();
 };
 
+export const getTweetById = async (id: string) => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.tweetById(id), {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    ).json();
+};
+
 export const editPost = async (id: string, body: IEditBody) => {
     const token = getLocalStorage();
     return (
@@ -86,6 +98,30 @@ export const saveProfileInfo = async (body: IUserData) => {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
+            },
+        })
+    ).json();
+};
+
+export const addLike = async (id: string) => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.likeByPostId(id), {
+            method: ApiMethods.POST,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    ).json();
+};
+
+export const deleteLike = async (id: string) => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.likeByPostId(id), {
+            method: ApiMethods.DELETE,
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
         })
     ).json();
