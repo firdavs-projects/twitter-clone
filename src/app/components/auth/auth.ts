@@ -1,11 +1,10 @@
-
-import {authTemplate, createAuthError, loginTemplate} from './template';
-import Button from "../Button";
-import authManager from "../../services/authManager";
+import { authTemplate, createAuthError, loginTemplate } from './template';
+import Button from '../Button';
+import authManager from '../../services/authManager';
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
 import { setLocalStorage } from '../../services/localStorage';
-import footerTemplate from "../footer/template";
+import footerTemplate from '../footer/template';
 
 class Auth {
     private rootNode: HTMLElement;
@@ -17,29 +16,24 @@ class Auth {
 
     public getTemplate(isRegisterRoute: boolean): HTMLElement {
         this.rootNode.textContent = '';
-        const authForm = document.createElement('div');
-        authForm.classList.add('text-center', 'h-full', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+        this.rootNode.classList.add(
+            'text-center',
+            'h-full',
+            'd-flex',
+            'flex-column',
+            'justify-content-center',
+            'align-items-center'
+        );
+        this.rootNode.insertAdjacentHTML('afterbegin', loginTemplate(isRegisterRoute));
 
-        this.rootNode.textContent = '';
-        // this.rootNode.insertAdjacentHTML('afterbegin', loginTemplate());
-        // return this.rootNode;
+        const btnWrapper = Node.setChild(this.rootNode, 'div');
 
-        // isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('firstName', 'text', 'First name'));
-        // isRegisterRoute && authForm.insertAdjacentHTML('beforeend', authTemplate('lastName', 'text', 'Last name'));
-
-        authForm.insertAdjacentHTML('afterbegin', loginTemplate(isRegisterRoute));
-        // authForm.insertAdjacentHTML('beforeend', authTemplate('password', 'password', 'Password'));
-
-        const btnWrapper = Node.setChild(authForm, 'div');
-        // authForm.insertAdjacentHTML('beforeend', btnWrapper)
-        this.rootNode.append(authForm);
+        const btn = new Button(btnWrapper, isRegisterRoute ? 'Sign up' : 'Sign in');
+        btn.addClass('btn');
+        btn.addClass('btn-lg');
+        btn.addClass('btn-primary');
 
         if (isRegisterRoute) {
-            const btn = new Button(btnWrapper, 'Registration');
-            // const btn = document.getElementById('auth-btn')
-            btn.addClass('btn')
-            btn.addClass('btn-lg')
-            btn.addClass('btn-primary')
             btn?.onclick(async () => {
                 console.log('registration...');
                 const inputUserName = document.getElementById('username') as HTMLInputElement;
@@ -69,11 +63,6 @@ class Auth {
                 }
             });
         } else {
-            const btn = new Button(btnWrapper, 'Login');
-            btn.addClass('btn')
-            btn.addClass('btn-lg')
-            btn.addClass('btn-primary')
-            // const btn = document.getElementById('auth-btn')
             btn.onclick(async () => {
                 console.log('logining...');
                 const inputUserName = document.getElementById('username') as HTMLInputElement;
@@ -93,8 +82,7 @@ class Auth {
                 } catch (error) {
                     console.log(error);
                 }
-            })
-
+            });
         }
         return this.rootNode;
     }

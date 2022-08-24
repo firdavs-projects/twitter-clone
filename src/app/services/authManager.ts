@@ -24,7 +24,7 @@ export class AuthManager {
 
     private checkAuth(isLogin?: boolean): void {
         // TODO check here token
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         this.isLogin = !!token;
         this.setRouter();
     }

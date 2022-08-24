@@ -23,14 +23,23 @@ class MainPageView {
 
     private createMainLayout() {
         const main = new Node(this.rootNode, 'main', 'main');
-        main.node.insertAdjacentHTML('beforeend', 'Hello World! Main Page');
+        main.node.insertAdjacentHTML(
+            'beforeend',
+            `
+            <div class="container">
+                <h1>Hello Main Page</h1>
+                <span>Tweets</span>
+            </div>
+        `
+        );
 
-        const btnWrapper = Node.setChild(main.node, 'div');
-        const btn = new Button(btnWrapper,'logout test')
-        btn.addClass('btn')
-        btn.addClass('btn-danger')
+        const btnWrapper = Node.setChild(main.node, 'div', 'container');
+        const btn = new Button(btnWrapper, 'logout test');
+        btn.addClass('btn');
+        btn.addClass('btn-danger');
+        btn.addClass('my-4');
         btn.onclick(() => {
-            localStorage.removeItem('token') // remove on logout
+            localStorage.removeItem('token'); // remove on logout
             authManager.navigate('/login', false);
         });
     }
