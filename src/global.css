@@ -133,7 +133,7 @@
 }
 
 .image-part {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -148,7 +148,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-right: auto;
+  width: 100%;
 }
 
 .post-data {
@@ -174,15 +174,19 @@
 }
 
 .edit .post-edit {
-  display: block;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
 }
 
-.post-input {
-  border: 1px solid rgba(128, 128, 128, 0.397);
-  padding-left: 10px;
-  color: grey;
-  background-color: white;
-  border-radius: 5px;
+.post-reactions {
+  display: flex;
+}
+
+.like-container, .comment-container {
+  display: flex;
+  gap: 5px;
+  width: 70px;
 }
 
 .head-part {

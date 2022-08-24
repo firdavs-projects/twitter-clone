@@ -46,7 +46,9 @@ class UserProfile {
                 data.username,
                 this.showDate(el.date),
                 el.text,
-                el._id
+                el._id,
+                el.likes.length !== 0 ? el.likes.length.toString() : '',
+                el.tweets.length !== 0 ? el.tweets.length.toString() : ''
             );
             postsContainer.innerHTML += form;
         });
