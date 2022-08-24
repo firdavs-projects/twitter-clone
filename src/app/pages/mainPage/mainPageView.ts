@@ -24,9 +24,13 @@ class MainPageView {
     private createMainLayout() {
         const main = new Node(this.rootNode, 'main', 'main');
         main.node.insertAdjacentHTML('beforeend', 'Hello World! Main Page');
-        const btnWrapper = Node.setChild(this.rootNode, 'div');
+
+        const btnWrapper = Node.setChild(main.node, 'div');
         const btn = new Button(btnWrapper,'logout test')
+        btn.addClass('btn')
+        btn.addClass('btn-danger')
         btn.onclick(() => {
+            localStorage.removeItem('token') // remove on logout
             authManager.navigate('/login', false);
         })
     }
