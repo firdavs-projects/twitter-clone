@@ -20,6 +20,8 @@ class UserProfile {
     }
 
     public async showUser(): Promise<void> {
+        const container = document.querySelector('.user-container');
+        container?.remove();
         const data = await getUser();
         this.rootNode.innerHTML += template.createUser(
             data.firstName,
