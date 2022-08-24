@@ -5,6 +5,7 @@ export const routes = {
     registration: `${baseUrl}/auth/register`,
     profile: `${baseUrl}/profile`,
     user: `${baseUrl}/profile/me`,
+    userById: (id: string | number) => baseUrl + '/profile/' + id,
 
     allTweets: baseUrl + '/tweet/all',
     myTweets: baseUrl + '/tweet',

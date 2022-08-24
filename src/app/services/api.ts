@@ -28,12 +28,12 @@ export const getRegistration = async (body: IRegistrationBody) => {
 };
 
 export const getAllUserTweets = async () => {
+    const token = getLocalStorage();
     return (
         await fetch(routes.myTweets, {
             method: ApiMethods.GET,
             headers: {
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzAxZjdlMDExMGZlMjExMzBmYTdkZWQiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE2NjEwNzMzNzcsImV4cCI6MTY2Mzc1MTc3N30.6qeuAhjeQ6bY0_ylsNPjyKxIUStSJkuORpNzaTkonco',
+                Authorization: `Bearer ${token}`,
             },
         })
     ).json();
@@ -43,6 +43,18 @@ export const getUser = async () => {
     const token = getLocalStorage();
     return (
         await fetch(routes.user, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    ).json();
+};
+
+export const getUserById = async (id: string) => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.userById(id), {
             method: ApiMethods.GET,
             headers: {
                 Authorization: `Bearer ${token}`,

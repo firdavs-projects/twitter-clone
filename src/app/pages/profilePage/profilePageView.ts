@@ -35,10 +35,10 @@ class ProfilePageView {
         }
     }
 
-    private idCallback(callback: (id: string, e: Event) => void, className: string, e: Event) {
+    private idCallback(callback: (id: string) => void, className: string, e: Event) {
         const element = <HTMLElement>e.target;
         if (element && (<Element>element).classList.contains(className)) {
-            callback(<string>element.dataset.id, e);
+            callback(<string>element.dataset.id);
         }
     }
 

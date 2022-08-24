@@ -1,4 +1,13 @@
-import { addLike, deleteLike, deletePost, editPost, getTweetById, getUser, saveProfileInfo } from '../../services/api';
+import {
+    addLike,
+    deleteLike,
+    deletePost,
+    editPost,
+    getAllUserTweets,
+    getTweetById,
+    getUser,
+    saveProfileInfo,
+} from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
@@ -33,17 +42,18 @@ class UserProfile {
     }
 
     public async showPosts(): Promise<void> {
-        const data = await getUser();
+        const user = await getUser();
+        const tweets = await getAllUserTweets();
         const container = document.querySelector('.post-container');
         container?.remove();
         const postsContainer = new Node(this.rootNode, 'div', 'post-container').node;
         Node.setChild(postsContainer, 'div', 'post-heading', 'Tweets');
         this.rootNode.append(postsContainer);
-        data.tweets.forEach((el: IUserTweet) => {
+        tweets.tweets.forEach((el: IUserTweet) => {
             const form = template.createPostForm(
-                data.firstName,
-                data.lastName,
-                data.username,
+                user.firstName,
+                user.lastName,
+                user.username,
                 this.showDate(el.date),
                 el.text,
                 el._id,
@@ -53,7 +63,7 @@ class UserProfile {
             postsContainer.innerHTML += form;
             const post = postsContainer.lastChild as HTMLElement;
             const likeImg = post.querySelector('.like-image') as HTMLElement;
-            if (el.likes.includes(data._id)) {
+            if (el.likes.includes(user._id)) {
                 likeImg.classList.add('active');
             }
         });
@@ -109,10 +119,10 @@ class UserProfile {
         }
     }
 
-    public async toggleLike(id: string, e: Event) {
+    public async toggleLike(id: string) {
         const user = await getUser();
         const tweet = await getTweetById(id);
-        const likeImg = <HTMLElement>e.target;
+        const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
         const postForm = document.getElementById(id) as HTMLElement;
         const likeCounter = postForm.querySelector('.like-counter') as HTMLElement;
         if (tweet.tweet.likes.includes(user._id)) {
