@@ -28,7 +28,12 @@ class ProfilePageView {
 
     private createProfileLayout() {
         const main = new Node(this.rootNode, 'main', 'profile');
-        main.node.insertAdjacentHTML('beforeend', 'Hello Profile Page!');
+        main.node.insertAdjacentHTML('beforeend', `
+            <div class="container">
+                <h1>Hello Profile Page</h1>
+                <span>Profile</span>
+            </div>
+        `);
     }
 
     private createFooter(): void {
