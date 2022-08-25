@@ -42,6 +42,13 @@ class ProfilePageView {
         }
     }
 
+    private eventCallback(callback: (e: Event) => void, className: string, e: Event) {
+        const element = <HTMLElement>e.target;
+        if (element && (<Element>element).classList.contains(className)) {
+            callback(e);
+        }
+    }
+
     private createProfileLayout() {
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
@@ -62,6 +69,12 @@ class ProfilePageView {
         );
         document.addEventListener('click', (e: Event) =>
             this.idCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e)
+        );
+        document.addEventListener('click', (e: Event) =>
+            this.eventCallback(userProfile.editStatus.bind(userProfile), 'user-status', e)
+        );
+        document.addEventListener('focusout', (e: Event) =>
+            this.eventCallback(userProfile.editStatus.bind(userProfile), 'status-input', e)
         );
     }
 

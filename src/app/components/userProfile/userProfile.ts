@@ -40,7 +40,8 @@ class UserProfile {
             data.lastName,
             data.username,
             data._id,
-            this.showDate(data.date)
+            this.showDate(data.date),
+            data.status || 'Change your status...'
         );
     }
 
@@ -149,6 +150,26 @@ class UserProfile {
             likeImg.classList.add('active');
             addLike(id);
             likeCounter.innerHTML = (Number(<string>likeCounter.innerHTML) + 1).toString();
+        }
+    }
+
+    public async editStatus(e: Event) {
+        console.log(e.type);
+        const input = document.querySelector('.status-input') as HTMLInputElement;
+        const textEl = document.querySelector('.user-status') as HTMLElement;
+        const container = <HTMLElement>input.parentElement;
+        if (e.type === 'click') {
+            input.value = textEl.textContent as string;
+            container.classList.add('edit');
+        } else if (e.type === 'focusout') {
+            if (input.checkValidity()) {
+                container.classList.remove('edit');
+                const status = input.value as string;
+                textEl.textContent = status;
+                await saveProfileInfo({ status });
+            } else {
+                container.classList.add('was-validated');
+            }
         }
     }
 }

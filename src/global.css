@@ -165,15 +165,15 @@
   color: rgb(83, 100, 113);
 }
 
-.post-edit {
+.post-edit, .status-input {
   display: none;
 }
 
-.edit .post-text {
+.edit .post-text, .edit .user-status {
   display: none;
 }
 
-.edit .post-edit {
+.edit .post-edit, .edit .status-input  {
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -226,5 +226,11 @@ path {
 .modal-body {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.user-status-container {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }

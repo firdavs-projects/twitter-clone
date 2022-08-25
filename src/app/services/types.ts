@@ -48,8 +48,9 @@ export interface IUserTweet {
 }
 
 export interface IUserData {
-    username: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
+    username?: string;
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    status?: string;
 }
