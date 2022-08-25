@@ -23,10 +23,6 @@
 /*button:hover {*/
 /*    cursor: pointer;*/
 /*}*/
-main{
-    min-height: calc(100vh - 273px);
-    /*padding-bottom: 100px;*/
-}
 
 .h-full{
     min-height: 100vh!important;
@@ -108,3 +104,133 @@ main{
 }
 
 /***************end auth page**************/
+
+/***************start profile  page**************/
+
+.post-container, .user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.user-container {
+  background-color: #F5F8FA;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #1da0f25b;
+  padding: 25px;
+  background-color: #ffffffc9;
+  border-radius: 5px;
+  max-width: 800px;
+  width: 60%;
+}
+
+.image-part {
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1DA1F2;
+  border-radius: 20px;
+  font-size: 20px;
+  color: white;
+}
+
+.data-part {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.post-data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-login, .post-date {
+  color: rgb(83, 100, 113);
+}
+
+.post-edit, .status-input {
+  display: none;
+}
+
+.edit .post-text, .edit .user-status {
+  display: none;
+}
+
+.edit .post-edit, .edit .status-input  {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.post-reactions {
+  display: flex;
+}
+
+.like-container, .comment-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 70px;
+}
+
+.head-part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  padding: 25px;
+}
+
+.head-part .image-part {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  font-size: 40px;
+}
+
+.user-data {
+  width: 60%;
+  padding: 0 25px;
+}
+
+.like-image {
+  cursor: pointer;
+}
+
+.like-image.active {
+  fill: rgb(231, 69, 96);
+  stroke: rgb(231, 69, 96);
+}
+
+path {
+  pointer-events: none;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-status-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

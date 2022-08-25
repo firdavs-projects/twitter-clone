@@ -1,8 +1,8 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import Node from '../../components/Node';
-import Button from "../../components/Button";
-import authManager from "../../services/authManager";
+import Button from '../../components/Button';
+import authManager from '../../services/authManager';
 
 class MainPageView {
     private rootNode: HTMLElement;
@@ -23,22 +23,25 @@ class MainPageView {
 
     private createMainLayout() {
         const main = new Node(this.rootNode, 'main', 'main');
-        main.node.insertAdjacentHTML('beforeend', `
+        main.node.insertAdjacentHTML(
+            'beforeend',
+            `
             <div class="container">
                 <h1>Hello Main Page</h1>
                 <span>Tweets</span>
             </div>
-        `);
+        `
+        );
 
         const btnWrapper = Node.setChild(main.node, 'div', 'container');
-        const btn = new Button(btnWrapper,'logout test')
-        btn.addClass('btn')
-        btn.addClass('btn-danger')
-        btn.addClass('my-4')
+        const btn = new Button(btnWrapper, 'logout test');
+        btn.addClass('btn');
+        btn.addClass('btn-danger');
+        btn.addClass('my-4');
         btn.onclick(() => {
-            localStorage.removeItem('token') // remove on logout
+            localStorage.removeItem('token'); // remove on logout
             authManager.navigate('/login', false);
-        })
+        });
     }
 }
 

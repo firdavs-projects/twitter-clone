@@ -1,5 +1,3 @@
-class MainPageModel {
-
-}
+class MainPageModel {}
 
 export default MainPageModel;

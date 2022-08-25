@@ -1,10 +1,10 @@
-import {authTemplate, createAuthError, loginTemplate} from './template';
-import Button from "../Button";
-import authManager from "../../services/authManager";
+import { authTemplate, createAuthError, loginTemplate } from './template';
+import Button from '../Button';
+import authManager from '../../services/authManager';
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
 import { setLocalStorage } from '../../services/localStorage';
-import footerTemplate from "../footer/template";
+import footerTemplate from '../footer/template';
 
 class Auth {
     private rootNode: HTMLElement;
@@ -16,15 +16,22 @@ class Auth {
 
     public getTemplate(isRegisterRoute: boolean): HTMLElement {
         this.rootNode.textContent = '';
-        this.rootNode.classList.add('text-center', 'h-full', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
+        this.rootNode.classList.add(
+            'text-center',
+            'h-full',
+            'd-flex',
+            'flex-column',
+            'justify-content-center',
+            'align-items-center'
+        );
         this.rootNode.insertAdjacentHTML('afterbegin', loginTemplate(isRegisterRoute));
 
         const btnWrapper = Node.setChild(this.rootNode, 'div');
 
         const btn = new Button(btnWrapper, isRegisterRoute ? 'Sign up' : 'Sign in');
-        btn.addClass('btn')
-        btn.addClass('btn-lg')
-        btn.addClass('btn-primary')
+        btn.addClass('btn');
+        btn.addClass('btn-lg');
+        btn.addClass('btn-primary');
 
         if (isRegisterRoute) {
             btn?.onclick(async () => {
@@ -39,7 +46,7 @@ class Auth {
                         username: inputUserName.value,
                         password: inputPassword.value,
                         firstName: inputFirstName.value,
-                        lastName: inputLastName.value
+                        lastName: inputLastName.value,
                     });
 
                     if (data.token) {
@@ -54,8 +61,7 @@ class Auth {
                 } catch (error) {
                     console.log(error);
                 }
-            })
-
+            });
         } else {
             btn.onclick(async () => {
                 console.log('logining...');
@@ -76,8 +82,7 @@ class Auth {
                 } catch (error) {
                     console.log(error);
                 }
-            })
-
+            });
         }
         return this.rootNode;
     }

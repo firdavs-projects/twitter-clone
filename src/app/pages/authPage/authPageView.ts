@@ -1,8 +1,8 @@
 import auth from '../../components/auth/auth';
-import header from "../../components/header/header";
-import footer from "../../components/footer/footer";
-import Node from "../../components/Node";
-import router from "../../router/router";
+import header from '../../components/header/header';
+import footer from '../../components/footer/footer';
+import Node from '../../components/Node';
+import router from '../../router/router';
 
 export class AuthView {
     private rootNode: HTMLElement;

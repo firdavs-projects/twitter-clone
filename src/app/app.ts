@@ -1,12 +1,12 @@
 import { IApp } from './services/types';
-import authManager from "./services/authManager";
+import authManager from './services/authManager';
 
 class App implements IApp {
     private static _instance: App;
     private authManager;
 
     private constructor() {
-        this.authManager = authManager
+        this.authManager = authManager;
     }
 
     public static get Instance() {

@@ -9,7 +9,7 @@ export class AuthManager {
 
     private router;
 
-    constructor(isLogin: boolean = false) {
+    constructor(isLogin = false) {
         this.router = router;
         this.config = new Config();
         this.isLogin = isLogin;
@@ -17,12 +17,14 @@ export class AuthManager {
 
     public navigate(path?: string | undefined, isLogin?: boolean): void {
         this.checkAuth(isLogin);
-        if (path) this.router.navigate(path);
+        if (path) {
+            this.router.navigate(path);
+        }
     }
 
     private checkAuth(isLogin?: boolean): void {
         // TODO check here token
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         this.isLogin = !!token;
         this.setRouter();
     }

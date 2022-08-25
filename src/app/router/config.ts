@@ -1,7 +1,7 @@
-import {AuthPageController} from '../pages/authPage/authPageController';
+import { AuthPageController } from '../pages/authPage/authPageController';
 import MainPageController from '../pages/mainPage/mainPageController';
 import ProfilePageController from '../pages/profilePage/profilePageController';
-import {RouteOption} from '../services/types';
+import { RouteOption } from '../services/types';
 
 class Config {
     public mainPageController: MainPageController;
