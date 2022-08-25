@@ -28,20 +28,6 @@ class ProfilePageView {
         this.rootNode.append(header.getTemplate());
     }
 
-    private callbackBuilder(callback: (...args: string[]) => void, className: string, e: Event) {
-        const element = <HTMLElement>e.target;
-        if (element && (<Element>element).classList.contains(className)) {
-            callback(className, <string>element.dataset.id);
-        }
-    }
-
-    private idCallback(callback: (id: string) => void, className: string, e: Event) {
-        const element = <HTMLElement>e.target;
-        if (element && (<Element>element).classList.contains(className)) {
-            callback(<string>element.dataset.id);
-        }
-    }
-
     private eventCallback(callback: (e: Event) => void, className: string, e: Event) {
         const element = <HTMLElement>e.target;
         if (element && (<Element>element).classList.contains(className)) {
@@ -53,22 +39,22 @@ class ProfilePageView {
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
         document.addEventListener('click', (e: Event) =>
-            this.callbackBuilder(userProfile.editPost.bind(userProfile), 'edit-post', e)
+            this.eventCallback(userProfile.editPost.bind(userProfile), 'edit-post', e)
         );
         document.addEventListener('click', (e: Event) =>
-            this.callbackBuilder(userProfile.editPost.bind(userProfile), 'save-button', e)
+            this.eventCallback(userProfile.editPost.bind(userProfile), 'save-button', e)
         );
         document.addEventListener('click', (e: Event) =>
-            this.callbackBuilder(userProfile.editProfile.bind(userProfile), 'edit-user-button', e)
+            this.eventCallback(userProfile.editProfile.bind(userProfile), 'edit-user-button', e)
         );
         document.addEventListener('click', (e: Event) =>
-            this.callbackBuilder(userProfile.editProfile.bind(userProfile), 'save-profile-button', e)
+            this.eventCallback(userProfile.editProfile.bind(userProfile), 'save-profile-button', e)
         );
         document.addEventListener('click', (e: Event) =>
-            this.idCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e)
+            this.eventCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e)
         );
         document.addEventListener('click', (e: Event) =>
-            this.idCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e)
+            this.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e)
         );
         document.addEventListener('click', (e: Event) =>
             this.eventCallback(userProfile.editStatus.bind(userProfile), 'user-status', e)

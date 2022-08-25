@@ -81,14 +81,16 @@ class UserProfile {
             : `${postDate.getDate()}.${('0' + (postDate.getMonth() + 1)).slice(-2)}.${postDate.getFullYear()}`;
     }
 
-    public async editPost(className: string, id: string) {
+    public async editPost(e: Event) {
+        const button = <HTMLElement>e.target;
+        const id = button.dataset.id as string;
         const post = <HTMLElement>document.getElementById(`${id}`);
         const input = post.querySelector('.post-input') as HTMLInputElement;
         const textEl = post.querySelector('.post-text') as HTMLElement;
-        if (className === 'edit-post') {
+        if (button.classList.contains('edit-post')) {
             input.value = textEl.textContent as string;
             post.classList.add('edit');
-        } else if (className === 'save-button') {
+        } else if (button.classList.contains('save-button')) {
             if (input.checkValidity()) {
                 post.classList.remove('edit');
                 const text = input.value as string;
@@ -100,26 +102,27 @@ class UserProfile {
         }
     }
 
-    public async deletePost(id: string) {
-        await deletePost(id);
+    public async deletePost(e: Event) {
+        await deletePost((<HTMLElement>e.target).dataset.id as string);
         this.showPosts();
     }
 
-    public async editProfile(className: string): Promise<void> {
+    public async editProfile(e: Event): Promise<void> {
         const user = await getUser();
+        const button = <HTMLElement>e.target;
         const inputUsername = document.querySelector('.edit-username') as HTMLInputElement;
         const inputName = document.querySelector('.edit-name') as HTMLInputElement;
         const inputLastName = document.querySelector('.edit-surname') as HTMLInputElement;
         const inputPhone = document.querySelector('.edit-phone') as HTMLInputElement;
         const inputArr = [inputUsername, inputName, inputLastName, inputPhone];
-        if (className === 'edit-user-button') {
+        if (button.classList.contains('edit-user-button')) {
             (this.modal as bootstrap.Modal).toggle();
             inputUsername.value = user.username;
             inputName.value = user.firstName;
             inputLastName.value = user.lastName;
             inputPhone.value = user.phone || '';
         }
-        if (className === 'save-profile-button') {
+        if (button.classList.contains('save-profile-button')) {
             if (inputArr.some((el) => !el.checkValidity())) {
                 (<HTMLElement>inputName.closest('.modal-body')).classList.add('was-validated');
             } else {
@@ -135,7 +138,8 @@ class UserProfile {
         }
     }
 
-    public async toggleLike(id: string) {
+    public async toggleLike(e: Event) {
+        const id = (<HTMLElement>e.target).dataset.id as string;
         const user = await getUser();
         const tweet = await getTweetById(id);
         const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
@@ -154,7 +158,6 @@ class UserProfile {
     }
 
     public async editStatus(e: Event) {
-        console.log(e.type);
         const input = document.querySelector('.status-input') as HTMLInputElement;
         const textEl = document.querySelector('.user-status') as HTMLElement;
         const container = <HTMLElement>input.parentElement;
