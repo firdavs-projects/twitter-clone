@@ -1,8 +1,8 @@
 import auth from '../../components/auth/auth';
-import header from "../../components/header/header";
-import footer from "../../components/footer/footer";
-import Node from "../../components/Node";
-import router from "../../router/router";
+import header from '../../components/header/header';
+import footer from '../../components/footer/footer';
+import Node from '../../components/Node';
+import router from '../../router/router';
 
 export class AuthView {
     private rootNode: HTMLElement;
@@ -14,15 +14,15 @@ export class AuthView {
     public render() {
         this.rootNode.textContent = '';
 
-        this.rootNode.append(header.getTemplate());
+        // this.rootNode.append(header.getTemplate()); не нужен
 
         this.createMainLayout();
 
-        this.rootNode.append(footer.getTemplate());
+        // this.rootNode.append(footer.getTemplate()); не нужен
     }
 
     private createMainLayout() {
-        const main = new Node(this.rootNode, 'main', 'auth');
+        const main = new Node(this.rootNode, 'section', 'auth-page');
         const isRegisterRoute = router.getRoute().includes('register');
         main.node.append(auth.getTemplate(isRegisterRoute));
     }

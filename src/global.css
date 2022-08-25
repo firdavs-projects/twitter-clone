@@ -1,8 +1,236 @@
-body {
-    font-family: sans-serif;
-    padding: 0;
-    margin: 0;
+/*#app {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: space-between;*/
+/*}*/
+/*body {*/
+/*    font-family: sans-serif;*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*    height: 100vh;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: space-between;*/
+/*}*/
+/*button {*/
+/*    border: 0;*/
+/*    min-width: 70px;*/
+/*    height: 30px;*/
+/*    padding: 5px 10px;*/
+/*    background-color: #1DA1F2;*/
+/*    color: white;*/
+/*}*/
+/*button:hover {*/
+/*    cursor: pointer;*/
+/*}*/
+
+.h-full{
+    min-height: 100vh!important;
 }
-.wrapper {
-    border: 1px solid rgba(46, 139, 86, 0.486);
+
+/*auth page bootstrap */
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+}
+
+.form-floating {
+    position: relative;
+}
+
+.form-floating>label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+}
+
+.username-input {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.base-input{
+    border-radius: 0;
+    margin-bottom: -1px;
+}
+
+.password-input {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/***************start auth page**************/
+.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F8FA;
+    padding: 15px;
+}
+
+/*.authForm {*/
+/*    border: 1px solid #1da0f25b;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 10px;*/
+/*    padding: 25px;*/
+/*    background-color: #ffffffc9;*/
+/*    border-radius: 5px;*/
+/*}*/
+.authForm input {
+    width: 340px;
+    height: 30px;
+    border: 1px solid rgba(128, 128, 128, 0.397);
+    padding-left: 10px;
+    color: grey;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#error-auth-message {
+    color: red;
+}
+
+/***************end auth page**************/
+
+/***************start profile  page**************/
+
+.post-container, .user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.user-container {
+  background-color: #F5F8FA;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #1da0f25b;
+  padding: 25px;
+  background-color: #ffffffc9;
+  border-radius: 5px;
+  max-width: 800px;
+  width: 60%;
+}
+
+.image-part {
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1DA1F2;
+  border-radius: 20px;
+  font-size: 20px;
+  color: white;
+}
+
+.data-part {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.post-data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-login, .post-date {
+  color: rgb(83, 100, 113);
+}
+
+.post-edit, .status-input {
+  display: none;
+}
+
+.edit .post-text, .edit .user-status {
+  display: none;
+}
+
+.edit .post-edit, .edit .status-input  {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.post-reactions {
+  display: flex;
+}
+
+.like-container, .comment-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 70px;
+}
+
+.head-part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  padding: 25px;
+}
+
+.head-part .image-part {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  font-size: 40px;
+}
+
+.user-data {
+  width: 60%;
+  padding: 0 25px;
+}
+
+.like-image {
+  cursor: pointer;
+}
+
+.like-image.active {
+  fill: rgb(231, 69, 96);
+  stroke: rgb(231, 69, 96);
+}
+
+path {
+  pointer-events: none;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-status-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

@@ -5,5 +5,7 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: path.resolve(__dirname, './docs'),
+        port: 5000,
+        hot: true,
     },
 };

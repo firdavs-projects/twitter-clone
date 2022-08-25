@@ -1,7 +1,7 @@
-import {AuthPageController} from '../pages/authPage/authPageController';
+import { AuthPageController } from '../pages/authPage/authPageController';
 import MainPageController from '../pages/mainPage/mainPageController';
 import ProfilePageController from '../pages/profilePage/profilePageController';
-import {RouteOption} from '../services/types';
+import { RouteOption } from '../services/types';
 
 class Config {
     public mainPageController: MainPageController;
@@ -31,12 +31,12 @@ class Config {
             {
                 path: / /,
                 callback: () => this.mainPageController.createPage(),
-                isAuth: true, // TODO turn on
+                isAuth: true,
             },
             {
                 path: /profile/,
                 callback: () => this.profilePageController.createPage(),
-                isAuth: true, // TODO turn on
+                isAuth: true,
             },
         ];
     }
