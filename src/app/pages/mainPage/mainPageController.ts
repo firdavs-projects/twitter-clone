@@ -1,5 +1,4 @@
 import MainPageView from './mainPageView';
-import authManager from '../../services/authManager';
 
 class MainPageController {
     private view: MainPageView;

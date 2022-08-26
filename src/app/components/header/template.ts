@@ -8,6 +8,7 @@ export default function headerTemplate(): string {
       </ul>
       <ul class="nav">
         <li class="nav-item"><a href="#/profile" class="nav-link link-dark px-2">Profile</a></li>
+        <li class="nav-item"><a href="#/login" id="logout" class="nav-link link-dark px-2">Logout</a></li>
       </ul>
     </div>
     </nav>

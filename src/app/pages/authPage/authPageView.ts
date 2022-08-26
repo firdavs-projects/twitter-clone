@@ -14,11 +14,7 @@ export class AuthView {
     public render() {
         this.rootNode.textContent = '';
 
-        // this.rootNode.append(header.getTemplate()); не нужен
-
         this.createMainLayout();
-
-        // this.rootNode.append(footer.getTemplate()); не нужен
     }
 
     private createMainLayout() {

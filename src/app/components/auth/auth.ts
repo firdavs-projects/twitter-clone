@@ -1,17 +1,15 @@
-import { authTemplate, createAuthError, loginTemplate } from './template';
+import { createAuthError, loginTemplate } from './template';
 import Button from '../Button';
 import authManager from '../../services/authManager';
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
 import { setLocalStorage } from '../../services/localStorage';
-import footerTemplate from '../footer/template';
 
 class Auth {
     private rootNode: HTMLElement;
 
     constructor() {
         this.rootNode = document.createElement('div');
-        // this.rootNode.className = 'text-center h-full';
     }
 
     public getTemplate(isRegisterRoute: boolean): HTMLElement {
@@ -56,7 +54,7 @@ class Auth {
                     } else {
                         console.log('Incorrect data');
                         errorElement ? errorElement.remove() : null;
-                        // authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
+                        this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
                     }
                 } catch (error) {
                     console.log(error);
@@ -77,7 +75,7 @@ class Auth {
                     } else {
                         console.log(`Incorrect username or password`);
                         errorElement ? errorElement.remove() : null;
-                        // authForm.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
+                        this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
                     }
                 } catch (error) {
                     console.log(error);
@@ -85,6 +83,11 @@ class Auth {
             });
         }
         return this.rootNode;
+    }
+    public logout() {
+        localStorage.removeItem('token'); // remove on logout
+        authManager.navigate('/login', false);
+        console.log('logout...')
     }
 }
 

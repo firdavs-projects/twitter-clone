@@ -3,6 +3,7 @@ import header from '../../components/header/header';
 import Node from '../../components/Node';
 import Button from '../../components/Button';
 import authManager from '../../services/authManager';
+import auth from '../../components/auth/auth';
 
 class MainPageView {
     private rootNode: HTMLElement;
@@ -22,6 +23,9 @@ class MainPageView {
     }
 
     private createMainLayout() {
+        const logout = document.getElementById('logout') as HTMLElement;
+        logout?.addEventListener('click', () => auth.logout());
+
         const main = new Node(this.rootNode, 'main', 'main');
         main.node.insertAdjacentHTML(
             'beforeend',
@@ -32,16 +36,17 @@ class MainPageView {
             </div>
         `
         );
+        
 
-        const btnWrapper = Node.setChild(main.node, 'div', 'container');
-        const btn = new Button(btnWrapper, 'logout test');
-        btn.addClass('btn');
-        btn.addClass('btn-danger');
-        btn.addClass('my-4');
-        btn.onclick(() => {
-            localStorage.removeItem('token'); // remove on logout
-            authManager.navigate('/login', false);
-        });
+        // const btnWrapper = Node.setChild(main.node, 'div', 'container');
+        // const btn = new Button(btnWrapper, 'logout test');
+        // btn.addClass('btn');
+        // btn.addClass('btn-danger');
+        // btn.addClass('my-4');
+        // btn.onclick(() => {
+        //     localStorage.removeItem('token'); // remove on logout
+        //     authManager.navigate('/login', false);
+        // });
     }
 }
 
