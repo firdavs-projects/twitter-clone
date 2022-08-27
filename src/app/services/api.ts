@@ -39,6 +39,18 @@ export const getAllUserTweets = async () => {
     ).json();
 };
 
+export const getTweetsBySubscriptions = async () => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.tweetsBySubscriptions, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    ).json();
+};
+
 export const getUser = async () => {
     const token = getLocalStorage();
     return (
@@ -138,21 +150,3 @@ export const deleteLike = async (id: string) => {
         })
     ).json();
 };
-
-// export const getLogin = (body: ILoginBody) =>
-//     new Promise<void>(async (resolve, reject) => {
-//         try {
-//             const res = await fetch(loginUrl, {
-//                 method: 'POST',
-//                 body: JSON.stringify(body),
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//             })
-//             if (res.ok) {
-//                 resolve(res.json())
-//             }
-//         } catch {
-//             reject();
-//         }
-//     });

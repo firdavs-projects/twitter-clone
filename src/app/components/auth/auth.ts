@@ -84,7 +84,7 @@ class Auth {
         }
         return this.rootNode;
     }
-    public logout() {
+    public async logout() {
         localStorage.removeItem('token'); // remove on logout
         authManager.navigate('/login', false);
         console.log('logout...')

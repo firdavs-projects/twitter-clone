@@ -1,29 +1,3 @@
-/*#app {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    justify-content: space-between;*/
-/*}*/
-/*body {*/
-/*    font-family: sans-serif;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    height: 100vh;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    justify-content: space-between;*/
-/*}*/
-/*button {*/
-/*    border: 0;*/
-/*    min-width: 70px;*/
-/*    height: 30px;*/
-/*    padding: 5px 10px;*/
-/*    background-color: #1DA1F2;*/
-/*    color: white;*/
-/*}*/
-/*button:hover {*/
-/*    cursor: pointer;*/
-/*}*/
-
 .h-full{
     min-height: 100vh!important;
 }
@@ -79,16 +53,6 @@
     background-color: #F5F8FA;
     padding: 15px;
 }
-
-/*.authForm {*/
-/*    border: 1px solid #1da0f25b;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 10px;*/
-/*    padding: 25px;*/
-/*    background-color: #ffffffc9;*/
-/*    border-radius: 5px;*/
-/*}*/
 .authForm input {
     width: 340px;
     height: 30px;
@@ -104,6 +68,20 @@
 }
 
 /***************end auth page**************/
+
+/***************start tweets-folder page**************/
+.tweets-feed {
+  border: 1px solid red;
+  min-height: 500px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 15px;
+  justify-content: space-between;
+}
+
+/***************end tweets-folder**************/
 
 /***************start profile  page**************/
 
