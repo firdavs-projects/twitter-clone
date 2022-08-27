@@ -1,7 +1,6 @@
-import { addLike, getTweetsBySubscriptions, getUser, getUserById } from '../../services/api';
+import { getTweetsBySubscriptions, getUser, getUserById } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
-import createPostForm from '../../components/userProfile/templates';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
 
@@ -41,7 +40,8 @@ class MainPageController {
                 el.text,
                 el._id,
                 el.likes.length !== 0 ? el.likes.length.toString() : '',
-                el.tweets.length !== 0 ? el.tweets.length.toString() : ''
+                el.tweets.length !== 0 ? el.tweets.length.toString() : '',
+                el.image
             );
             postsContainer.innerHTML += form;
 

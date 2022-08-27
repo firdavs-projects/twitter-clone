@@ -69,7 +69,8 @@ class UserProfileTemplates {
         text: string,
         id: string,
         likes?: string,
-        comments?: string
+        comments?: string,
+        image?: string,
     ): string => {
         return `<div class="post-form" id="${id}">
         <div class="image-part">${name.slice(0, 1)}</div>
@@ -80,6 +81,9 @@ class UserProfileTemplates {
             <div class="post-date">${date}</div>
           </div>
           <div class="post-text">${text}</div>
+          <div class="tweet-img">
+            <img src="${image}" alt="" height="300">
+          </div>
           <div class="post-edit">
             <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
             <button class="save-button btn btn-primary btn-sm" data-id="${id}">Save</button>

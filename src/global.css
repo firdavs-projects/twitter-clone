@@ -69,20 +69,6 @@
 
 /***************end auth page**************/
 
-/***************start tweets-folder page**************/
-.tweets-feed {
-  border: 1px solid red;
-  min-height: 500px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 25px;
-  padding: 15px;
-  justify-content: space-between;
-}
-
-/***************end tweets-folder**************/
-
 /***************start profile  page**************/
 
 .post-container, .user-container {
@@ -211,4 +197,7 @@ path {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.tweet-img{
+  margin-bottom: 10px;
 }

@@ -45,6 +45,7 @@ export interface IUserTweet {
     user: string;
     __v: number;
     _id: string;
+    image: string;
 }
 
 export interface IUserData {
