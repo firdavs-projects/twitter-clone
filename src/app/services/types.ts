@@ -3,9 +3,10 @@ export interface IApp {
 }
 
 export type RouteOption = {
-    path: RegExp;
+    path: string;
     callback: () => void;
     isAuth: boolean | null;
+    withId: boolean
 };
 
 export type TAuthResult = {
@@ -42,9 +43,15 @@ export interface IUserTweet {
     likes: string[];
     text: string;
     tweets: string[];
-    user: string;
+    user: {
+        _id: string;
+        username: string;
+        firstName: string;
+        lastName: string;
+    };
     __v: number;
     _id: string;
+    image: string | null;
 }
 
 export interface IUserData {

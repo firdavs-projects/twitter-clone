@@ -25,11 +25,12 @@ class Router implements IRouter {
         this.listen();
     }
 
-    addPath(path: RegExp, callback: () => void, isAuth: boolean | null): void {
+    addPath(path: string, callback: () => void, isAuth: boolean | null, withId: boolean): void {
         this.routes.push({
             path,
             callback,
             isAuth,
+            withId,
         });
     }
 
@@ -41,21 +42,26 @@ class Router implements IRouter {
         this.routes = [...routes];
     }
 
-    removePath(path: RegExp): void {
+    removePath(path: string): void {
         const routeToDelete = this.routes.find((route: RouteOption) => route.path === path);
+        console.log(routeToDelete, this.routes)
         if (routeToDelete) {
             this.routes.splice(this.routes.indexOf(routeToDelete), 1);
         }
     }
 
-    getPath(path: RegExp | string): string {
-        const currPath = path.toString().replace(/^\//, '').replace(/\\/, '').replace(/\/$/, '');
+    getPath(path: string): string {
+        const currPath = path.toString()
+            .replace(/^\//, '').replace(/\\/, '').replace(/\/$/, '');
         return currPath ? currPath : this.root;
     }
 
     getRoute(): string {
         let route = '';
-        const match = window.location.href.match(/#(.*)$/);
+        const match = window.location.href
+            .split('/#')
+            // .match(/#(.*)$/);
+        // console.log(match)
         route = match && match[1] ? match[1] : this.root;
 
         return this.getPath(route);
@@ -72,6 +78,13 @@ class Router implements IRouter {
         this.intervalId = setInterval(this.checkRoute.bind(this), 100);
     }
 
+    getRouteIdParam(url: string):string {
+        if (url?.split('#/')[1]) {
+            url = url?.split('#/')[1]
+        }
+        return url?.split('/')[1]?.split('/')[0] || ''
+    }
+
     checkRoute(): void {
         if (this.current === this.getRoute()) {
             return;
@@ -81,13 +94,14 @@ class Router implements IRouter {
 
         this.routes.some((route) => {
             if (this.current) {
-                const match = this.current.match(route.path) as [];
-
+                const match = this.current.includes(route.path);
+                // const m = this.current.match(route.path) as [];
                 if (match) {
-                    const currRoute = match.shift();
+                    const id = route.withId && this.getRouteIdParam(this.current)
+                    const currRoute = route.withId ? route.path + '/' + id : route.path
                     this.navigate(currRoute);
 
-                    route.callback.apply({}, match);
+                    route.callback.apply({id}, []);
                     return this;
                 }
                 this.navigate(this.root);
