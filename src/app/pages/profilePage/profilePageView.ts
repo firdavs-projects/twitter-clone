@@ -1,6 +1,7 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import UserProfile from '../../components/userProfile/userProfile';
+import Router from "../../router/router";
 
 const userProfile = new UserProfile();
 
@@ -36,6 +37,11 @@ class ProfilePageView {
     }
 
     private createProfileLayout() {
+        const username = Router.getRouteIdParam(window.location.href)
+        if (username) {
+            console.log('Its other user profile, check & get other user with username')
+        }
+
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
         document.addEventListener('click', (e: Event) =>
