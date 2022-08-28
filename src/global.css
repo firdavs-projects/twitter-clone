@@ -121,11 +121,12 @@
   color: black;
   position: relative;
   width: 100px;
-  
+
 }
 .fileInput+ label::after {
   position: absolute;
-  content:url('./assets/img/up.png');
+  /*выдает ошибку*/
+  /*content:url('./assets/img/up.png');*/
   left: 73%;
   bottom: 0%;
 }
