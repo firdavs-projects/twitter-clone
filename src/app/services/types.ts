@@ -3,9 +3,10 @@ export interface IApp {
 }
 
 export type RouteOption = {
-    path: RegExp;
+    path: string;
     callback: () => void;
     isAuth: boolean | null;
+    withId: boolean
 };
 
 export type TAuthResult = {

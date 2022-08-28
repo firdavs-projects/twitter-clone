@@ -19,24 +19,40 @@ class Config {
     public getRoutes(): RouteOption[] {
         return [
             {
-                path: /register/,
+                path: 'register',
                 callback: () => this.authPageController.createPage(),
                 isAuth: false,
+                withId: false
             },
             {
-                path: /login/,
+                path: 'login',
                 callback: () => this.authPageController.createPage(),
                 isAuth: false,
+                withId: false
             },
             {
-                path: / /,
+                path: ' ',
                 callback: () => this.mainPageController.createPage(),
                 isAuth: true,
+                withId: false
             },
             {
-                path: /profile/,
+                path: 'profile',
                 callback: () => this.profilePageController.createPage(),
                 isAuth: true,
+                withId: false
+            },
+            {
+                path: 'user',
+                callback: () => this.profilePageController.createPage(),
+                isAuth: true,
+                withId: true
+            },
+            {
+                path: 'tweet',
+                callback: () => this.profilePageController.createPage(),
+                isAuth: true,
+                withId: true
             },
         ];
     }

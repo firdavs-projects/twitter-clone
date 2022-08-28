@@ -19,6 +19,9 @@ class ProfilePageView {
 
         this.createHeader();
 
+        const id = window.location.href.split('/').reverse()[0] // id of tweet or username
+        console.log(id)
+
         this.createProfileLayout();
 
         this.createFooter();
