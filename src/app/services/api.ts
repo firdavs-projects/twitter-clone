@@ -150,3 +150,16 @@ export const deleteLike = async (id: string) => {
         })
     ).json();
 };
+
+export const addNewTweet = async (body: FormData) => {
+    const token = getLocalStorage();
+    return (
+        await fetch(routes.createTweet, {
+            method: ApiMethods.POST,
+            body: body,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    ).json();
+};

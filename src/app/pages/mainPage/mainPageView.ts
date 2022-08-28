@@ -2,6 +2,7 @@ import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import Node from '../../components/Node';
 import auth from '../../components/auth/auth';
+import { addTweet } from '../../components/modalForm/modalForm';
 
 class MainPageView {
     private rootNode: HTMLElement;
@@ -14,6 +15,7 @@ class MainPageView {
         this.rootNode.textContent = '';
 
         this.rootNode.append(header.getTemplate());
+        addTweet();
 
         this.createMainLayout();
 
@@ -27,7 +29,7 @@ class MainPageView {
         const main = new Node(this.rootNode, 'main', 'main');
         main.node.insertAdjacentHTML(
             'beforeend',
-            `
+            `   
                 <div class="post-container"></div>
             `
         );

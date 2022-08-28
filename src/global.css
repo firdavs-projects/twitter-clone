@@ -1,77 +1,147 @@
-.h-full{
-    min-height: 100vh!important;
+.h-full {
+  min-height: 100vh !important;
 }
 
 /*auth page bootstrap */
 
 .form-signin {
-    max-width: 330px;
-    padding: 15px;
+  max-width: 330px;
+  padding: 15px;
 }
 
 .form-floating {
-    position: relative;
+  position: relative;
 }
 
 .form-floating>label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1rem 0.75rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    pointer-events: none;
-    border: 1px solid transparent;
-    transform-origin: 0 0;
-    transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out, transform .1s ease-in-out;
 }
 
 .username-input {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
-.base-input{
-    border-radius: 0;
-    margin-bottom: -1px;
+
+.base-input {
+  border-radius: 0;
+  margin-bottom: -1px;
 }
 
 .password-input {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /***************start auth page**************/
 .auth {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #F5F8FA;
-    padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F8FA;
+  padding: 15px;
 }
+
 .authForm input {
-    width: 340px;
-    height: 30px;
-    border: 1px solid rgba(128, 128, 128, 0.397);
-    padding-left: 10px;
-    color: grey;
-    background-color: white;
-    border-radius: 5px;
+  width: 340px;
+  height: 30px;
+  border: 1px solid rgba(128, 128, 128, 0.397);
+  padding-left: 10px;
+  color: grey;
+  background-color: white;
+  border-radius: 5px;
 }
 
 #error-auth-message {
-    color: red;
+  color: red;
 }
+
 
 /***************end auth page**************/
 
+/***************start modal page**************/
+
+.new-tweet-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+  width: 40vw;
+  height: 30vh;
+  border: 1px solid #6969699f;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+#formElem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+  width: 30vw;
+  margin: 0 auto;
+}
+
+.btn-tweet {
+  width: 90px;
+  margin: auto auto;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.fileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.fileInput + label {
+  font-size: 0.9em;
+  color: white;
+  display: inline-block;
+  color: black;
+  position: relative;
+  width: 100px;
+  
+}
+.fileInput+ label::after {
+  position: absolute;
+  content:url('./assets/img/up.png');
+  left: 73%;
+  bottom: 0%;
+}
+
+.fileInput:focus + label,
+.fileInput + label:hover {
+  cursor: pointer;
+}
+
+/***************end main modal**************/
+
+
 /***************start profile  page**************/
 
-.post-container, .user-container {
+.post-container,
+.user-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -125,19 +195,23 @@
   font-weight: bold;
 }
 
-.user-login, .post-date {
+.user-login,
+.post-date {
   color: rgb(83, 100, 113);
 }
 
-.post-edit, .status-input {
+.post-edit,
+.status-input {
   display: none;
 }
 
-.edit .post-text, .edit .user-status {
+.edit .post-text,
+.edit .user-status {
   display: none;
 }
 
-.edit .post-edit, .edit .status-input  {
+.edit .post-edit,
+.edit .status-input {
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -147,7 +221,8 @@
   display: flex;
 }
 
-.like-container, .comment-container {
+.like-container,
+.comment-container {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -198,6 +273,11 @@ path {
   align-items: center;
   gap: 10px;
 }
-.tweet-img{
+
+.tweet-img {
   margin-bottom: 10px;
+}
+
+#new-tweet:hover {
+  cursor: pointer;
 }

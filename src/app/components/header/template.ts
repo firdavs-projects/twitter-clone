@@ -20,6 +20,15 @@ export default function headerTemplate(): string {
           </svg>
           <span class="fs-4">Twitter Clone</span>
         </a>
+
+        <form id="formElem">
+            <textarea class="form-control" id="tweet-textarea" rows="1" placeholder="What's happening?"></textarea>
+            <input class="fileInput" type="file" id="tweet-file">
+            <label for="tweet-file">Add image</label>
+            <button type="button" class="btn btn-primary btn-tweet">Tweet</button>
+        </form>
+        
+
         <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
           <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
         </form>

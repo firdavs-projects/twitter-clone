@@ -3,7 +3,6 @@ import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
-
 const template = new UserProfileTemplates();
 
 class MainPageController {
@@ -29,13 +28,11 @@ class MainPageController {
         postsContainer.classList.add('post-container');
         const main = document.querySelector('.main') as HTMLElement;
         main.append(postsContainer);
-
         tweets.tweets.forEach(async (el: IUserTweet) => {
-            const user = await getUserById(el.user);
             const form = template.createPostForm(
-                user.firstName,
-                user.lastName,
-                user.username,
+                el.user.firstName,
+                el.user.lastName,
+                el.user.username,
                 this.UserProfile.showDate(el.date),
                 el.text,
                 el._id,
@@ -59,6 +56,8 @@ class MainPageController {
                 likeImg.classList.add('active');
             }
         });
+
+        
 
     }
 }
