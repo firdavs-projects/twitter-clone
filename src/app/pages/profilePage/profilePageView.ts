@@ -1,5 +1,6 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
+import { addTweet } from '../../components/modalForm/modalForm';
 import UserProfile from '../../components/userProfile/userProfile';
 import Router from "../../router/router";
 
@@ -19,6 +20,7 @@ class ProfilePageView {
         this.rootNode.textContent = '';
 
         this.createHeader();
+        addTweet();
 
         this.createProfileLayout();
 

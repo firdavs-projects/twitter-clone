@@ -1,8 +1,8 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import Node from '../../components/Node';
-import Button from '../../components/Button';
-import authManager from '../../services/authManager';
+import auth from '../../components/auth/auth';
+import { addTweet } from '../../components/modalForm/modalForm';
 
 class MainPageView {
     private rootNode: HTMLElement;
@@ -15,6 +15,7 @@ class MainPageView {
         this.rootNode.textContent = '';
 
         this.rootNode.append(header.getTemplate());
+        addTweet();
 
         this.createMainLayout();
 
@@ -22,26 +23,17 @@ class MainPageView {
     }
 
     private createMainLayout() {
+        const logout = document.getElementById('logout') as HTMLElement;
+        logout?.addEventListener('click', () => auth.logout());
+
         const main = new Node(this.rootNode, 'main', 'main');
         main.node.insertAdjacentHTML(
             'beforeend',
+            `   
+                <div class="post-container"></div>
             `
-            <div class="container">
-                <h1>Hello Main Page</h1>
-                <span>Tweets</span>
-            </div>
-        `
         );
-
-        const btnWrapper = Node.setChild(main.node, 'div', 'container');
-        const btn = new Button(btnWrapper, 'logout test');
-        btn.addClass('btn');
-        btn.addClass('btn-danger');
-        btn.addClass('my-4');
-        btn.onclick(() => {
-            localStorage.removeItem('token'); // remove on logout
-            authManager.navigate('/login', false);
-        });
+        
     }
 }
 

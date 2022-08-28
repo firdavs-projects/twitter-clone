@@ -43,9 +43,15 @@ export interface IUserTweet {
     likes: string[];
     text: string;
     tweets: string[];
-    user: string;
+    user: {
+        _id: string;
+        username: string;
+        firstName: string;
+        lastName: string;
+    };
     __v: number;
     _id: string;
+    image: string | null;
 }
 
 export interface IUserData {
