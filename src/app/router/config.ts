@@ -1,10 +1,13 @@
 import { AuthPageController } from '../pages/authPage/authPageController';
 import MainPageController from '../pages/mainPage/mainPageController';
 import ProfilePageController from '../pages/profilePage/profilePageController';
+import TweetPageController from "../pages/tweetPage/tweetPageController";
 import { RouteOption } from '../services/types';
+
 
 class Config {
     public mainPageController: MainPageController;
+    public tweetPageController: TweetPageController;
 
     public authPageController: AuthPageController;
 
@@ -12,6 +15,7 @@ class Config {
 
     constructor() {
         this.mainPageController = new MainPageController();
+        this.tweetPageController = new TweetPageController();
         this.authPageController = new AuthPageController();
         this.profilePageController = new ProfilePageController();
     }
@@ -40,17 +44,11 @@ class Config {
                 path: 'profile',
                 callback: () => this.profilePageController.createPage(),
                 isAuth: true,
-                withId: false
-            },
-            {
-                path: 'user',
-                callback: () => this.profilePageController.createPage(),
-                isAuth: true,
                 withId: true
             },
             {
                 path: 'tweet',
-                callback: () => this.profilePageController.createPage(),
+                callback: () => this.tweetPageController.createPage(),
                 isAuth: true,
                 withId: true
             },

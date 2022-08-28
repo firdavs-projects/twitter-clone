@@ -78,6 +78,13 @@ class Router implements IRouter {
         this.intervalId = setInterval(this.checkRoute.bind(this), 100);
     }
 
+    getRouteIdParam(url: string):string {
+        if (url?.split('#/')[1]) {
+            url = url?.split('#/')[1]
+        }
+        return url?.split('/')[1]?.split('/')[0] || ''
+    }
+
     checkRoute(): void {
         if (this.current === this.getRoute()) {
             return;
@@ -89,10 +96,9 @@ class Router implements IRouter {
             if (this.current) {
                 const match = this.current.includes(route.path);
                 // const m = this.current.match(route.path) as [];
-                // console.log(this.current?.split('/')[1]?.split('/')[0])
                 if (match) {
-                    const id = route.withId && this.current?.split('/')[1]?.split('/')[0] || ''
-                    const currRoute = route.withId ? route.path+'/'+id : route.path
+                    const id = route.withId && this.getRouteIdParam(this.current)
+                    const currRoute = route.withId ? route.path + '/' + id : route.path
                     this.navigate(currRoute);
 
                     route.callback.apply({id}, []);
