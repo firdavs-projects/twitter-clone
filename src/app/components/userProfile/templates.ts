@@ -79,15 +79,15 @@ class UserProfileTemplates {
         name: string,
         surname: string,
         login: string,
-        image: string,
         date: string,
         text: string,
         id: string,
         likes?: string,
-        comments?: string
+        comments?: string,
+        image?: string | null
     ): string => {
         return `<div class="post-form" id="${id}">
-        ${this.profileImage(image, name)}
+        <div class="image-part">${name.slice(0, 1)}</div>
         <div class="data-part">
           <div class="post-data">
             <div class="user-name">${name} ${surname}</div>
@@ -95,6 +95,9 @@ class UserProfileTemplates {
             <div class="post-date">${date}</div>
           </div>
           <div class="post-text">${text}</div>
+          <div class="tweet-img">
+            <img src="${!image ? (image = '#') : image}" alt="" height="300">
+          </div>
           <div class="post-edit">
             <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
             <button class="save-button btn btn-primary btn-sm" data-id="${id}">Save</button>

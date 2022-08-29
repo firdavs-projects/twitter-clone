@@ -5,27 +5,23 @@ import Node from '../../components/Node';
 import router from '../../router/router';
 
 export class AuthView {
-    private rootNode: HTMLElement;
+  private rootNode: HTMLElement;
 
-    constructor() {
-        this.rootNode = <HTMLElement>document.getElementById('app');
-    }
+  constructor() {
+    this.rootNode = <HTMLElement>document.getElementById('app');
+  }
 
-    public render() {
-        this.rootNode.textContent = '';
+  public render() {
+    this.rootNode.textContent = '';
 
-        // this.rootNode.append(header.getTemplate()); не нужен
+    this.createMainLayout();
+  }
 
-        this.createMainLayout();
-
-        // this.rootNode.append(footer.getTemplate()); не нужен
-    }
-
-    private createMainLayout() {
-        const main = new Node(this.rootNode, 'section', 'auth-page');
-        const isRegisterRoute = router.getRoute().includes('register');
-        main.node.append(auth.getTemplate(isRegisterRoute));
-    }
+  private createMainLayout() {
+    const main = new Node(this.rootNode, 'section', 'auth-page');
+    const isRegisterRoute = router.getRoute().includes('register');
+    main.node.append(auth.getTemplate(isRegisterRoute));
+  }
 }
 
 export default new AuthView();
