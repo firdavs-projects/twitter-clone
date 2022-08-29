@@ -5,11 +5,12 @@ class UserProfileTemplates {
         username: string,
         id: string,
         date: string,
-        status: string
+        status: string,
+        image: string
     ) => {
         return `<div class="user-container container" id="${id}">
         <div class="head-part">
-          <div class="image-part">${name.slice(0, 1).toUpperCase()}</div>
+          ${this.profileImage(image, name)}
           <button class="edit-user-button btn btn-primary btn-sm" data-id="${id}" data-bs-target="#editBackdrop">Edit profile</button>
           ${this.createModalForm(this.editBody(), 'editBackdrop')}
           </div>
@@ -25,6 +26,15 @@ class UserProfileTemplates {
         </div>`;
     };
 
+    public profileImage(imgage: string, name: string) {
+        if (imgage) {
+            return `<div class="image-part">
+              <img src="${imgage}" alt="profile image" class="profile-image">
+            </div>`;
+        }
+        return `<div class="image-part">${name.slice(0, 1).toUpperCase()}</div>`;
+    }
+
     public createModalForm = (body: string, id: string) => {
         return `<div class="modal fade" id="${id}" tabindex="-1" aria-labelledby="modelLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -33,7 +43,7 @@ class UserProfileTemplates {
               <h5 class="modal-title" id="modelLabel">Edit profile</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">${body}</div>
+            <form class="modal-body">${body}</form>
             <div class="modal-footer">
               <button class="save-profile-button btn btn-primary btn-sm">Save changes</button>
             </div>
@@ -44,19 +54,23 @@ class UserProfileTemplates {
 
     public editBody = () => {
         return `<div class="form-floating edit-container">
-      <input type="text" class="form-control edit-username" id="floatingUsername" placeholder="Username" minlength="3" maxlenght="40" required>
+      <input type="file" class="form-control edit-image" name="file" id="profileImage">
+      <label for="profileImage">Avatar</label>
+    </div>
+    <div class="form-floating edit-container">
+      <input type="text" class="form-control edit-username" name="username" id="floatingUsername" placeholder="Username" minlength="3" maxlenght="40" required>
       <label for="floatingUsername">Username</label>
     </div>
     <div class="form-floating edit-container">
-      <input type="text" class="form-control edit-name" id="floatingName" placeholder="FirstName" minlength="3" maxlenght="30" required>
+      <input type="text" class="form-control edit-name" name="firstName" id="floatingName" placeholder="FirstName" minlength="3" maxlenght="30" required>
       <label for="floatingName">FirstName</label>
     </div>
     <div class="form-floating edit-container">
-      <input type="text" class="form-control edit-surname" id="floatingLastName" placeholder="LastName" minlength="3" maxlenght="30" required>
+      <input type="text" class="form-control edit-surname" name="lastName" id="floatingLastName" placeholder="LastName" minlength="3" maxlenght="30" required>
       <label for="floatingLastName">LastName</label>
     </div>
     <div class="form-floating edit-container">
-      <input type="text" class="form-control edit-phone" id="floatingPhone" placeholder="Phone" pattern="^[+]?[1-9]+[0-9]*$" max-length="15">
+      <input type="text" class="form-control edit-phone" name="phone" id="floatingPhone" placeholder="Phone" pattern="^[+]?[1-9]+[0-9]*$" max-length="15">
       <label for="floatingPhone">Phone</label>
     </div>`;
     };
@@ -65,6 +79,7 @@ class UserProfileTemplates {
         name: string,
         surname: string,
         login: string,
+        image: string,
         date: string,
         text: string,
         id: string,
@@ -72,7 +87,7 @@ class UserProfileTemplates {
         comments?: string
     ): string => {
         return `<div class="post-form" id="${id}">
-        <div class="image-part">${name.slice(0, 1)}</div>
+        ${this.profileImage(image, name)}
         <div class="data-part">
           <div class="post-data">
             <div class="user-name">${name} ${surname}</div>

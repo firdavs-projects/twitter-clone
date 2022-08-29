@@ -41,7 +41,8 @@ class UserProfile {
             data.username,
             data._id,
             this.showDate(data.date),
-            data.status || 'Change your status...'
+            data.status || 'Change your status...',
+            data.avatar
         );
     }
 
@@ -58,6 +59,7 @@ class UserProfile {
                 user.firstName,
                 user.lastName,
                 user.username,
+                user.avatar,
                 this.showDate(el.date),
                 el.text,
                 el._id,
@@ -95,7 +97,9 @@ class UserProfile {
                 post.classList.remove('edit');
                 const text = input.value as string;
                 textEl.textContent = text;
-                await editPost(id, { text });
+                const formData = new FormData();
+                formData.append('text', text);
+                await editPost(id, formData);
             } else {
                 (<HTMLElement>input.parentElement).classList.add('was-validated');
             }
@@ -127,12 +131,8 @@ class UserProfile {
                 (<HTMLElement>inputName.closest('.modal-body')).classList.add('was-validated');
             } else {
                 (this.modal as bootstrap.Modal).toggle();
-                await saveProfileInfo({
-                    username: inputUsername.value,
-                    firstName: inputName.value,
-                    lastName: inputLastName.value,
-                    phone: inputPhone.value,
-                });
+                const formData = new FormData(<HTMLFormElement>document.querySelector('.modal-body'));
+                await saveProfileInfo(formData);
                 this.showPage();
             }
         }
@@ -169,7 +169,9 @@ class UserProfile {
                 container.classList.remove('edit');
                 const status = input.value as string;
                 textEl.textContent = status;
-                await saveProfileInfo({ status });
+                const formData = new FormData();
+                formData.append('status', status);
+                await saveProfileInfo(formData);
             } else {
                 container.classList.add('was-validated');
             }

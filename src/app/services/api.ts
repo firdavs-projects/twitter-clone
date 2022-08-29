@@ -1,4 +1,4 @@
-import { IEditBody, ILoginBody, IRegistrationBody, IUserData } from './types';
+import { ILoginBody, IRegistrationBody } from './types';
 import { routes } from './routes';
 import { ApiMethods } from './constants';
 import { getLocalStorage } from './localStorage';
@@ -75,15 +75,14 @@ export const getTweetById = async (id: string) => {
     ).json();
 };
 
-export const editPost = async (id: string, body: IEditBody) => {
+export const editPost = async (id: string, formData: FormData) => {
     const token = getLocalStorage();
     return (
         await fetch(routes.tweetById(id), {
             method: ApiMethods.PUT,
-            body: JSON.stringify(body),
+            body: formData,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
             },
         })
     ).json();
@@ -101,15 +100,14 @@ export const deletePost = async (id: string) => {
     ).json();
 };
 
-export const saveProfileInfo = async (body: IUserData) => {
+export const saveProfileInfo = async (formData: FormData) => {
     const token = getLocalStorage();
     return (
         await fetch(routes.profile, {
             method: ApiMethods.PUT,
-            body: JSON.stringify(body),
+            body: formData,
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
             },
         })
     ).json();

@@ -38,12 +38,8 @@ class ProfilePageView {
     private createProfileLayout() {
         userProfile.showPage();
         this.rootNode.append(userProfile.rootNode);
-        document.addEventListener('click', (e: Event) =>
-            this.eventCallback(userProfile.editPost.bind(userProfile), 'edit-post', e)
-        );
-        document.addEventListener('click', (e: Event) =>
-            this.eventCallback(userProfile.editPost.bind(userProfile), 'save-button', e)
-        );
+        document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.editPost, 'edit-post', e));
+        document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.editPost, 'save-button', e));
         document.addEventListener('click', (e: Event) =>
             this.eventCallback(userProfile.editProfile.bind(userProfile), 'edit-user-button', e)
         );
@@ -53,14 +49,10 @@ class ProfilePageView {
         document.addEventListener('click', (e: Event) =>
             this.eventCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e)
         );
-        document.addEventListener('click', (e: Event) =>
-            this.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e)
-        );
-        document.addEventListener('click', (e: Event) =>
-            this.eventCallback(userProfile.editStatus.bind(userProfile), 'user-status', e)
-        );
+        document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.toggleLike, 'like-image', e));
+        document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.editStatus, 'user-status', e));
         document.addEventListener('focusout', (e: Event) =>
-            this.eventCallback(userProfile.editStatus.bind(userProfile), 'status-input', e)
+            this.eventCallback(userProfile.editStatus, 'status-input', e)
         );
     }
 
