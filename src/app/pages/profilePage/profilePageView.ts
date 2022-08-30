@@ -35,7 +35,6 @@ class ProfilePageView {
     const element = <HTMLElement>e.target;
     if (element && (<Element>element).classList.contains(className)) {
       callback(e);
-      console.log('dddddd');
     }
   }
 

@@ -1,4 +1,4 @@
-import { getTweetsBySubscriptions, getUser } from '../../services/api';
+import { getTweetsBySubscriptions, getUser, getUserByName } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -29,11 +29,12 @@ class MainPageController {
     const main = document.querySelector('.main') as HTMLElement;
     main.append(postsContainer);
     tweets.tweets.forEach(async (el: IUserTweet) => {
+      const thisUser = await getUserByName(el.user.username);
       const form = template.createPostForm(
         el.user.firstName,
         el.user.lastName,
         el.user.username,
-        currentUser.avatar,
+        thisUser.avatar,
         this.UserProfile.showDate(el.date),
         el.text,
         el._id,

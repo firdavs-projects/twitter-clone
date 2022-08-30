@@ -60,7 +60,7 @@ class UserProfile {
     container?.remove();
     const pageContainer = <HTMLElement>document.querySelector('.page-container');
     const postsContainer = new Node(pageContainer, 'div', 'post-container').node;
-    Node.setChild(postsContainer, 'div', 'post-heading', 'Tweets');
+    Node.setChild(postsContainer, 'h5', 'post-heading', 'Tweets');
     pageContainer.append(postsContainer);
     tweets.tweets.forEach((el: IUserTweet) => {
       const form = template.createPostForm(

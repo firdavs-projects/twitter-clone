@@ -114,12 +114,12 @@ class UserProfileTemplates {
             <div class="post-date">${date}</div>
           </div>
           <div class="post-text">${text}</div>
-          <div class="tweet-img">
-            <img src="${!image ? (image = '#') : image}" alt="" height="300">
-          </div>
           <div class="post-edit">
             <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
             <button class="save-button btn btn-primary btn-sm" data-id="${id}">Save</button>
+          </div>
+          <div class="tweet-img">
+            <img src="${!image ? (image = '#') : image}" alt="">
           </div>
           <div class="post-reactions">
             ${this.createPostReactions(id, likes, comments)}
