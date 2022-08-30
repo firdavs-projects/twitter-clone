@@ -5,7 +5,8 @@ export const routes = {
   registration: `${baseUrl}/auth/register`,
   profile: `${baseUrl}/profile`,
   user: `${baseUrl}/profile/me`,
-  userById: (id: string | number) => baseUrl + '/profile/' + id,
+  popularUsers: `${baseUrl}/profile/top`,
+  userByName: (name: string) => baseUrl + '/profile/' + name,
 
   createTweet: baseUrl + '/tweet',
   allTweets: baseUrl + '/tweet/all',
@@ -15,4 +16,6 @@ export const routes = {
 
   tweetById: (id: string | number) => baseUrl + '/tweet/' + id,
   likeByPostId: (id: string | number) => baseUrl + '/tweet/' + id + '/like',
+
+  subscribe: (id: string) => baseUrl + '/profile/' + id + '/subscribe',
 };

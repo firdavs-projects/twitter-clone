@@ -5,11 +5,15 @@ import {
   deletePost,
   editPost,
   getAllUserTweets,
+  getPopularUsers,
   getTweetById,
   getUser,
+  getUserByName,
   saveProfileInfo,
+  subscribe,
 } from '../../services/api';
-import { IUserTweet } from '../../services/types';
+import { ApiMethods } from '../../services/constants';
+import { IUserInfo, IUserTweet, TLike } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
 
@@ -21,13 +25,14 @@ class UserProfile {
 
   constructor() {
     this.rootNode = document.createElement('main');
-    this.rootNode.className = 'user-profile';
+    this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
   }
 
   public async showPage(): Promise<void> {
-    this.rootNode.innerHTML = '';
+    this.rootNode.innerHTML = template.createStructure();
     await this.showUser();
     await this.showPosts();
+    await this.showPopularUsers();
     this.modal = new bootstrap.Modal(<HTMLElement>document.getElementById('editBackdrop'));
   }
 
@@ -35,14 +40,16 @@ class UserProfile {
     const container = document.querySelector('.user-container');
     container?.remove();
     const data = await getUser();
-    this.rootNode.innerHTML += template.createUser(
+    (<HTMLElement>document.querySelector('.page-container')).innerHTML += template.createUser(
       data.firstName,
       data.lastName,
       data.username,
       data._id,
       this.showDate(data.date),
       data.status || 'Change your status...',
-      data.avatar
+      data.avatar,
+      data.subscriptions.length,
+      data.followers.length
     );
   }
 
@@ -51,9 +58,10 @@ class UserProfile {
     const tweets = await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
-    const postsContainer = new Node(this.rootNode, 'div', 'post-container').node;
+    const pageContainer = <HTMLElement>document.querySelector('.page-container');
+    const postsContainer = new Node(pageContainer, 'div', 'post-container').node;
     Node.setChild(postsContainer, 'div', 'post-heading', 'Tweets');
-    this.rootNode.append(postsContainer);
+    pageContainer.append(postsContainer);
     tweets.tweets.forEach((el: IUserTweet) => {
       const form = template.createPostForm(
         user.firstName,
@@ -64,12 +72,13 @@ class UserProfile {
         el.text,
         el._id,
         el.likes.length !== 0 ? el.likes.length.toString() : '',
-        el.tweets.length !== 0 ? el.tweets.length.toString() : ''
+        el.tweets.length !== 0 ? el.tweets.length.toString() : '',
+        el.image
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
       const likeImg = post.querySelector('.like-image') as HTMLElement;
-      if (el.likes.includes(user._id)) {
+      if (el.likes.some((like: TLike) => like._id === user._id)) {
         likeImg.classList.add('active');
       }
     });
@@ -81,6 +90,24 @@ class UserProfile {
     return dateNow - postDate.getTime() < 8.64e7
       ? `${('0' + (postDate.getHours() + 1)).slice(-2)}:${('0' + (postDate.getMinutes() + 1)).slice(-2)}`
       : `${postDate.getDate()}.${('0' + (postDate.getMonth() + 1)).slice(-2)}.${postDate.getFullYear()}`;
+  }
+
+  public async showPopularUsers() {
+    const popularUsers = await getPopularUsers();
+    const data = await getUser();
+    const container = document.querySelector('.popular-user-container') as HTMLElement;
+    container.innerHTML = '';
+    popularUsers.forEach(async (el: IUserInfo) => {
+      const user = await getUserByName(el.username);
+      container.innerHTML += template.createFollower(
+        el.firstName,
+        el.lastName,
+        el.username,
+        el._id,
+        user.avatar,
+        data.subscriptions.some((element: TLike) => element._id === el._id)
+      );
+    });
   }
 
   public async editPost(e: Event) {
@@ -128,10 +155,13 @@ class UserProfile {
     }
     if (button.classList.contains('save-profile-button')) {
       if (inputArr.some((el) => !el.checkValidity())) {
-        (<HTMLElement>inputName.closest('.modal-body')).classList.add('was-validated');
+        (<HTMLElement>inputName.closest('.edit-body')).classList.add('was-validated');
       } else {
         (this.modal as bootstrap.Modal).toggle();
-        const formData = new FormData(<HTMLFormElement>document.querySelector('.modal-body'));
+        const formData = new FormData(<HTMLFormElement>document.querySelector('.edit-body')) as FormData;
+        if ((formData.get('file') as File).name === '') {
+          formData.delete('file');
+        }
         await saveProfileInfo(formData);
         this.showPage();
       }
@@ -145,14 +175,14 @@ class UserProfile {
     const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
     const postForm = document.getElementById(id) as HTMLElement;
     const likeCounter = postForm.querySelector('.like-counter') as HTMLElement;
-    if (tweet.tweet.likes.includes(user._id)) {
+    if (tweet.tweet.likes.some((like: TLike) => like._id === user._id)) {
+      await deleteLike(id);
       likeImg.classList.remove('active');
-      deleteLike(id);
       const newCounter = (Number(<string>likeCounter.innerHTML) - 1).toString();
       likeCounter.innerHTML = newCounter !== '0' ? newCounter : '';
     } else {
+      await addLike(id);
       likeImg.classList.add('active');
-      addLike(id);
       likeCounter.innerHTML = (Number(<string>likeCounter.innerHTML) + 1).toString();
     }
   }
@@ -174,6 +204,56 @@ class UserProfile {
         await saveProfileInfo(formData);
       } else {
         container.classList.add('was-validated');
+      }
+    }
+  }
+
+  public async showFollowers(e: Event) {
+    const user = await getUser();
+    const type = (<HTMLElement>e.target).dataset.follows as string;
+    const follows = document.querySelector('.follows-container') as HTMLElement;
+    const switchBtns = document.querySelectorAll('.follow-button') as NodeListOf<HTMLElement>;
+    switchBtns.forEach((btn) =>
+      btn.dataset.follows === type ? btn.classList.add('active') : btn.classList.remove('active')
+    );
+    follows.innerHTML = '';
+    user[type].forEach(async (el: TLike) => {
+      const followUser = await getUserByName(el.username);
+      follows.innerHTML += template.createFollower(
+        el.firstName,
+        el.lastName,
+        el.username,
+        el._id,
+        followUser.avatar,
+        followUser.followers.some((element: TLike) => user._id === element._id)
+      );
+    });
+  }
+
+  public async toggleFollow(e: Event) {
+    const button = <HTMLElement>e.target;
+    const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
+    const subscribeCounter = document.querySelector('[data-follows="subscriptions"] span') as HTMLElement;
+    const allButtons = document.querySelectorAll(`[data-id="${id}"] .subscribe-btn`);
+    if (button.classList.contains('active')) {
+      try {
+        await subscribe(id, ApiMethods.DELETE);
+        subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) - 1).toString();
+        allButtons.forEach((element) => {
+          element.classList.remove('active');
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await subscribe(id, ApiMethods.POST);
+        subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) + 1).toString();
+        allButtons.forEach((element) => {
+          element.classList.add('active');
+        });
+      } catch (error) {
+        console.log(error);
       }
     }
   }

@@ -22,6 +22,13 @@ export type TUser = {
   username: string;
 };
 
+export type TLike = {
+  _id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+};
+
 export interface ILoginBody {
   username: string;
   password: string;
@@ -40,7 +47,7 @@ export interface IRegistrationBody {
 
 export interface IUserTweet {
   date: string;
-  likes: string[];
+  likes: TLike[];
   text: string;
   tweets: string[];
   user: {
@@ -60,4 +67,23 @@ export interface IUserData {
   lastName?: string;
   phone?: string;
   status?: string;
+}
+
+export interface IUserInfo {
+  tweets: string[];
+  likedTweets: string[];
+  subscriptions: TLike[];
+  followers: TLike[];
+  _id: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  date: string;
+  __v: number;
+  avatar: string | null;
+  birthDate: string | null;
+  phone: string | null;
+  status: string | null;
 }

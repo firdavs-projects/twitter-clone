@@ -35,6 +35,7 @@ class ProfilePageView {
     const element = <HTMLElement>e.target;
     if (element && (<Element>element).classList.contains(className)) {
       callback(e);
+      console.log('dddddd');
     }
   }
 
@@ -57,9 +58,13 @@ class ProfilePageView {
     document.addEventListener('click', (e: Event) =>
       this.eventCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e)
     );
-    document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.toggleLike, 'like-image', e));
+    document.addEventListener('click', (e: Event) =>
+      this.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e)
+    );
     document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.editStatus, 'user-status', e));
     document.addEventListener('focusout', (e: Event) => this.eventCallback(userProfile.editStatus, 'status-input', e));
+    document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.showFollowers, 'show-follows', e));
+    document.addEventListener('click', (e: Event) => this.eventCallback(userProfile.toggleFollow, 'subscribe-btn', e));
   }
 
   private createFooter(): void {

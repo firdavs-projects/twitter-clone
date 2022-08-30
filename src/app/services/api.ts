@@ -63,10 +63,10 @@ export const getUser = async () => {
   ).json();
 };
 
-export const getUserById = async (id: string) => {
+export const getUserByName = async (name: string) => {
   const token = getLocalStorage();
   return (
-    await fetch(routes.userById(id), {
+    await fetch(routes.userByName(name), {
       method: ApiMethods.GET,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -155,6 +155,30 @@ export const addNewTweet = async (body: FormData) => {
     await fetch(routes.createTweet, {
       method: ApiMethods.POST,
       body: body,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  ).json();
+};
+
+export const getPopularUsers = async () => {
+  const token = getLocalStorage();
+  return (
+    await fetch(routes.popularUsers, {
+      method: ApiMethods.GET,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  ).json();
+};
+
+export const subscribe = async (id: string, method: string) => {
+  const token = getLocalStorage();
+  return (
+    await fetch(routes.subscribe(id), {
+      method: method,
       headers: {
         Authorization: `Bearer ${token}`,
       },

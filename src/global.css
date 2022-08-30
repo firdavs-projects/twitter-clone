@@ -114,7 +114,8 @@
   position: absolute;
   z-index: -1;
 }
-.fileInput + label {
+
+.fileInput+label {
   font-size: 0.9em;
   color: white;
   display: inline-block;
@@ -123,7 +124,8 @@
   width: 100px;
 
 }
-.fileInput+ label::after {
+
+.fileInput+label::after {
   position: absolute;
   /*выдает ошибку*/
   /*content:url('./assets/img/up.png');*/
@@ -131,8 +133,8 @@
   bottom: 0%;
 }
 
-.fileInput:focus + label,
-.fileInput + label:hover {
+.fileInput:focus+label,
+.fileInput+label:hover {
   cursor: pointer;
 }
 
@@ -148,6 +150,10 @@
   align-items: center;
   padding: 20px 0;
   gap: 10px;
+}
+
+.user-profile {
+  margin: 0 auto;
 }
 
 .user-container {
@@ -167,7 +173,8 @@
   width: 60%;
 }
 
-.image-part, .profile-image {
+.image-part,
+.profile-image {
   min-width: 40px;
   height: 40px;
   display: flex;
@@ -238,7 +245,8 @@
   padding: 25px;
 }
 
-.head-part .image-part, .head-part .profile-image {
+.head-part .image-part,
+.head-part .profile-image {
   width: 100px;
   height: 100px;
   border-radius: 50px;
@@ -281,4 +289,79 @@ path {
 
 #new-tweet:hover {
   cursor: pointer;
+}
+
+.follower-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.follower-form .post-data {
+  flex-direction: column;
+  gap: 0;
+}
+
+.change-follows {
+  display: flex;
+  justify-content: space-around;
+}
+
+.follow-button {
+  position: relative;
+  display: flex;
+  width: 50%;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.follow-button.active {
+  font-weight: bold;
+}
+
+.follow-button::after {
+  content: '';
+  position: absolute;
+  background: #0d6efd;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  transition: width .3s ease-in-out
+}
+
+.follow-button.active::after {
+  width: 100%;
+}
+
+.subscribe-btn {
+  width: 80px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.subscribe-btn::before {
+  content: attr(text);
+}
+
+.subscribe-btn.active::before {
+  content: attr(active);
+}
+
+.subscribe-btn.active {
+  background-color: transparent;
+  border: 2px solid rgb(207, 217, 222);
+  color: rgb(15, 20, 25);
+}
+
+.subscribe-btn.active:hover {
+  background-color: rgba(244, 33, 46, 0.1);
+  border-color: rgb(253, 201, 206);
+  color: rgb(244, 33, 46);
+}
+
+.subscribe-btn.active:hover::before {
+  content: attr(hover-active);
 }

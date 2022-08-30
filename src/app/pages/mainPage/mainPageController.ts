@@ -1,4 +1,4 @@
-import { getTweetsBySubscriptions, getUser, getUserById } from '../../services/api';
+import { getTweetsBySubscriptions, getUser } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -33,6 +33,7 @@ class MainPageController {
         el.user.firstName,
         el.user.lastName,
         el.user.username,
+        currentUser.avatar,
         this.UserProfile.showDate(el.date),
         el.text,
         el._id,
@@ -52,7 +53,7 @@ class MainPageController {
 
       const post = postsContainer.lastChild as HTMLElement;
       const likeImg = post.querySelector('.like-image') as HTMLElement;
-      if (el.likes.includes(currentUser._id)) {
+      if (el.likes.some((like) => like._id === currentUser._id)) {
         likeImg.classList.add('active');
       }
     });
