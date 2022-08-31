@@ -143,13 +143,25 @@
 
 /***************start profile  page**************/
 
-.post-container,
-.user-container {
+.post-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
   gap: 10px;
+}
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.user-container.another-user { 
+  flex-direction: row;
 }
 
 .user-profile {
@@ -241,7 +253,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
   padding: 25px;
 }
 
@@ -254,8 +265,11 @@
 }
 
 .user-data {
-  width: 100%;
   padding: 0 0 0 20%;
+}
+
+.user-data.another-user{
+  padding: 0;
 }
 
 .like-image {
@@ -298,6 +312,10 @@ path {
   cursor: pointer;
 }
 
+.popular-users {
+  text-align: center;
+}
+
 .popular-user-container {
   display: flex;
   flex-direction: column;
@@ -311,6 +329,11 @@ path {
   gap: 10px;
   width: 100%;
   max-width: 500px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.follower-form:hover {
+  background-color: #F5F8FA;
 }
 
 .follower-form .post-data {

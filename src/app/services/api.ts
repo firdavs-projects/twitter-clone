@@ -39,6 +39,18 @@ export const getAllUserTweets = async () => {
   ).json();
 };
 
+export const getTweetsByUserId = async (id: string) => {
+  const token = getLocalStorage();
+  return (
+    await fetch(routes.tweetsByUserId(id), {
+      method: ApiMethods.GET,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  ).json();
+};
+
 export const getTweetsBySubscriptions = async () => {
   const token = getLocalStorage();
   return (

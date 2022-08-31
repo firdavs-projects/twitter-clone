@@ -18,15 +18,15 @@ class UserProfileTemplates {
     status: string,
     image: string | null,
     following: number,
-    followers: number
+    followers: number,
+    isMe: boolean
   ) => {
-    return `<div class="user-container container" id="${id}">
+    return `<div class="user-container container ${isMe ? '' : 'another-user'}" id="${id}">
         <div class="head-part">
           ${this.profileImage(image, name)}
-          <button class="edit-user-button btn btn-primary btn-sm" data-id="${id}" data-bs-target="#editBackdrop">Edit profile</button>
-          ${this.createModalForm(this.editBody(), 'editBackdrop')}
-          </div>
-        <div class="user-data">
+          ${this.editProfileOption(isMe, id)}
+        </div>
+        <div class="user-data ${isMe ? '' : 'another-user'}">
           <div class="user-name">${name} ${lastName}</div>
           <div class="user-status-container">
             ${this.statusSVG()}
@@ -47,10 +47,18 @@ class UserProfileTemplates {
         ${this.createFollowsForm()}`;
   };
 
-  public profileImage(imgage: string | null, name: string) {
-    if (imgage) {
+  public editProfileOption(isMe: boolean, id: string) {
+    if (isMe) {
+      return `<button class="edit-user-button btn btn-primary btn-sm" data-id="${id}" data-bs-target="#editBackdrop">Edit profile</button>
+        ${this.createModalForm(this.editBody(), 'editBackdrop')}`;
+    }
+    return ``;
+  }
+
+  public profileImage(image: string | null, name: string) {
+    if (image) {
       return `<div class="image-part">
-              <img src="${imgage}" alt="profile image" class="profile-image">
+              <img src="${image}" alt="profile image" class="profile-image">
             </div>`;
     }
     return `<div class="image-part">${name.slice(0, 1).toUpperCase()}</div>`;
@@ -103,7 +111,8 @@ class UserProfileTemplates {
     id: string,
     likes?: string,
     comments?: string,
-    image?: string | null
+    image?: string | null,
+    isMe?: boolean
   ): string => {
     return `<div class="post-form" id="${id}">
         ${this.profileImage(avatar, name)}
@@ -125,16 +134,20 @@ class UserProfileTemplates {
             ${this.createPostReactions(id, likes, comments)}
           </div>
         </div>
-        <div class="dropdown">
-          <div class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-            data-bs-toggle="dropdown" aria-expanded="false">
-          </div>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li class="dropdown-item delete-post" data-id="${id}">Delete</li>
-            <li class="dropdown-item edit-post" data-id="${id}">Edit</li>
-          </ul>
-        </div>
+        ${isMe ? this.postDropdown(id) : ''}
       </div>`;
+  };
+
+  public postDropdown = (id: string) => {
+    return `<div class="dropdown">
+    <div class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+      data-bs-toggle="dropdown" aria-expanded="false">
+    </div>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <li class="dropdown-item delete-post" data-id="${id}">Delete</li>
+      <li class="dropdown-item edit-post" data-id="${id}">Edit</li>
+    </ul>
+  </div>`;
   };
 
   public likeSVG = (id: string) => {
@@ -185,20 +198,20 @@ class UserProfileTemplates {
   public createFollower = (
     name: string,
     surname: string,
-    login: string,
+    username: string,
     id: string,
     avatar: string,
     follow: boolean
   ): string => {
-    return `<div class="follower-form" data-id="${id}">
+    return `<div class="follower-form" data-id="${id}" data-name="${username}">
         ${this.profileImage(avatar, name)}
         <div class="post-data">
           <div class="user-name">${name} ${surname}</div>
-          <div class="user-login">@${login}</div>
+          <div class="user-login">@${username}</div>
         </div>
         <button type="button" class="btn btn-primary btn-sm subscribe-btn ${
           follow ? 'active' : ''
-        }" <button text="Follow" active="Following" hover-active="Unfollow"></button>
+        }" text="Follow" active="Following" hover-active="Unfollow"></button>
       </div>`;
   };
 }

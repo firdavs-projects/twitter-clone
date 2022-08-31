@@ -7,6 +7,7 @@ import {
   getAllUserTweets,
   getPopularUsers,
   getTweetById,
+  getTweetsByUserId,
   getUser,
   getUserByName,
   saveProfileInfo,
@@ -22,24 +23,29 @@ const template = new UserProfileTemplates();
 class UserProfile {
   public rootNode: HTMLElement;
   public modal: bootstrap.Modal | undefined;
+  public myId: string;
+  static counter = 0;
 
   constructor() {
     this.rootNode = document.createElement('main');
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
+    this.myId = '';
   }
 
-  public async showPage(): Promise<void> {
+  public async showPage(username?: string): Promise<void> {
     this.rootNode.innerHTML = template.createStructure();
-    await this.showUser();
-    await this.showPosts();
+    await this.showUser(username);
+    await this.showPosts(username);
     await this.showPopularUsers();
-    this.modal = new bootstrap.Modal(<HTMLElement>document.getElementById('editBackdrop'));
+    if (!username) {
+      this.modal = new bootstrap.Modal(<HTMLElement>document.getElementById('editBackdrop'));
+    }
   }
 
-  public async showUser(): Promise<void> {
+  public async showUser(username?: string): Promise<void> {
     const container = document.querySelector('.user-container');
     container?.remove();
-    const data = await getUser();
+    const data = username ? await getUserByName(username) : await getUser();
     (<HTMLElement>document.querySelector('.page-container')).innerHTML += template.createUser(
       data.firstName,
       data.lastName,
@@ -49,13 +55,18 @@ class UserProfile {
       data.status || 'Change your status...',
       data.avatar,
       data.subscriptions.length,
-      data.followers.length
+      data.followers.length,
+      !username
     );
   }
 
-  public async showPosts(): Promise<void> {
-    const user = await getUser();
-    const tweets = await getAllUserTweets();
+  public async showPosts(username?: string): Promise<void> {
+    const user = username ? await getUserByName(username) : await getUser();
+    let me: IUserInfo;
+    if (username) {
+      me = await getUser();
+    }
+    const tweets = username ? await getTweetsByUserId(user._id) : await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
     const pageContainer = <HTMLElement>document.querySelector('.page-container');
@@ -73,12 +84,13 @@ class UserProfile {
         el._id,
         el.likes.length !== 0 ? el.likes.length.toString() : '',
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
-        el.image
+        el.image,
+        !username
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
       const likeImg = post.querySelector('.like-image') as HTMLElement;
-      if (el.likes.some((like: TLike) => like._id === user._id)) {
+      if (el.likes.some((like: TLike) => like._id === (username ? me._id : user._id))) {
         likeImg.classList.add('active');
       }
     });
@@ -95,6 +107,7 @@ class UserProfile {
   public async showPopularUsers() {
     const popularUsers = await getPopularUsers();
     const data = await getUser();
+    this.myId = data._id;
     const container = document.querySelector('.popular-user-container') as HTMLElement;
     container.innerHTML = '';
     popularUsers.forEach(async (el: IUserInfo) => {
@@ -208,9 +221,14 @@ class UserProfile {
     }
   }
 
-  public async showFollowers(e: Event) {
-    const user = await getUser();
+  public async showFollowers(e: Event, username?: string) {
+    const isModalActive = (<HTMLElement>document.querySelector('#exampleModal')).classList.contains('show');
+    const activeFollowBtn = document.querySelector('.follow-button.active') as HTMLElement;
     const type = (<HTMLElement>e.target).dataset.follows as string;
+    if (isModalActive && activeFollowBtn.dataset.follows === type) {
+      return;
+    }
+    const user = username ? await getUserByName(username) : await getUser();
     const follows = document.querySelector('.follows-container') as HTMLElement;
     const switchBtns = document.querySelectorAll('.follow-button') as NodeListOf<HTMLElement>;
     switchBtns.forEach((btn) =>
@@ -225,36 +243,53 @@ class UserProfile {
         el.username,
         el._id,
         followUser.avatar,
-        followUser.followers.some((element: TLike) => user._id === element._id)
+        followUser.followers.some((element: TLike) => element._id === (username ? this.myId : user._id))
       );
     });
   }
 
-  public async toggleFollow(e: Event) {
+  public async toggleFollow(e: Event, username?: string) {
     const button = <HTMLElement>e.target;
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     const subscribeCounter = document.querySelector('[data-follows="subscriptions"] span') as HTMLElement;
     const allButtons = document.querySelectorAll(`[data-id="${id}"] .subscribe-btn`);
-    if (button.classList.contains('active')) {
+    if (button.classList.contains('active') && id !== this.myId) {
       try {
         await subscribe(id, ApiMethods.DELETE);
-        subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) - 1).toString();
+        if (!username) {
+          subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) - 1).toString();
+        }
         allButtons.forEach((element) => {
           element.classList.remove('active');
         });
       } catch (error) {
         console.log(error);
       }
-    } else {
+    } else if (id !== this.myId) {
       try {
         await subscribe(id, ApiMethods.POST);
-        subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) + 1).toString();
+        if (!username) {
+          subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) + 1).toString();
+        }
         allButtons.forEach((element) => {
           element.classList.add('active');
         });
       } catch (error) {
         console.log(error);
       }
+    }
+  }
+  public async goAnotherUserPage(e: Event) {
+    const button = <HTMLElement>e.target;
+    const name = (<HTMLElement>button.closest('.follower-form')).dataset.name as string;
+    const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
+    if (!button.classList.contains('subscribe-btn')) {
+      if (id !== this.myId) {
+        window.location.href = `#/profile/${name}`;
+      } else {
+        window.location.href = `#/profile/`;
+      }
+      document.querySelector('.modal-backdrop')?.remove();
     }
   }
 }
