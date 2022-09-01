@@ -20,7 +20,7 @@ export const showModal = () => {
 
 export const addTweet = () => {
   const btnTweet = document.querySelector('.btn-tweet') as HTMLButtonElement;
-  btnTweet.addEventListener('click', async () => {
+  const addTweetListener = async () => {
     console.log('Post tweet...');
 
     const formData = new FormData();
@@ -37,5 +37,7 @@ export const addTweet = () => {
     } catch (error) {
       console.log(error);
     }
-  });
+  }
+  btnTweet.removeEventListener('click', addTweetListener);
+  btnTweet.addEventListener('click', addTweetListener);
 };

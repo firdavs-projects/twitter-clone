@@ -27,6 +27,7 @@ export type TLike = {
   username: string;
   firstName: string;
   lastName: string;
+  avatar: string | null;
 };
 
 export interface ILoginBody {
@@ -55,6 +56,7 @@ export interface IUserTweet {
     username: string;
     firstName: string;
     lastName: string;
+    avatar: string;
   };
   __v: number;
   _id: string;

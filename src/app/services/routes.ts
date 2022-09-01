@@ -13,6 +13,7 @@ export const routes = {
   tweetsBySubscriptions: baseUrl + '/tweet/subscriptions',
   myTweets: baseUrl + '/tweet',
   tweetsByUserId: (id: string | number) => baseUrl + '/tweet/user/' + id,
+  tweetsByUsername: (username: string | number) => baseUrl + '/tweet/user/' + username,
 
   tweetById: (id: string | number) => baseUrl + '/tweet/' + id,
   likeByPostId: (id: string | number) => baseUrl + '/tweet/' + id + '/like',
