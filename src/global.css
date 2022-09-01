@@ -72,7 +72,7 @@
 
 /***************end auth page**************/
 
-/***************start modal page**************/
+/***************start new tweet form**************/
 
 .new-tweet-form {
   display: flex;
@@ -95,6 +95,7 @@
   gap: 10px;
   width: 30vw;
   margin: 0 auto;
+  padding: 8px;
 }
 
 .btn-tweet {
@@ -127,10 +128,10 @@
 
 .fileInput+label::after {
   position: absolute;
-  /*выдает ошибку*/
-  /*content:url('./assets/img/up.png');*/
+  content: url('./assets/img/up.png');
   left: 73%;
   bottom: 0%;
+  
 }
 
 .fileInput:focus+label,
@@ -138,7 +139,18 @@
   cursor: pointer;
 }
 
-/***************end main modal**************/
+
+.edit-tweet-form {
+  width: 100%;
+  border: 1px solid red;
+}
+
+.edit-tweet-form .fileInput+label::after {
+  left: 105%;
+  bottom: -45%;
+}
+
+/***************end  new tweet form**************/
 
 
 /***************start profile  page**************/
@@ -160,7 +172,7 @@
   gap: 10px;
 }
 
-.user-container.another-user { 
+.user-container.another-user {
   flex-direction: row;
 }
 
@@ -268,7 +280,7 @@
   padding: 0 0 0 20%;
 }
 
-.user-data.another-user{
+.user-data.another-user {
   padding: 0;
 }
 
@@ -303,7 +315,7 @@ path {
   margin-bottom: 10px;
 }
 
-.tweet-img img{
+.tweet-img img {
   max-width: 100%;
   max-height: 400px;
 }
@@ -332,6 +344,7 @@ path {
   cursor: pointer;
   transition: 0.3s;
 }
+
 .follower-form:hover {
   background-color: #F5F8FA;
 }
@@ -411,4 +424,11 @@ path {
 
 .show-follows:not(.follow-button):hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 726px) {
+  .fileInput+label::after {
+    left: 70%;
+    bottom: -45%;
+  }
 }

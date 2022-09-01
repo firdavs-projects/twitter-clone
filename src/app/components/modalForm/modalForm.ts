@@ -4,20 +4,6 @@ export const showModal = () => {
   console.log('show modal');
 };
 
-// export const createModalForm = () => {
-//     const newTweetForm = document.querySelector('.new-tweet-form') as HTMLElement;
-//     newTweetForm.innerHTML = `
-//         <form id="formElem">
-//             <textarea class="form-control" id="tweet-textarea" rows="3" placeholder="What's happening?"></textarea>
-//             <input class="form-control" type="file" id="tweet-file">
-//         </form>
-
-//         <button type="button" class="btn btn-primary btn-tweet">Tweet</button>
-//         <button type="button" class="close btn-close">
-//     `;
-//     addTweet();
-// }
-
 export const addTweet = () => {
   const btnTweet = document.querySelector('.btn-tweet') as HTMLButtonElement;
   const addTweetListener = async () => {
