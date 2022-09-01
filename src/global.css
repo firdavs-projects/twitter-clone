@@ -142,7 +142,6 @@
 
 .edit-tweet-form {
   width: 100%;
-  border: 1px solid red;
 }
 
 .edit-tweet-form .fileInput+label::after {
