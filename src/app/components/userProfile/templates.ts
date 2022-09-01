@@ -126,7 +126,11 @@ class UserProfileTemplates {
           </div>
           <div class="post-text">${text}</div>
           <div class="post-edit">
-            <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
+            <div class="edit-tweet-form">
+              <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
+              <input class="fileInput" type="file" id="tweet-file-download">
+              <label for="tweet-file-download">Change image</label>
+              </div>
             <button class="save-button btn btn-primary btn-sm" data-id="${id}">Save</button>
           </div>
           <div class="tweet-img">

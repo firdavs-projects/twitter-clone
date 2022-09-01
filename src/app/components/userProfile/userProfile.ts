@@ -135,9 +135,11 @@ class UserProfile {
       if (input.checkValidity()) {
         post.classList.remove('edit');
         const text = input.value as string;
+        const file = (document.getElementById('tweet-file-download') as HTMLInputElement).files![0];
         textEl.textContent = text;
         const formData = new FormData();
         formData.append('text', text);
+        formData.append('file', file);
         await editPost(id, formData);
       } else {
         (<HTMLElement>input.parentElement).classList.add('was-validated');
