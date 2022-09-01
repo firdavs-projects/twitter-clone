@@ -1,65 +1,69 @@
-import { getTweetsBySubscriptions, getUser, getUserById } from '../../services/api';
-import { IUserTweet } from '../../services/types';
+import {getTweetsBySubscriptions, getUser} from '../../services/api';
+import {IUserTweet} from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
+import {addEventListener, removeAllEventListeners} from "../../services/eventListener";
 const template = new UserProfileTemplates();
 
 class MainPageController {
-    private view: MainPageView;
-    public UserProfile: UserProfile;
+  private view: MainPageView;
+  public userProfile: UserProfile;
 
-    constructor() {
-        this.view = new MainPageView();
-        this.UserProfile = new UserProfile();
-    }
+  constructor() {
+    this.view = new MainPageView();
+    this.userProfile = new UserProfile();
+  }
 
-    public async createPage() {
-        this.view.render();
-        await this.showTweetsFeed();
-    }
-    private async showTweetsFeed(): Promise<void> {
-        const currentUser = await getUser();
-        const tweets = await getTweetsBySubscriptions();
-        console.log(tweets)
-        const container = document.querySelector('.post-container');
-        container?.remove();
-        const postsContainer = document.createElement('div');
-        postsContainer.classList.add('post-container');
-        const main = document.querySelector('.main') as HTMLElement;
-        main.append(postsContainer);
-        tweets.tweets.forEach(async (el: IUserTweet) => {
-            const form = template.createPostForm(
-                el.user.firstName,
-                el.user.lastName,
-                el.user.username,
-                this.UserProfile.showDate(el.date),
-                el.text,
-                el._id,
-                el.likes.length !== 0 ? el.likes.length.toString() : '',
-                el.tweets.length !== 0 ? el.tweets.length.toString() : '',
-                el.image
-            );
-            postsContainer.innerHTML += form;
+  public async createPage() {
+    this.view.render();
+    await this.showTweetsFeed();
+  }
+  private async showTweetsFeed(): Promise<void> {
+    const currentUser = this.userProfile.me ?? await getUser();
+    const tweets = await getTweetsBySubscriptions();
+    const container = document.querySelector('.post-container');
+    container?.remove();
+    const postsContainer = document.createElement('div');
+    postsContainer.classList.add('post-container');
+    const main = document.querySelector('.main') as HTMLElement;
+    main.append(postsContainer);
+    tweets.tweets.forEach((el: IUserTweet) => {
+      // const thisUser = await getUserByName(el.user.username);
+      const form = template.createPostForm(
+        el.user.firstName,
+        el.user.lastName,
+        el.user.username,
+        el.user.avatar,
+        this.userProfile.showDate(el.date),
+        el.text,
+        el._id,
+        el.likes.length !== 0 ? el.likes.length.toString() : '',
+        el.tweets.length !== 0 ? el.tweets.length.toString() : '',
+        el.image,
+        el.user._id === currentUser?._id,
+        currentUser?.likedTweets.includes(el._id),
+      );
+      postsContainer.innerHTML += form;
 
-            const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
-            likeImgs.forEach((img) => {
-                img.addEventListener('click', (event) => {
-                    this.UserProfile.toggleLike(event);
-                    console.log((event.target as HTMLElement).dataset.id)
-                })
-            })
+      const toggleLike = (event: Event) => {
+        this.userProfile.toggleLike(event);
+      }
 
-            const post = postsContainer.lastChild as HTMLElement;
-            const likeImg = post.querySelector('.like-image') as HTMLElement;
-            if (el.likes.includes(currentUser._id)) {
-                likeImg.classList.add('active');
-            }
-        });
+      const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
 
-        
+      removeAllEventListeners();
+      likeImgs.forEach((img: Element, i) => {
+        addEventListener(img, 'click', toggleLike);
+      });
 
-    }
+      const post = postsContainer.lastChild as HTMLElement;
+      const likeImg = post.querySelector('.like-image') as HTMLElement;
+      if (el.likes.some((like) => like._id === currentUser?._id)) {
+        likeImg.classList.add('active');
+      }
+    });
+  }
 }
 
 export default MainPageController;

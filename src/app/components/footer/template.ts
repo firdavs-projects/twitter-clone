@@ -1,5 +1,5 @@
 export default function footerTemplate(): string {
-    return `
+  return `
 <footer class="border-top mt-4" style="z-index: 100">
   <div class="container d-flex flex-wrap justify-content-between align-items-center py-3">
     <p class="col-md-4 mb-0 text-muted p-2">© 2022 Twitter Clone & RS School</p>

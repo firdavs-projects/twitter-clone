@@ -1,5 +1,5 @@
 export default {
-    cloudName: '',
-    apiKey: '',
-    apiSecret: '',
+  cloudName: '',
+  apiKey: '',
+  apiSecret: '',
 };

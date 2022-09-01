@@ -1,5 +1,5 @@
 export default function headerTemplate(): string {
-    return `
+  return `
     <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">

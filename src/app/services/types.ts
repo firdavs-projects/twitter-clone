@@ -1,63 +1,91 @@
 export interface IApp {
-    start(): void;
+  start(): void;
 }
 
 export type RouteOption = {
-    path: string;
-    callback: () => void;
-    isAuth: boolean | null;
-    withId: boolean
+  path: string;
+  callback: () => void;
+  isAuth: boolean | null;
+  withId: boolean;
 };
 
 export type TAuthResult = {
-    token: string;
-    userId: string;
+  token: string;
+  userId: string;
 };
 
 export type TUser = {
-    firstName?: string;
-    lastName?: string;
-    phone?: string;
-    avatar?: string;
-    username: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  avatar?: string;
+  username: string;
+};
+
+export type TLike = {
+  _id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  avatar: string | null;
 };
 
 export interface ILoginBody {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 export interface IEditBody {
-    text: string;
+  text: string;
 }
 
 export interface IRegistrationBody {
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface IUserTweet {
-    date: string;
-    likes: string[];
-    text: string;
-    tweets: string[];
-    user: {
-        _id: string;
-        username: string;
-        firstName: string;
-        lastName: string;
-    };
-    __v: number;
+  date: string;
+  likes: TLike[];
+  text: string;
+  tweets: string[];
+  user: {
     _id: string;
-    image: string | null;
+    username: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+  };
+  __v: number;
+  _id: string;
+  image: string | null;
 }
 
 export interface IUserData {
-    username?: string;
-    firstName?: string;
-    lastName?: string;
-    phone?: string;
-    status?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  status?: string;
+}
+
+export interface IUserInfo {
+  tweets: string[];
+  likedTweets: string[];
+  subscriptions: TLike[];
+  followers: TLike[];
+  _id: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  date: string;
+  __v: number;
+  avatar: string | null;
+  birthDate: string | null;
+  phone: string | null;
+  status: string | null;
 }
