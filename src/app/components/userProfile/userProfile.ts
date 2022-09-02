@@ -23,18 +23,19 @@ class UserProfile {
   public rootNode: HTMLElement;
   public modal: bootstrap.Modal | undefined;
   public myId: string;
-  public me: IUserInfo | undefined;
+  private _me: IUserInfo | undefined;
   static counter = 0;
 
   constructor() {
     this.rootNode = document.createElement('main');
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
     this.myId = '';
-    this.getMe().then();
   }
 
-  public async getMe(): Promise<void> {
-    this.me = await getUser() as IUserInfo;
+  async me(): Promise<IUserInfo> {
+    if (this._me) return this._me;
+    this._me = await getUser();
+    return this._me
   }
 
   public async showPage(username?: string): Promise<void> {
@@ -50,7 +51,7 @@ class UserProfile {
   public async showUser(username?: string): Promise<void> {
     const container = document.querySelector('.user-container');
     container?.remove();
-    const data = username ? await getUserByName(username) : (this.me ?? await getUser());
+    const data = username ? await getUserByName(username) : await this.me();
     (<HTMLElement>document.querySelector('.page-container')).innerHTML += template.createUser(
       data.firstName,
       data.lastName,
@@ -66,6 +67,7 @@ class UserProfile {
   }
 
   public async showPosts(username?: string): Promise<void> {
+    const me = await this.me()
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
@@ -86,12 +88,12 @@ class UserProfile {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         !username,
-        this.me?.likedTweets.includes(el._id),
+          me.likedTweets.includes(el._id),
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
       const likeImg = post.querySelector('.like-image') as HTMLElement;
-      if (this.me?.likedTweets.includes(el._id)) {
+      if (me.likedTweets.includes(el._id)) {
         likeImg.classList.add('active');
       }
     });
@@ -106,6 +108,7 @@ class UserProfile {
   }
 
   public async showPopularUsers() {
+    const me = await this.me()
     const popularUsers = await getPopularUsers();
     const container = document.querySelector('.popular-user-container') as HTMLElement;
     container.innerHTML = '';
@@ -116,8 +119,8 @@ class UserProfile {
         el.username,
         el._id,
         el.avatar || '',
-        !!this.me?.subscriptions.some((element: TLike) => element._id === el._id),
-        el._id === this.me?._id
+        me.subscriptions.some((element: TLike) => element._id === el._id),
+        el._id === me._id
       );
     });
   }
@@ -153,7 +156,7 @@ class UserProfile {
   }
 
   public async editProfile(e: Event): Promise<void> {
-    const user = this.me;
+    const user = await this.me();
     const button = <HTMLElement>e.target;
     const inputUsername = document.querySelector('.edit-username') as HTMLInputElement;
     const inputName = document.querySelector('.edit-name') as HTMLInputElement;
@@ -183,20 +186,21 @@ class UserProfile {
   }
 
   public async toggleLike(e: Event) {
+    const me = await this.me()
     const id = (<HTMLElement>e.target).dataset.id as string;
     const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
     const postForm = document.getElementById(id) as HTMLElement;
     const likeCounter = postForm.querySelector('.like-counter') as HTMLElement;
-    if (this.me?.likedTweets.includes(id)) {
+    if (me.likedTweets.includes(id)) {
       likeImg.classList.remove('active');
       const newCounter = (Number(<string>likeCounter.innerHTML) - 1).toString();
       likeCounter.innerHTML = newCounter !== '0' ? newCounter : '';
-      this.me.likedTweets = this.me?.likedTweets.filter(i => i !== id);
+      this._me ? this._me.likedTweets = this._me?.likedTweets.filter(i => i !== id) : null;
       await deleteLike(id);
     } else {
       likeImg.classList.add('active');
       likeCounter.innerHTML = (Number(<string>likeCounter.innerHTML) + 1).toString();
-      this.me?.likedTweets.push(id);
+      this._me ? this._me.likedTweets.push(id) : null;
       await addLike(id);
     }
   }
@@ -230,7 +234,7 @@ class UserProfile {
     if (isModalActive && activeFollowBtn.dataset.follows === type) {
       return;
     }
-    const me = this.me;
+    const me = await this.me();
     const user = username ? await getUserByName(username) : me as IUserInfo;
     const follows = document.querySelector('.follows-container') as HTMLElement;
     const switchBtns = document.querySelectorAll('.follow-button') as NodeListOf<HTMLElement>;
@@ -238,7 +242,7 @@ class UserProfile {
       btn.dataset.follows === type ? btn.classList.add('active') : btn.classList.remove('active')
     );
     follows.innerHTML = '';
-    user[type].forEach((el: TLike) => {
+    (user[type as keyof IUserInfo] as TLike[])?.forEach((el: TLike) => {
       follows.innerHTML += template.createFollower(
         el.firstName,
         el.lastName,
@@ -284,6 +288,7 @@ class UserProfile {
   }
   public async goAnotherUserPage(e: Event) {
     const button = <HTMLElement>e.target;
+    document.body.removeAttribute('style');
     const name = (<HTMLElement>button.closest('.follower-form')).dataset.name as string;
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     if (!button.classList.contains('subscribe-btn')) {

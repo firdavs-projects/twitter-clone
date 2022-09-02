@@ -1,4 +1,4 @@
-const _eventHandlers: ({
+let _eventHandlers: ({
     event: string,
     node: Node,
     capture: boolean,
@@ -12,6 +12,7 @@ export const addEventListener = (node: Node, event: string, handler: EventListen
 
 export const removeAllEventListeners = () => {
     _eventHandlers.forEach(l => l.node.removeEventListener(l.event, l.handler, l.capture))
+    _eventHandlers = [];
 }
 
 

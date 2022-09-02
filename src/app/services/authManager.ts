@@ -15,15 +15,14 @@ export class AuthManager {
     this.isLogin = isLogin;
   }
 
-  public navigate(path?: string | undefined, isLogin?: boolean): void {
-    this.checkAuth(isLogin);
+  public navigate(path?: string | undefined): void {
+    this.checkAuth();
     if (path) {
       this.router.navigate(path);
     }
   }
 
-  private checkAuth(isLogin?: boolean): void {
-    // TODO check here token
+  private checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLogin = !!token;
     this.setRouter();
