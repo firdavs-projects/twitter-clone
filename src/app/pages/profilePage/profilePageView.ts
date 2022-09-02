@@ -1,7 +1,7 @@
 import auth from '../../components/auth/auth';
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
-import { addTweet } from '../../components/createTweetForm/modalForm';
+import { addTweet } from '../../components/createTweetForm/tweetForm';
 import UserProfile from '../../components/userProfile/userProfile';
 import Router from '../../router/router';
 import { logout } from '../../services/api';
