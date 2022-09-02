@@ -1,4 +1,4 @@
-import {getTweetsBySubscriptions, getUser} from '../../services/api';
+import {getTweetsBySubscriptions} from '../../services/api';
 import {IUserTweet} from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -20,7 +20,7 @@ class MainPageController {
     await this.showTweetsFeed();
   }
   private async showTweetsFeed(): Promise<void> {
-    const currentUser = this.userProfile.me ?? await getUser();
+    const currentUser = await this.userProfile.me();
     const tweets = await getTweetsBySubscriptions();
     const container = document.querySelector('.post-container');
     container?.remove();

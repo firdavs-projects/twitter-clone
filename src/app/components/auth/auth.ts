@@ -50,7 +50,7 @@ class Auth {
           if (data.token) {
             setLocalStorage(data.token);
             console.log(`user has been created`);
-            authManager.navigate('/', true);
+            authManager.navigate('/');
           } else {
             console.log('Incorrect data');
             errorElement ? errorElement.remove() : null;
@@ -70,7 +70,7 @@ class Auth {
           const data = await getLogin({ username: inputUserName.value, password: inputPassword.value });
           if (data.token) {
             setLocalStorage(data.token);
-            authManager.navigate('/', true);
+            authManager.navigate('/');
             console.log(`login successful`);
           } else {
             console.log(`Incorrect username or password`);
@@ -86,8 +86,9 @@ class Auth {
   }
   public async logout() {
     localStorage.removeItem('token'); // remove on logout
-    authManager.navigate('/login', false);
+    authManager.navigate('/login');
     console.log('logout...');
+    window.location.reload();
   }
 }
 
