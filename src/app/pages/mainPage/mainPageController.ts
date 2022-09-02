@@ -51,11 +51,20 @@ class MainPageController {
         this.userProfile.toggleLike(event);
       };
 
+      const goTweetPage = (event: Event) => {
+        this.userProfile.goTweetPage(event);
+      };
+
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
+      const postForms = document.querySelectorAll('.post-form') as NodeListOf<Element>;
 
       removeAllEventListeners();
-      likeImgs.forEach((img: Element, i) => {
+      likeImgs.forEach((img: Element) => {
         addEventListener(img, 'click', toggleLike);
+      });
+
+      postForms.forEach((form: Element) => {
+        addEventListener(form, 'click', goTweetPage);
       });
 
       const post = postsContainer.lastChild as HTMLElement;

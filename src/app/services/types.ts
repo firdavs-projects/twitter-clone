@@ -50,7 +50,7 @@ export interface IUserTweet {
   date: string;
   likes: TLike[];
   text: string;
-  tweets: string[];
+  tweets: IUserTweet[];
   user: {
     _id: string;
     username: string;

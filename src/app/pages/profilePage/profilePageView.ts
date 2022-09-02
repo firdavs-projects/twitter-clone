@@ -62,7 +62,7 @@ class ProfilePageView {
           ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e, username),
         (e: Event) =>
           ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e),
-        (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'comment-image', e),
+        (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'post-form', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));
@@ -84,7 +84,7 @@ class ProfilePageView {
         (e: Event) => ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e),
         (e: Event) =>
           ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e),
-        (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'comment-image', e),
+        (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'post-form', e),
         (e: Event) => ProfilePageView.eventCallback(auth.logout.bind(auth), 'logout', e),
       ];
 

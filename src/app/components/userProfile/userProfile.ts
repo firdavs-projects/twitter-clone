@@ -308,8 +308,13 @@ class UserProfile {
 
   public async goTweetPage(e: Event) {
     const button = <HTMLElement>e.target;
-    const id = button.dataset.id as string;
-    if (button.nextElementSibling?.textContent !== '') {
+    const id = (<HTMLElement>button.closest('.post-form')).id;
+    if (
+      !button.classList.contains('like-image') &&
+      !button.closest('.dropdown-toggle') &&
+      !button.closest('.dropdown-menu') &&
+      !button.closest('.post-edit')
+    ) {
       window.location.href = `#/tweet/${id}`;
     }
   }

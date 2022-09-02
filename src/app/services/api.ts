@@ -171,8 +171,8 @@ export const getTweetById = async (id: string) =>
         logout();
       }
       if (res.ok) {
-        const tweet: IUserTweet = await res.json();
-        resolve(tweet);
+        const tweet: { tweet: IUserTweet } = await res.json();
+        resolve(tweet.tweet);
       }
     } catch {
       reject();
