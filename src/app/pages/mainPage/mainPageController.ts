@@ -4,6 +4,7 @@ import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
 import {addEventListener, removeAllEventListeners} from "../../services/eventListener";
+import auth from '../../components/auth/auth';
 const template = new UserProfileTemplates();
 
 class MainPageController {
@@ -18,6 +19,10 @@ class MainPageController {
   public async createPage() {
     this.view.render();
     await this.showTweetsFeed();
+
+    const logoutBtn = document.getElementById('logout') as HTMLElement;
+    addEventListener(logoutBtn, 'click', auth.logout);
+    
   }
   private async showTweetsFeed(): Promise<void> {
     const currentUser = await this.userProfile.me();
@@ -42,7 +47,7 @@ class MainPageController {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         el.user._id === currentUser?._id,
-        currentUser?.likedTweets.includes(el._id),
+        // currentUser?.likedTweets.includes(el._id),
       );
       postsContainer.innerHTML += form;
 
