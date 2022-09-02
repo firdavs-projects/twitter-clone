@@ -1,211 +1,343 @@
-import { ILoginBody, IRegistrationBody } from './types';
-import { routes } from './routes';
-import { ApiMethods } from './constants';
-import { getLocalStorage } from './localStorage';
+import {ILoginBody, IRegistrationBody, IUserInfo, IUserTweet, TAuthResult} from './types';
+import {routes} from './routes';
+import {ApiMethods} from './constants';
+import {getLocalStorage} from './localStorage';
 
-export const getLogin = async (body: ILoginBody) => {
-  return (
-    await fetch(routes.login, {
-      method: ApiMethods.POST,
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-};
+const logout = () => {
+    localStorage.clear();
+    window.location.reload();
+}
 
-export const getRegistration = async (body: IRegistrationBody) => {
-  return (
-    await fetch(routes.registration, {
-      method: ApiMethods.POST,
-      body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  ).json();
-};
+export const getLogin = async (body: ILoginBody) => new Promise<TAuthResult>(async (resolve, reject) => {
+    try {
+        const res = await fetch(routes.login, {
+            method: ApiMethods.POST,
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (res.ok) {
+            const data: TAuthResult = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getAllUserTweets = async () => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.myTweets, {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getRegistration = async (body: IRegistrationBody) => new Promise<TAuthResult>(async (resolve, reject) => {
+    try {
+        const res = await fetch(routes.registration, {
+            method: ApiMethods.POST,
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (res.ok) {
+            const data: TAuthResult = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getTweetsByUserId = async (id: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.tweetsByUserId(id), {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
-
-export const getTweetsByUsername = async (username: string) => {
-    const token = getLocalStorage();
-    return (
-        await fetch(routes.tweetsByUserId(username), {
+export const getAllUserTweets = async () => new Promise<{tweets: IUserTweet[] }>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.myTweets, {
             method: ApiMethods.GET,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
-    ).json();
-};
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const tweets: {tweets: IUserTweet[] } = await res.json();
+            resolve(tweets);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getTweetsBySubscriptions = async () => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.tweetsBySubscriptions, {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getTweetsByUsername = async (username: string) => new Promise<{tweets: IUserTweet[] }>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.tweetsByUserId(username), {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const tweets: {tweets: IUserTweet[] } = await res.json();
+            resolve(tweets);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getUser = async () => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.user, {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
 
-export const getUserByName = async (name: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.userByName(name), {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getTweetsBySubscriptions = () => new Promise<{tweets: IUserTweet[] }>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.tweetsBySubscriptions, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const tweets: {tweets: IUserTweet[] } = await res.json();
+            resolve(tweets);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getTweetById = async (id: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.tweetById(id), {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getUser = async () => new Promise<IUserInfo>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.user, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const user: IUserInfo = await res.json();
+            resolve(user);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const editPost = async (id: string, formData: FormData) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.tweetById(id), {
-      method: ApiMethods.PUT,
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getUserByName = async (name: string) => new Promise<IUserInfo>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.userByName(name), {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const user: IUserInfo = await res.json();
+            resolve(user);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const deletePost = async (id: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.tweetById(id), {
-      method: ApiMethods.DELETE,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const getTweetById = async (id: string) => new Promise<IUserTweet>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.tweetById(id), {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const tweet: IUserTweet = await res.json();
+            resolve(tweet);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const saveProfileInfo = async (formData: FormData) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.profile, {
-      method: ApiMethods.PUT,
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const editPost = async (id: string, formData: FormData) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.tweetById(id), {
+            method: ApiMethods.PUT,
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const addLike = async (id: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.likeByPostId(id), {
-      method: ApiMethods.POST,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const deletePost = async (id: string) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.tweetById(id), {
+            method: ApiMethods.DELETE,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const deleteLike = async (id: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.likeByPostId(id), {
-      method: ApiMethods.DELETE,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const saveProfileInfo = async (formData: FormData) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.profile, {
+            method: ApiMethods.PUT,
+            body: formData,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const addNewTweet = async (body: FormData) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.createTweet, {
-      method: ApiMethods.POST,
-      body: body,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const addLike = async (id: string) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.likeByPostId(id), {
+            method: ApiMethods.POST,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const getPopularUsers = async () => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.popularUsers, {
-      method: ApiMethods.GET,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const deleteLike = async (id: string) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.likeByPostId(id), {
+            method: ApiMethods.DELETE,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
 
-export const subscribe = async (id: string, method: string) => {
-  const token = getLocalStorage();
-  return (
-    await fetch(routes.subscribe(id), {
-      method: method,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-  ).json();
-};
+export const addNewTweet = async (body: FormData) => new Promise<{ tweet: IUserTweet }>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.createTweet, {
+            method: ApiMethods.POST,
+            body: body,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data: { tweet: IUserTweet } = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
+
+export const getPopularUsers = async () => new Promise<IUserInfo[]>(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.popularUsers, {
+            method: ApiMethods.GET,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data: IUserInfo[] = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});
+
+export const subscribe = async (id: string, method: string) => new Promise(async (resolve, reject) => {
+    try {
+        const token = getLocalStorage();
+        const res = await fetch(routes.subscribe(id), {
+            method: method,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        if (res.status === 401) {
+            logout();
+        }
+        if (res.ok) {
+            const data = await res.json();
+            resolve(data);
+        }
+    } catch {
+        reject();
+    }
+});

@@ -1,9 +1,10 @@
+import auth from '../../components/auth/auth';
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import { addTweet } from '../../components/modalForm/modalForm';
 import UserProfile from '../../components/userProfile/userProfile';
 import Router from '../../router/router';
-import {removeAllEventListeners, addEventListener} from "../../services/eventListener";
+import { removeAllEventListeners, addEventListener } from "../../services/eventListener";
 
 const userProfile = new UserProfile();
 
@@ -54,18 +55,18 @@ class ProfilePageView {
 
       const clickListeners = [
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e),
+          ProfilePageView.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.showFollowers.bind(userProfile), 'show-follows', e, username),
+          ProfilePageView.eventCallback(userProfile.showFollowers.bind(userProfile), 'show-follows', e, username),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e, username),
+          ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e, username),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
+          ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
       ];
 
       removeAllEventListeners();
       clickListeners.forEach(callback => addEventListener(document, 'click', callback));
-
+      
     } else {
       this.rootNode.append(userProfile.rootNode);
       userProfile.showPage();
@@ -74,29 +75,29 @@ class ProfilePageView {
         (e: Event) => ProfilePageView.eventCallback(userProfile.editPost, 'edit-post', e),
         (e: Event) => ProfilePageView.eventCallback(userProfile.editPost, 'save-button', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.editProfile.bind(userProfile), 'edit-user-button', e),
+          ProfilePageView.eventCallback(userProfile.editProfile.bind(userProfile), 'edit-user-button', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.editProfile.bind(userProfile), 'save-profile-button', e),
+          ProfilePageView.eventCallback(userProfile.editProfile.bind(userProfile), 'save-profile-button', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e),
+          ProfilePageView.eventCallback(userProfile.deletePost.bind(userProfile), 'delete-post', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e),
+          ProfilePageView.eventCallback(userProfile.toggleLike.bind(userProfile), 'like-image', e),
         (e: Event) => ProfilePageView.eventCallback(userProfile.editStatus, 'user-status', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.editStatus, 'status-input', e),
+          ProfilePageView.eventCallback(userProfile.editStatus, 'status-input', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.showFollowers.bind(userProfile), 'show-follows', e),
+          ProfilePageView.eventCallback(userProfile.showFollowers.bind(userProfile), 'show-follows', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e),
+          ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e),
         (e: Event) =>
-            ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
+          ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
       ];
 
       removeAllEventListeners();
       clickListeners.forEach(callback => addEventListener(document, 'click', callback));
 
       addEventListener(document, 'focusout', (e: Event) =>
-          ProfilePageView.eventCallback(userProfile.editStatus, 'status-input', e));
+        ProfilePageView.eventCallback(userProfile.editStatus, 'status-input', e));
     }
   }
 
