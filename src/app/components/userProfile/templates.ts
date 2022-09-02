@@ -61,7 +61,7 @@ class UserProfileTemplates {
                     Edit profile
                 </button>
                 <button id="logout" class="btn btn-sm mt-2 btn-outline-danger logout">Logout</button>
-                ${isAdmin ? `<a class="d-block mt-1" href="#/admin">Панель администратора</a>` : ''}
+                ${isAdmin ? `<a class="d-block mt-1 text-end" href="#/admin">Панель администратора</a>` : ''}
             </div>
 
         ${this.createModalForm(this.editBody(), 'editBackdrop')}`;
