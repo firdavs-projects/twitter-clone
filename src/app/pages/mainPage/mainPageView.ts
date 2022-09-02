@@ -1,7 +1,7 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import Node from '../../components/Node';
-import { addTweet } from '../../components/modalForm/modalForm';
+import { addTweet } from '../../components/createTweetForm/tweetForm';
 import auth from '../../components/auth/auth';
 import { addEventListener } from "../../services/eventListener";
 
@@ -26,7 +26,6 @@ class MainPageView {
 
   private createMainLayout() {
     // const logoutBtn = document.getElementById('logout') as HTMLElement;
-    // // logout?.addEventListener('click', () => auth.logout());
     // addEventListener(logoutBtn, 'click', auth.logout);
 
     const main = new Node(this.rootNode, 'main', 'main');
