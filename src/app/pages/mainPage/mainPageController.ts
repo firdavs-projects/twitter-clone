@@ -1,4 +1,4 @@
-import {getTweetsBySubscriptions} from '../../services/api';
+import {getTweetsBySubscriptions, logout} from '../../services/api';
 import {IUserTweet} from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -21,6 +21,7 @@ class MainPageController {
     await this.showTweetsFeed();
   }
   private async showTweetsFeed(): Promise<void> {
+    const logoutBtn = document.getElementById('logout-header') as HTMLElement;
     const currentUser = await this.userProfile.me();
     const tweets = await getTweetsBySubscriptions();
     const container = document.querySelector('.post-container');
@@ -54,6 +55,9 @@ class MainPageController {
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
 
       removeAllEventListeners();
+
+      addEventListener(logoutBtn, 'click', logout);
+      
       likeImgs.forEach((img: Element, i) => {
         addEventListener(img, 'click', toggleLike);
       });
