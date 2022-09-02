@@ -1,9 +1,9 @@
-import {getTweetsBySubscriptions} from '../../services/api';
-import {IUserTweet} from '../../services/types';
+import { getTweetsBySubscriptions } from '../../services/api';
+import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
-import {addEventListener, removeAllEventListeners} from "../../services/eventListener";
+import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
 import auth from '../../components/auth/auth';
 const template = new UserProfileTemplates();
 
@@ -42,14 +42,14 @@ class MainPageController {
         el.likes.length !== 0 ? el.likes.length.toString() : '',
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
-        el.user._id === currentUser?._id,
+        el.user._id === currentUser?._id
         // currentUser?.likedTweets.includes(el._id),
       );
       postsContainer.innerHTML += form;
 
       const toggleLike = (event: Event) => {
         this.userProfile.toggleLike(event);
-      }
+      };
 
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
 

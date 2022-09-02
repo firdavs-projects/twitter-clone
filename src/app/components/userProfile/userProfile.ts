@@ -12,12 +12,12 @@ import {
   saveProfileInfo,
   subscribe,
 } from '../../services/api';
-import {ApiMethods} from '../../services/constants';
-import {IUserInfo, IUserTweet, TLike} from '../../services/types';
+import { ApiMethods } from '../../services/constants';
+import { IUserInfo, IUserTweet, TLike } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
-import {addEventListener} from "../../services/eventListener";
-import auth from "../auth/auth";
+import { addEventListener } from '../../services/eventListener';
+import auth from '../auth/auth';
 
 const template = new UserProfileTemplates();
 
@@ -35,9 +35,11 @@ class UserProfile {
   }
 
   async me(): Promise<IUserInfo> {
-    if (this._me) return this._me;
+    if (this._me) {
+      return this._me;
+    }
     this._me = await getUser();
-    return this._me
+    return this._me;
   }
 
   public async showPage(username?: string): Promise<void> {
@@ -69,7 +71,7 @@ class UserProfile {
   }
 
   public async showPosts(username?: string): Promise<void> {
-    const me = await this.me()
+    const me = await this.me();
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
@@ -90,7 +92,7 @@ class UserProfile {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         !username,
-          me.likedTweets.includes(el._id),
+        me.likedTweets.includes(el._id)
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
@@ -110,7 +112,7 @@ class UserProfile {
   }
 
   public async showPopularUsers() {
-    const me = await this.me()
+    const me = await this.me();
     const popularUsers = await getPopularUsers();
     const container = document.querySelector('.popular-user-container') as HTMLElement;
     container.innerHTML = '';
@@ -188,7 +190,7 @@ class UserProfile {
   }
 
   public async toggleLike(e: Event) {
-    const me = await this.me()
+    const me = await this.me();
     const id = (<HTMLElement>e.target).dataset.id as string;
     const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
     const postForm = document.getElementById(id) as HTMLElement;
@@ -197,7 +199,7 @@ class UserProfile {
       likeImg.classList.remove('active');
       const newCounter = (Number(<string>likeCounter.innerHTML) - 1).toString();
       likeCounter.innerHTML = newCounter !== '0' ? newCounter : '';
-      this._me ? this._me.likedTweets = this._me?.likedTweets.filter(i => i !== id) : null;
+      this._me ? (this._me.likedTweets = this._me?.likedTweets.filter((i) => i !== id)) : null;
       await deleteLike(id);
     } else {
       likeImg.classList.add('active');
@@ -208,7 +210,7 @@ class UserProfile {
   }
 
   public async editStatus(e: Event) {
-    console.log('e')
+    console.log('e');
     const input = document.querySelector('.status-input') as HTMLInputElement;
     const textEl = document.querySelector('.user-status') as HTMLElement;
     const container = <HTMLElement>input.parentElement;
@@ -237,7 +239,7 @@ class UserProfile {
       return;
     }
     const me = await this.me();
-    const user = username ? await getUserByName(username) : me as IUserInfo;
+    const user = username ? await getUserByName(username) : (me as IUserInfo);
     const follows = document.querySelector('.follows-container') as HTMLElement;
     const switchBtns = document.querySelectorAll('.follow-button') as NodeListOf<HTMLElement>;
     switchBtns.forEach((btn) =>
@@ -288,6 +290,7 @@ class UserProfile {
       }
     }
   }
+
   public async goAnotherUserPage(e: Event) {
     const button = <HTMLElement>e.target;
     document.body.removeAttribute('style');
@@ -300,6 +303,14 @@ class UserProfile {
         window.location.href = `#/profile/`;
       }
       document.querySelector('.modal-backdrop')?.remove();
+    }
+  }
+
+  public async goTweetPage(e: Event) {
+    const button = <HTMLElement>e.target;
+    const id = button.dataset.id as string;
+    if (button.nextElementSibling?.textContent !== '') {
+      window.location.href = `#/tweet/${id}`;
     }
   }
 }

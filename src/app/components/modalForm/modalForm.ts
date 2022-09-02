@@ -23,7 +23,7 @@ export const addTweet = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   btnTweet.removeEventListener('click', addTweetListener);
   btnTweet.addEventListener('click', addTweetListener);
 };

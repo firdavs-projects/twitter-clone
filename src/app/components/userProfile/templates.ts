@@ -4,12 +4,16 @@ class UserProfileTemplates {
     <div class="page-container col-lg-8 d-flex justify-content-end flex-column">
         ${isMyProfile ? `<button id="logout" class="btn btn-outline-danger logout">Logout</button>` : ''}
     </div>
-    ${isMyProfile ? `<div class="aside col-lg-4">
+    ${
+      isMyProfile
+        ? `<div class="aside col-lg-4">
       <div class="popular">
         <h5 class="popular-users">Popular users</h5>
         <div class="popular-user-container"></div>
       </div>
-    </div>` : ''}
+    </div>`
+        : ''
+    }
 `;
   };
 
@@ -117,7 +121,7 @@ class UserProfileTemplates {
     comments?: string,
     image?: string | null,
     isMe?: boolean,
-    isLikedByMe?: boolean,
+    isLikedByMe?: boolean
   ): string => {
     return `<div class="post-form" id="${id}">
         ${this.profileImage(avatar, name)}
@@ -160,7 +164,9 @@ class UserProfileTemplates {
   };
 
   public likeSVG = (id: string, isLikedByMe?: boolean) => {
-    return `<svg viewBox="-4 -4 30 30" aria-hidden="true" class="like-image ${isLikedByMe ? 'active' : ''}" data-id="${id}" width="24" height="24" stroke="black" fill="none" stroke-width="2px"><g><path d="M 12 21.638 h -0.014 C 9.403 21.59 1.95 14.856 1.95 8.478 c 0 -3.064 2.525 -5.754 5.403 -5.754 c 2.29 0 3.83 1.58 4.646 2.73 c 0.814 -1.148 2.354 -2.73 4.645 -2.73 c 2.88 0 5.404 2.69 5.404 5.755 c 0 6.376 -7.454 13.11 -10.037 13.157 H 12 Z"></path></g></svg>`;
+    return `<svg viewBox="-4 -4 30 30" aria-hidden="true" class="like-image ${
+      isLikedByMe ? 'active' : ''
+    }" data-id="${id}" width="24" height="24" stroke="black" fill="none" stroke-width="2px"><g><path d="M 12 21.638 h -0.014 C 9.403 21.59 1.95 14.856 1.95 8.478 c 0 -3.064 2.525 -5.754 5.403 -5.754 c 2.29 0 3.83 1.58 4.646 2.73 c 0.814 -1.148 2.354 -2.73 4.645 -2.73 c 2.88 0 5.404 2.69 5.404 5.755 c 0 6.376 -7.454 13.11 -10.037 13.157 H 12 Z"></path></g></svg>`;
   };
 
   public commentSVG = (id: string) => {
@@ -211,7 +217,7 @@ class UserProfileTemplates {
     id: string,
     avatar: string,
     follow: boolean,
-    isMyProfile: boolean,
+    isMyProfile: boolean
   ): string => {
     return `<div class="follower-form" data-id="${id}" data-name="${username}">
         ${this.profileImage(avatar, name)}
@@ -219,10 +225,13 @@ class UserProfileTemplates {
           <div class="user-name">${name} ${surname}</div>
           <div class="user-login">@${username}</div>
         </div>
-        ${isMyProfile ? '' 
-        : `<button type="button" class="btn btn-primary btn-sm subscribe-btn ${
-          follow ? 'active' : ''
-        }" text="Follow" active="Following" hover-active="Unfollow"></button>`}
+        ${
+          isMyProfile
+            ? ''
+            : `<button type="button" class="btn btn-primary btn-sm subscribe-btn ${
+                follow ? 'active' : ''
+              }" text="Follow" active="Following" hover-active="Unfollow"></button>`
+        }
       </div>`;
   };
 }

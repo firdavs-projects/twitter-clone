@@ -3,8 +3,7 @@ import header from '../../components/header/header';
 import Node from '../../components/Node';
 import { addTweet } from '../../components/modalForm/modalForm';
 import auth from '../../components/auth/auth';
-import { addEventListener } from "../../services/eventListener";
-
+import { addEventListener } from '../../services/eventListener';
 
 class MainPageView {
   private rootNode: HTMLElement;
