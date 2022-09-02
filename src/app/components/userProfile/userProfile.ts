@@ -12,12 +12,14 @@ import {
   saveProfileInfo,
   subscribe,
 } from '../../services/api';
-import {ApiMethods} from '../../services/constants';
+import {ADMIN, ApiMethods} from '../../services/constants';
 import {IUserInfo, IUserTweet, TLike} from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
 import {addEventListener} from "../../services/eventListener";
 import auth from "../auth/auth";
+import {parseJwt} from "../../services/decoder";
+import {getLocalStorage} from "../../services/localStorage";
 
 const template = new UserProfileTemplates();
 
@@ -59,6 +61,7 @@ class UserProfile {
     const container = document.querySelector('.user-container');
     container?.remove();
     const data = username ? await getUserByName(username) : await this.me();
+    const isAdmin = parseJwt(getLocalStorage()).role === ADMIN;
     (<HTMLElement>document.querySelector('.page-container')).innerHTML += template.createUser(
       data.firstName,
       data.lastName,
@@ -69,7 +72,8 @@ class UserProfile {
       data.avatar,
       data.subscriptions.length,
       data.followers.length,
-      !username
+      !username,
+      isAdmin
     );
   }
 
