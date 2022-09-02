@@ -1,6 +1,9 @@
 class UserProfileTemplates {
   public createStructure = (isMyProfile: boolean) => {
-    return `<div class="page-container col-lg-8"></div>
+    return `
+    <div class="page-container col-lg-8 d-flex justify-content-end flex-column">
+        ${isMyProfile ? `<button id="logout" class="btn btn-outline-danger logout">Logout</button>` : ''}
+    </div>
     ${isMyProfile ? `<div class="aside col-lg-4">
       <div class="popular">
         <h5 class="popular-users">Popular users</h5>

@@ -2,6 +2,13 @@
   min-height: 100vh !important;
 }
 
+#logout{
+  cursor: pointer;
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 5px;
+}
+
 /*auth page bootstrap */
 
 .form-signin {
@@ -131,7 +138,7 @@
   content: url('./assets/img/up.png');
   left: 73%;
   bottom: 0%;
-  
+
 }
 
 .fileInput:focus+label,
