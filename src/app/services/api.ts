@@ -4,10 +4,25 @@ import { ApiMethods } from './constants';
 import { getLocalStorage } from './localStorage';
 
 export const logout = async () => {
-  localStorage.clear();
-  window.location.reload();
-  await fetch(routes.logout, { method: ApiMethods.GET })
+  const token = getLocalStorage();
+
+  try {
+    const res = await fetch(routes.logout, {
+      method: ApiMethods.GET,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if (res.ok) {
+      console.log('Logout...')
+      localStorage.clear();
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log('Something went wrong...')
+  }
 }
+
 
 export const getLogin = async (body: ILoginBody) => new Promise<TAuthResult>(async (resolve, reject) => {
   try {
