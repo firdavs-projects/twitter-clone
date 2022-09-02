@@ -2,6 +2,7 @@ import { baseUrl } from './constants';
 
 export const routes = {
   login: `${baseUrl}/auth/login`,
+  logout: `${baseUrl}/auth/logout`,
   registration: `${baseUrl}/auth/register`,
   profile: `${baseUrl}/profile`,
   user: `${baseUrl}/profile/me`,
