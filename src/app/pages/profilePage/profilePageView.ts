@@ -47,11 +47,12 @@ class ProfilePageView {
 
   private createProfileLayout() {
     const username = Router.getRouteIdParam(window.location.href);
+    removeAllEventListeners();
 
     if (username) {
       console.log('Its other user profile, check & get other user with username');
       this.rootNode.append(userProfile.rootNode);
-      userProfile.showPage(username);
+      userProfile.showPage(username)
 
       const clickListeners = [
         (e: Event) =>
@@ -64,9 +65,8 @@ class ProfilePageView {
           ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
       ];
 
-      removeAllEventListeners();
       clickListeners.forEach(callback => addEventListener(document, 'click', callback));
-      
+
     } else {
       this.rootNode.append(userProfile.rootNode);
       userProfile.showPage();
@@ -90,10 +90,11 @@ class ProfilePageView {
         (e: Event) =>
           ProfilePageView.eventCallback(userProfile.toggleFollow.bind(userProfile), 'subscribe-btn', e),
         (e: Event) =>
-          ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e)
+          ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e),
+        (e: Event) =>
+            ProfilePageView.eventCallback(auth.logout.bind(auth), 'logout', e),
       ];
 
-      removeAllEventListeners();
       clickListeners.forEach(callback => addEventListener(document, 'click', callback));
 
       addEventListener(document, 'focusout', (e: Event) =>

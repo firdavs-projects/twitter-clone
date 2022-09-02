@@ -1,4 +1,6 @@
 import headerTemplate from './template';
+import {addEventListener} from "../../services/eventListener";
+import auth from "../auth/auth";
 
 class Header {
   private rootNode: HTMLElement;

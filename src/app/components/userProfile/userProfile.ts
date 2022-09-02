@@ -16,6 +16,8 @@ import {ApiMethods} from '../../services/constants';
 import {IUserInfo, IUserTweet, TLike} from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
+import {addEventListener} from "../../services/eventListener";
+import auth from "../auth/auth";
 
 const template = new UserProfileTemplates();
 

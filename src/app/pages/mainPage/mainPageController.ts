@@ -19,10 +19,6 @@ class MainPageController {
   public async createPage() {
     this.view.render();
     await this.showTweetsFeed();
-
-    const logoutBtn = document.getElementById('logout') as HTMLElement;
-    addEventListener(logoutBtn, 'click', auth.logout);
-    
   }
   private async showTweetsFeed(): Promise<void> {
     const currentUser = await this.userProfile.me();
