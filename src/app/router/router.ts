@@ -25,12 +25,13 @@ class Router implements IRouter {
     this.listen();
   }
 
-  addPath(path: string, callback: () => void, isAuth: boolean | null, withId: boolean): void {
+  addPath(path: string, callback: () => void, isAuth: boolean | null, withId: boolean, isPrivate: boolean): void {
     this.routes.push({
       path,
       callback,
       isAuth,
       withId,
+      isPrivate
     });
   }
 
@@ -44,7 +45,6 @@ class Router implements IRouter {
 
   removePath(path: string): void {
     const routeToDelete = this.routes.find((route: RouteOption) => route.path === path);
-    console.log(routeToDelete, this.routes);
     if (routeToDelete) {
       this.routes.splice(this.routes.indexOf(routeToDelete), 1);
     }
