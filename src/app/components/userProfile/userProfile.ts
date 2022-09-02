@@ -34,16 +34,21 @@ class UserProfile {
     this.myId = '';
   }
 
-  async me(): Promise<IUserInfo> {
-    if (this._me) return this._me;
+  async getMe(): Promise<IUserInfo> {
     this._me = await getUser();
     return this._me
+  }
+
+  async me(): Promise<IUserInfo> {
+    if (this._me) return this._me;
+    return await this.getMe();
   }
 
   public async showPage(username?: string): Promise<void> {
     this.rootNode.innerHTML = template.createStructure(!username);
     await this.showUser(username);
     await this.showPosts(username);
+    await this.getMe();
     if (!username) {
       await this.showPopularUsers();
       this.modal = new bootstrap.Modal(<HTMLElement>document.getElementById('editBackdrop'));

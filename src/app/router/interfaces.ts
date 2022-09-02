@@ -1,7 +1,7 @@
 import { RouteOption } from '../services/types';
 
 export interface IRouter {
-  addPath: (path: string, callback: () => void, isAuth: boolean | null, withId: boolean) => void;
+  addPath: (path: string, callback: () => void, isAuth: boolean | null, withId: boolean, isPrivate: boolean) => void;
   removePath: (path: string) => void;
   getPath: (path: string) => string | void;
   getRoute: () => string;
