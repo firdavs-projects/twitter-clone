@@ -1,8 +1,9 @@
+// ${isMyProfile ? `<button id="logout" class="btn btn-outline-danger logout">Logout</button>` : ''}
+
 class UserProfileTemplates {
   public createStructure = (isMyProfile: boolean) => {
     return `
     <div class="page-container col-lg-8 d-flex justify-content-end flex-column">
-        ${isMyProfile ? `<button id="logout" class="btn btn-outline-danger logout">Logout</button>` : ''}
     </div>
     ${isMyProfile ? `<div class="aside col-lg-4">
       <div class="popular">
@@ -23,12 +24,13 @@ class UserProfileTemplates {
     image: string | null,
     following: number,
     followers: number,
-    isMe: boolean
+    isMe: boolean,
+    isAdmin: boolean
   ) => {
     return `<div class="user-container container ${isMe ? '' : 'another-user'}" id="${id}">
         <div class="head-part">
           ${this.profileImage(image, name)}
-          ${this.editProfileOption(isMe, id)}
+          ${this.editProfileOption(isMe, id, isAdmin)}
         </div>
         <div class="user-data ${isMe ? '' : 'another-user'}">
           <div class="user-name">${name} ${lastName}</div>
@@ -51,9 +53,17 @@ class UserProfileTemplates {
         ${this.createFollowsForm()}`;
   };
 
-  public editProfileOption(isMe: boolean, id: string) {
+  public editProfileOption(isMe: boolean, id: string, isAdmin: boolean) {
     if (isMe) {
-      return `<button class="edit-user-button btn btn-primary btn-sm" data-id="${id}" data-bs-target="#editBackdrop">Edit profile</button>
+      return `
+            <div class="d-flex flex-column justify-content-end align-items-end">
+                <button class="edit-user-button btn btn-primary btn-sm" data-id="${id}" data-bs-target="#editBackdrop">
+                    Edit profile
+                </button>
+                <button id="logout" class="btn btn-sm mt-2 btn-outline-danger logout">Logout</button>
+                ${isAdmin ? `<a class="d-block mt-1 text-end" href="#/admin">Панель администратора</a>` : ''}
+            </div>
+
         ${this.createModalForm(this.editBody(), 'editBackdrop')}`;
     }
     return ``;
