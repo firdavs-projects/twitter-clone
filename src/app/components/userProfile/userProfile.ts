@@ -16,8 +16,13 @@ import { ADMIN, ApiMethods } from '../../services/constants';
 import { IUserInfo, IUserTweet, TLike } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
+<<<<<<< HEAD
 import { parseJwt } from '../../services/decoder';
 import { getLocalStorage } from '../../services/localStorage';
+=======
+import {parseJwt} from "../../services/decoder";
+import {getLocalStorage} from "../../services/localStorage";
+>>>>>>> 9f633b7ce12a15377d9cf04149e81b7421282d0a
 
 const template = new UserProfileTemplates();
 

@@ -3,7 +3,7 @@
 class UserProfileTemplates {
   public createStructure = (isMyProfile: boolean) => {
     return `
-    <div class="page-container col-lg-8 d-flex justify-content-end flex-column">
+    <div class="page-container col-lg-8 d-flex justify-content-start flex-column">
     </div>
     ${
       isMyProfile

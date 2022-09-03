@@ -4,7 +4,6 @@ import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
 import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
-import auth from '../../components/auth/auth';
 const template = new UserProfileTemplates();
 
 class MainPageController {

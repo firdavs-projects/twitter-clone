@@ -89,4 +89,15 @@ export interface IUserInfo {
   birthDate: string | null;
   phone: string | null;
   status: string | null;
+  blocked?: boolean;
+}
+
+export interface IRole {
+  role: string;
+  _id: string;
+  users: string[];
+}
+
+export interface IRoles {
+  roles: IRole[];
 }

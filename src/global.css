@@ -5,6 +5,15 @@
   justify-content: space-between;
 }
 
+.badge{
+  cursor: pointer;
+}
+
+main{
+  height: 100%;
+  margin-bottom: auto!important;
+}
+
 .h-full {
   min-height: 100vh !important;
 }
