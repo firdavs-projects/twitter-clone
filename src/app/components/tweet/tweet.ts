@@ -36,6 +36,7 @@ class Tweet {
   public async showTweet(id: string): Promise<void> {
     const tweet = await this.tweet(id);
     const user = await userProfile.me();
+    console.log(user.likedTweets);
     const container = <HTMLElement>document.querySelector('.main-tweet');
     container.innerHTML = templateProfile.createPostForm(
       tweet.user.firstName,

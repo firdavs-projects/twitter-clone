@@ -70,7 +70,6 @@ class UserProfile {
 
   public async showPosts(username?: string): Promise<void> {
     const me = await this.me();
-    console.log(me.likedTweets);
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
@@ -209,7 +208,6 @@ class UserProfile {
   }
 
   public async editStatus(e: Event) {
-    console.log('e');
     const input = document.querySelector('.status-input') as HTMLInputElement;
     const textEl = document.querySelector('.user-status') as HTMLElement;
     const container = <HTMLElement>input.parentElement;
@@ -266,6 +264,10 @@ class UserProfile {
     if (button.classList.contains('active')) {
       try {
         await subscribe(id, ApiMethods.DELETE);
+        this._me?.subscriptions.splice(
+          this._me?.subscriptions.findIndex((el) => el._id === id),
+          1
+        );
         if (!username) {
           subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) - 1).toString();
         }
@@ -278,6 +280,7 @@ class UserProfile {
     } else {
       try {
         await subscribe(id, ApiMethods.POST);
+        this._me = await getUser();
         if (!username) {
           subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) + 1).toString();
         }
