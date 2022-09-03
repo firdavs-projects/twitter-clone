@@ -9,6 +9,7 @@ export const logout = async () => {
   const token = getLocalStorage();
   const now = Date.now();
   loader.push(now);
+
   try {
     const res = await fetch(routes.logout, {
       method: ApiMethods.GET,
@@ -280,9 +281,9 @@ export const getTweetById = async (id: string) =>
         logout();
       }
       if (res.ok) {
-        const tweet: IUserTweet = await res.json();
+        const tweet: { tweet: IUserTweet } = await res.json();
         loader.remove(now);
-        resolve(tweet);
+        resolve(tweet.tweet);
       }
     } catch {
       loader.remove(now);

@@ -1,11 +1,10 @@
-import { getTweetById, getUserByName } from '../../services/api';
+import { userProfile } from '../../pages/profilePage/profilePageView';
+import { deletePost, getTweetById } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import UserProfileTemplates from '../userProfile/templates';
-import UserProfile from '../userProfile/userProfile';
 import TweetTemplate from './templates';
 
 const templateProfile = new UserProfileTemplates();
-const userProfile = new UserProfile();
 const templateTweet = new TweetTemplate();
 
 class Tweet {
@@ -30,13 +29,13 @@ class Tweet {
   public async showPage(id: string): Promise<void> {
     this.rootNode.innerHTML = templateTweet.createStructure();
     await this.showTweet(id);
-    await this.showComments(id);
+    await this.showPosts(id);
   }
 
   public async showTweet(id: string): Promise<void> {
     const tweet = await this.tweet(id);
     const user = await userProfile.me();
-    console.log(user.likedTweets);
+    console.log(user);
     const container = <HTMLElement>document.querySelector('.main-tweet');
     container.innerHTML = templateProfile.createPostForm(
       tweet.user.firstName,
@@ -58,10 +57,11 @@ class Tweet {
     }
   }
 
-  public async showComments(id: string): Promise<void> {
+  public async showPosts(id: string): Promise<void> {
     const tweet = await this.tweet(id);
     const user = await userProfile.me();
     const container = document.querySelector('.post-container') as HTMLElement;
+    container.innerHTML = '<h5 class="post-heading">Comments</h5>';
     tweet.tweets.forEach((el) => {
       container.innerHTML += templateProfile.createPostForm(
         el.user.firstName,
@@ -82,6 +82,20 @@ class Tweet {
         likeImg.classList.add('active');
       }
     });
+  }
+
+  public async deletePost(e: Event) {
+    const postId = (<HTMLElement>e.target).dataset.id as string;
+    await deletePost(postId);
+    if (postId === this._id) {
+      window.location.href = `#/profile/`;
+    } else {
+      this._tweet?.tweets.splice(
+        this._tweet.tweets.findIndex((el) => el._id === postId),
+        1
+      );
+      await this.showPage(this._id);
+    }
   }
 }
 

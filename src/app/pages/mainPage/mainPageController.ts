@@ -4,6 +4,7 @@ import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
 import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
+import { userProfile } from '../profilePage/profilePageView';
 const template = new UserProfileTemplates();
 
 class MainPageController {
@@ -12,7 +13,7 @@ class MainPageController {
 
   constructor() {
     this.view = new MainPageView();
-    this.userProfile = new UserProfile();
+    this.userProfile = userProfile;
   }
 
   public async createPage() {

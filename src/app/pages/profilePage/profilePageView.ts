@@ -6,7 +6,7 @@ import Router from '../../router/router';
 import { logout } from '../../services/api';
 import { removeAllEventListeners, addEventListener } from '../../services/eventListener';
 
-const userProfile = new UserProfile();
+export const userProfile = new UserProfile();
 
 class ProfilePageView {
   private rootNode: HTMLElement;

@@ -1,25 +1,21 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
-import Node from '../../components/Node';
-// import Button from '../../components/Button';
-// import authManager from '../../services/authManager';
 import Router from '../../router/router';
 import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
-import { IUserTweet } from '../../services/types';
 import Tweet from '../../components/tweet/tweet';
 import UserProfile from '../../components/userProfile/userProfile';
 import { addTweet } from '../../components/createTweetForm/tweetForm';
+import { userProfile } from '../profilePage/profilePageView';
 
-let tweetComponent;
+let tweetComponent: Tweet;
 
 class TweetPageView {
   private rootNode: HTMLElement;
   public userProfile: UserProfile;
-  // private tweet: IUserTweet;
 
   constructor() {
     this.rootNode = <HTMLElement>document.getElementById('app');
-    this.userProfile = new UserProfile();
+    this.userProfile = userProfile;
   }
 
   render(): void {
@@ -59,6 +55,7 @@ class TweetPageView {
         (e: Event) => TweetPageView.eventCallback(this.userProfile.goTweetPage.bind(this.userProfile), 'post-form', e),
         (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'edit-post', e),
         (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'save-button', e),
+        (e: Event) => TweetPageView.eventCallback(tweetComponent.deletePost.bind(tweetComponent), 'delete-post', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));
