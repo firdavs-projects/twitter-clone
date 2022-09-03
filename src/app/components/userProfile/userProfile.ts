@@ -38,7 +38,10 @@ class UserProfile {
     return this._me;
   }
 
-  async me(): Promise<IUserInfo> {
+  async me(reset = false): Promise<IUserInfo> {
+    if (reset) {
+      return await this.getMe();
+    }
     if (this._me) {
       return this._me;
     }
@@ -193,8 +196,10 @@ class UserProfile {
         if ((formData.get('file') as File).name === '') {
           formData.delete('file');
         }
-        await saveProfileInfo(formData);
-        await this.showPage();
+        await saveProfileInfo(formData).then(async () => {
+          this._me = undefined;
+          await this.showPage();
+        });
       }
     }
   }
@@ -303,6 +308,7 @@ class UserProfile {
         console.log(error);
       }
     }
+    await this.me(true);
   }
 
   public async goAnotherUserPage(e: Event) {

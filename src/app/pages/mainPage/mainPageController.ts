@@ -30,8 +30,12 @@ class MainPageController {
     postsContainer.classList.add('post-container');
     const main = document.querySelector('.main') as HTMLElement;
     main.append(postsContainer);
-    tweets.tweets.forEach(async (el: IUserTweet) => {
-      // const thisUser = await getUserByName(el.user.username);
+
+    if (tweets.tweets.length === 0) {
+      console.log(tweets);
+      postsContainer.innerHTML = template.tweetsNotFound();
+    }
+    tweets.tweets.forEach((el: IUserTweet) => {
       const form = template.createPostForm(
         el.user.firstName,
         el.user.lastName,
@@ -44,7 +48,6 @@ class MainPageController {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         el.user._id === currentUser?._id
-        // currentUser?.likedTweets.includes(el._id),
       );
       postsContainer.innerHTML += form;
 

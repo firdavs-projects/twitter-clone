@@ -57,7 +57,6 @@ export class AuthManager {
         routes.push(route);
       }
     });
-    console.log(routes);
 
     this.router.addAllPath(routes);
   }

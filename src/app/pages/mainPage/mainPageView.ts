@@ -24,16 +24,8 @@ class MainPageView {
   }
 
   private createMainLayout() {
-    // const logoutBtn = document.getElementById('logout') as HTMLElement;
-    // addEventListener(logoutBtn, 'click', auth.logout);
-
     const main = new Node(this.rootNode, 'main', 'main');
-    main.node.insertAdjacentHTML(
-      'beforeend',
-      `   
-                <div class="post-container"></div>
-            `
-    );
+    main.node.insertAdjacentHTML('beforeend', `<div class="post-container"></div>`);
   }
 }
 

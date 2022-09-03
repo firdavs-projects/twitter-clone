@@ -20,9 +20,9 @@ export const logout = async () => {
     if (res.ok) {
       console.log('Logout...');
       localStorage.clear();
-      loader.remove(now);
       window.location.reload();
     }
+    loader.remove(now);
   } catch (error) {
     loader.remove(now);
     console.log('Something went wrong...');
@@ -43,9 +43,9 @@ export const getLogin = async (body: ILoginBody) =>
       });
       if (res.ok) {
         const data: TAuthResult = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -66,9 +66,9 @@ export const getRegistration = async (body: IRegistrationBody) =>
       });
       if (res.ok) {
         const data: TAuthResult = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -88,14 +88,13 @@ export const getAllUserTweets = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const tweets: { tweets: IUserTweet[] } = await res.json();
-        loader.remove(now);
         resolve(tweets);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -115,14 +114,13 @@ export const getAllTweets = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const tweets: { tweets: IUserTweet[] } = await res.json();
-        loader.remove(now);
         resolve(tweets);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -142,14 +140,13 @@ export const getTweetsByUsername = async (username: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const tweets: { tweets: IUserTweet[] } = await res.json();
-        loader.remove(now);
         resolve(tweets);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -169,14 +166,13 @@ export const getTweetsBySubscriptions = () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const tweets: { tweets: IUserTweet[] } = await res.json();
-        loader.remove(now);
         resolve(tweets);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -196,14 +192,13 @@ export const getUser = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const user: IUserInfo = await res.json();
-        loader.remove(now);
         resolve(user);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -223,14 +218,13 @@ export const getUserByName = async (name: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const user: IUserInfo = await res.json();
-        loader.remove(now);
         resolve(user);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -250,14 +244,13 @@ export const deleteTweetByAdmin = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -277,14 +270,13 @@ export const getTweetById = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const tweet: { tweet: IUserTweet } = await res.json();
-        loader.remove(now);
         resolve(tweet.tweet);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -305,14 +297,13 @@ export const editPost = async (id: string, formData: FormData) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -332,14 +323,13 @@ export const deletePost = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -360,14 +350,13 @@ export const saveProfileInfo = async (formData: FormData) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -387,14 +376,13 @@ export const addLike = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -414,14 +402,13 @@ export const deleteLike = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -442,14 +429,13 @@ export const addNewTweet = async (body: FormData) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data: { tweet: IUserTweet } = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -469,14 +455,13 @@ export const getPopularUsers = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data: IUserInfo[] = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -496,14 +481,13 @@ export const getAllUsers = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data: IUserInfo[] = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -523,14 +507,13 @@ export const blockUserByAdmin = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -550,14 +533,13 @@ export const unlockUserByAdmin = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -577,14 +559,13 @@ export const deleteUserByAdmin = async (id: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -604,14 +585,13 @@ export const getRoles = async () =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data: IRoles = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -633,14 +613,13 @@ export const setUserRoleByAdmin = async (userId: string, body: { roleId: string 
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
@@ -660,14 +639,13 @@ export const subscribe = async (id: string, method: string) =>
         },
       });
       if (res.status === 401) {
-        loader.remove(now);
         logout();
       }
       if (res.ok) {
         const data = await res.json();
-        loader.remove(now);
         resolve(data);
       }
+      loader.remove(now);
     } catch {
       loader.remove(now);
       reject();
