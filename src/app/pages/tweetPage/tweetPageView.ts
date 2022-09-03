@@ -8,7 +8,7 @@ import { addEventListener, removeAllEventListeners } from '../../services/eventL
 import { IUserTweet } from '../../services/types';
 import Tweet from '../../components/tweet/tweet';
 import UserProfile from '../../components/userProfile/userProfile';
-import { addTweet } from '../../components/modalForm/modalForm';
+import { addTweet } from '../../components/createTweetForm/tweetForm';
 
 let tweetComponent;
 
