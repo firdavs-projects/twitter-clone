@@ -3,7 +3,7 @@ import MainPageController from '../pages/mainPage/mainPageController';
 import ProfilePageController from '../pages/profilePage/profilePageController';
 import TweetPageController from '../pages/tweetPage/tweetPageController';
 import { RouteOption } from '../services/types';
-import AdminPageController from "../pages/adminPage/adminPageController";
+import AdminPageController from '../pages/adminPage/adminPageController';
 
 class Config {
   public mainPageController: MainPageController;

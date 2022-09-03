@@ -1,8 +1,8 @@
 import Config from '../router/config';
 import router from '../router/router';
 import { RouteOption } from './types';
-import {parseJwt} from "./decoder";
-import {ADMIN} from "./constants";
+import { parseJwt } from './decoder';
+import { ADMIN } from './constants';
 
 export class AuthManager {
   private config: Config;
@@ -53,7 +53,7 @@ export class AuthManager {
       if (route.isPrivate && this.isPrivate) {
         routes.push(route);
       }
-      if ((route.isAuth === this.isLogin || route.isAuth === null) && !route.isPrivate ) {
+      if ((route.isAuth === this.isLogin || route.isAuth === null) && !route.isPrivate) {
         routes.push(route);
       }
     });

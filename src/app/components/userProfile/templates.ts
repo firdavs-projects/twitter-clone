@@ -5,12 +5,16 @@ class UserProfileTemplates {
     return `
     <div class="page-container col-lg-8 d-flex justify-content-start flex-column">
     </div>
-    ${isMyProfile ? `<div class="aside col-lg-4">
+    ${
+      isMyProfile
+        ? `<div class="aside col-lg-4">
       <div class="popular">
         <h5 class="popular-users">Popular users</h5>
         <div class="popular-user-container"></div>
       </div>
-    </div>` : ''}
+    </div>`
+        : ''
+    }
 `;
   };
 
@@ -127,16 +131,16 @@ class UserProfileTemplates {
     comments?: string,
     image?: string | null,
     isMe?: boolean,
-    isLikedByMe?: boolean,
+    isLikedByMe?: boolean
   ): string => {
     return `<div class="post-form" id="${id}">
         ${this.profileImage(avatar, name)}
         <div class="data-part">
-          <div class="post-data">
+          <a href="#/profile/${isMe ? '' : login}" class="post-data">
             <div class="user-name">${name} ${surname}</div>
             <div class="user-login">@${login}</div>
             <div class="post-date">${date}</div>
-          </div>
+          </a>
           <div class="post-text">${text}</div>
           <div class="post-edit">
             <div class="edit-tweet-form">
@@ -170,7 +174,9 @@ class UserProfileTemplates {
   };
 
   public likeSVG = (id: string, isLikedByMe?: boolean) => {
-    return `<svg viewBox="-4 -4 30 30" aria-hidden="true" class="like-image ${isLikedByMe ? 'active' : ''}" data-id="${id}" width="24" height="24" stroke="black" fill="none" stroke-width="2px"><g><path d="M 12 21.638 h -0.014 C 9.403 21.59 1.95 14.856 1.95 8.478 c 0 -3.064 2.525 -5.754 5.403 -5.754 c 2.29 0 3.83 1.58 4.646 2.73 c 0.814 -1.148 2.354 -2.73 4.645 -2.73 c 2.88 0 5.404 2.69 5.404 5.755 c 0 6.376 -7.454 13.11 -10.037 13.157 H 12 Z"></path></g></svg>`;
+    return `<svg viewBox="-4 -4 30 30" aria-hidden="true" class="like-image ${
+      isLikedByMe ? 'active' : ''
+    }" data-id="${id}" width="24" height="24" stroke="black" fill="none" stroke-width="2px"><g><path d="M 12 21.638 h -0.014 C 9.403 21.59 1.95 14.856 1.95 8.478 c 0 -3.064 2.525 -5.754 5.403 -5.754 c 2.29 0 3.83 1.58 4.646 2.73 c 0.814 -1.148 2.354 -2.73 4.645 -2.73 c 2.88 0 5.404 2.69 5.404 5.755 c 0 6.376 -7.454 13.11 -10.037 13.157 H 12 Z"></path></g></svg>`;
   };
 
   public commentSVG = (id: string) => {
@@ -221,7 +227,7 @@ class UserProfileTemplates {
     id: string,
     avatar: string,
     follow: boolean,
-    isMyProfile: boolean,
+    isMyProfile: boolean
   ): string => {
     return `<div class="follower-form" data-id="${id}" data-name="${username}">
         ${this.profileImage(avatar, name)}
@@ -229,14 +235,17 @@ class UserProfileTemplates {
           <div class="user-name">${name} ${surname}</div>
           <div class="user-login">@${username}</div>
         </div>
-        ${isMyProfile ? '' 
-        : `<button type="button" class="btn btn-primary btn-sm subscribe-btn ${
-          follow ? 'active' : ''
-        }" text="Follow" active="Following" hover-active="Unfollow"></button>`}
+        ${
+          isMyProfile
+            ? ''
+            : `<button type="button" class="btn btn-primary btn-sm subscribe-btn ${
+                follow ? 'active' : ''
+              }" text="Follow" active="Following" hover-active="Unfollow"></button>`
+        }
       </div>`;
   };
 
-  public tweetsNotFound = (): string => (`
+  public tweetsNotFound = (): string => `
     <div class="px-4 py-5 my-5 text-center">
     <svg width="60" height="50" fill="currentColor" class="bi bi-twitter me-2 mb-3" viewBox="0 0 16 16">
         <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
@@ -249,7 +258,7 @@ class UserProfileTemplates {
       </div>
     </div>
   </div>
-  `)
+  `;
 }
 
 export default UserProfileTemplates;

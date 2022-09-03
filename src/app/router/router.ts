@@ -31,7 +31,7 @@ class Router implements IRouter {
       callback,
       isAuth,
       withId,
-      isPrivate
+      isPrivate,
     });
   }
 
