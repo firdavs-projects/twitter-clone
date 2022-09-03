@@ -211,6 +211,7 @@ main{
 
 .user-container {
   background-color: #F5F8FA;
+  border-radius: 5px;
 }
 
 .post-form {
@@ -292,9 +293,12 @@ main{
 
 .head-part {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 600px;
   padding: 25px;
+  margin: 0 auto;
 }
 
 .head-part .image-part,
@@ -306,7 +310,10 @@ main{
 }
 
 .user-data {
-  padding: 0 0 0 20%;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 25px;
+  margin: 0 auto;
 }
 
 .user-data.another-user {
