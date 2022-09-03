@@ -30,8 +30,11 @@ class MainPageController {
     postsContainer.classList.add('post-container');
     const main = document.querySelector('.main') as HTMLElement;
     main.append(postsContainer);
+    if (tweets.tweets.length === 0) {
+      console.log(tweets)
+      postsContainer.innerHTML = template.tweetsNotFound()
+    }
     tweets.tweets.forEach((el: IUserTweet) => {
-      // const thisUser = await getUserByName(el.user.username);
       const form = template.createPostForm(
         el.user.firstName,
         el.user.lastName,
@@ -44,7 +47,6 @@ class MainPageController {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         el.user._id === currentUser?._id,
-        // currentUser?.likedTweets.includes(el._id),
       );
       postsContainer.innerHTML += form;
 
@@ -57,7 +59,7 @@ class MainPageController {
       removeAllEventListeners();
 
       addEventListener(logoutBtn, 'click', logout);
-      
+
       likeImgs.forEach((img: Element, i) => {
         addEventListener(img, 'click', toggleLike);
       });
