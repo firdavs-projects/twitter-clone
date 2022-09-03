@@ -24,14 +24,12 @@ const template = new UserProfileTemplates();
 class UserProfile {
   public rootNode: HTMLElement;
   public modal: bootstrap.Modal | undefined;
-  public myId: string;
   private _me: IUserInfo | undefined;
   static counter = 0;
 
   constructor() {
     this.rootNode = document.createElement('main');
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
-    this.myId = '';
   }
 
   async me(): Promise<IUserInfo> {
@@ -72,6 +70,7 @@ class UserProfile {
 
   public async showPosts(username?: string): Promise<void> {
     const me = await this.me();
+    console.log(me.likedTweets);
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
     const container = document.querySelector('.post-container');
     container?.remove();
@@ -264,7 +263,7 @@ class UserProfile {
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     const subscribeCounter = document.querySelector('[data-follows="subscriptions"] span') as HTMLElement;
     const allButtons = document.querySelectorAll(`[data-id="${id}"] .subscribe-btn`);
-    if (button.classList.contains('active') && id !== this.myId) {
+    if (button.classList.contains('active')) {
       try {
         await subscribe(id, ApiMethods.DELETE);
         if (!username) {
@@ -276,7 +275,7 @@ class UserProfile {
       } catch (error) {
         console.log(error);
       }
-    } else if (id !== this.myId) {
+    } else {
       try {
         await subscribe(id, ApiMethods.POST);
         if (!username) {
@@ -297,7 +296,7 @@ class UserProfile {
     const name = (<HTMLElement>button.closest('.follower-form')).dataset.name as string;
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     if (!button.classList.contains('subscribe-btn')) {
-      if (id !== this.myId) {
+      if (id !== this._me?._id) {
         window.location.href = `#/profile/${name}`;
       } else {
         window.location.href = `#/profile/`;

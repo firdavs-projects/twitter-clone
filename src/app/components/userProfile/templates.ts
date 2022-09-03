@@ -126,11 +126,11 @@ class UserProfileTemplates {
     return `<div class="post-form" id="${id}">
         ${this.profileImage(avatar, name)}
         <div class="data-part">
-          <div class="post-data">
+          <a href="#/profile/${isMe ? '' : login}" class="post-data">
             <div class="user-name">${name} ${surname}</div>
             <div class="user-login">@${login}</div>
             <div class="post-date">${date}</div>
-          </div>
+          </a>
           <div class="post-text">${text}</div>
           <div class="post-edit">
             <div class="edit-tweet-form">

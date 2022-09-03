@@ -35,6 +35,7 @@ class Tweet {
 
   public async showTweet(id: string): Promise<void> {
     const tweet = await this.tweet(id);
+    const user = await userProfile.me();
     const container = <HTMLElement>document.querySelector('.main-tweet');
     container.innerHTML = templateProfile.createPostForm(
       tweet.user.firstName,
@@ -46,12 +47,19 @@ class Tweet {
       tweet._id,
       tweet.likes.length !== 0 ? tweet.likes.length.toString() : '',
       tweet.tweets.length !== 0 ? tweet.tweets.length.toString() : '',
-      tweet.image
+      tweet.image,
+      user._id === tweet.user._id
     );
+    const post = container.lastChild as HTMLElement;
+    const likeImg = post.querySelector('.like-image') as HTMLElement;
+    if (user.likedTweets.includes(id)) {
+      likeImg.classList.add('active');
+    }
   }
 
   public async showComments(id: string): Promise<void> {
     const tweet = await this.tweet(id);
+    const user = await userProfile.me();
     const container = document.querySelector('.post-container') as HTMLElement;
     tweet.tweets.forEach((el) => {
       container.innerHTML += templateProfile.createPostForm(
@@ -62,10 +70,16 @@ class Tweet {
         userProfile.showDate(el.date),
         el.text,
         el._id,
-        el.likes.length !== 0 ? tweet.likes.length.toString() : '',
-        el.tweets.length !== 0 ? tweet.tweets.length.toString() : '',
-        el.image
+        el.likes.length !== 0 ? el.likes.length.toString() : '',
+        el.tweets.length !== 0 ? el.tweets.length.toString() : '',
+        el.image,
+        user._id === el.user._id
       );
+      const post = container.lastChild as HTMLElement;
+      const likeImg = post.querySelector('.like-image') as HTMLElement;
+      if (user.likedTweets.includes(el._id)) {
+        likeImg.classList.add('active');
+      }
     });
   }
 }

@@ -57,6 +57,8 @@ class TweetPageView {
       const clickListeners = [
         (e: Event) => TweetPageView.eventCallback(this.userProfile.toggleLike.bind(this.userProfile), 'like-image', e),
         (e: Event) => TweetPageView.eventCallback(this.userProfile.goTweetPage.bind(this.userProfile), 'post-form', e),
+        (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'edit-post', e),
+        (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'save-button', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));
