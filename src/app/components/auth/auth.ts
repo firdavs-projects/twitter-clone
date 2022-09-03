@@ -36,8 +36,8 @@ class Auth {
         console.log('registration...');
         const inputUserName = document.getElementById('username') as HTMLInputElement;
         const inputPassword = document.getElementById('password') as HTMLInputElement;
-        const inputFirstName = document.getElementById('firstName') as HTMLInputElement;
-        const inputLastName = document.getElementById('lastName') as HTMLInputElement;
+        const inputFirstName = document.getElementById('firstname') as HTMLInputElement;
+        const inputLastName = document.getElementById('lastname') as HTMLInputElement;
         const errorElement = document.getElementById('error-auth-message');
         try {
           const data = await getRegistration({
