@@ -6,6 +6,7 @@ import {
   editPost,
   getAllUserTweets,
   getPopularUsers,
+  getTweetById,
   getTweetsByUsername,
   getUser,
   getUserByName,
@@ -153,6 +154,9 @@ class UserProfile {
         formData.append('text', text);
         formData.append('file', file);
         await editPost(id, formData);
+        if (file !== undefined) {
+          (<HTMLImageElement>post.querySelector('.tweet-img img')).src = (await getTweetById(id)).image as string;
+        }
       } else {
         (<HTMLElement>input.parentElement).classList.add('was-validated');
       }

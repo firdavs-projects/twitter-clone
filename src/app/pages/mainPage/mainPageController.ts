@@ -56,8 +56,14 @@ class MainPageController {
         this.userProfile.goTweetPage(event);
       };
 
+      const editPost = (event: Event) => {
+        this.userProfile.editPost(event);
+      };
+
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
       const postForms = document.querySelectorAll('.post-form') as NodeListOf<Element>;
+      const editButtons = document.querySelectorAll('.edit-post') as NodeListOf<Element>;
+      const saveButtons = document.querySelectorAll('.save-button') as NodeListOf<Element>;
 
       removeAllEventListeners();
 
@@ -69,6 +75,14 @@ class MainPageController {
 
       postForms.forEach((form: Element) => {
         addEventListener(form, 'click', goTweetPage);
+      });
+
+      editButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', editPost);
+      });
+
+      saveButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', editPost);
       });
 
       const post = postsContainer.lastChild as HTMLElement;
