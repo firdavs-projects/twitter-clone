@@ -164,8 +164,9 @@ class UserProfile {
   }
 
   public async deletePost(e: Event) {
-    await deletePost((<HTMLElement>e.target).dataset.id as string);
-    await this.showPosts();
+    const btn = <HTMLElement>e.target;
+    await deletePost(btn.dataset.id as string);
+    btn.closest('.post-form')?.remove();
   }
 
   public async editProfile(e: Event): Promise<void> {

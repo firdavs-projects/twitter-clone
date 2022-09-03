@@ -1,4 +1,4 @@
-import { getTweetsBySubscriptions, logout } from '../../services/api';
+import { getTweetsBySubscriptions, logout, deletePost } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -18,9 +18,9 @@ class MainPageController {
 
   public async createPage() {
     this.view.render();
-    await this.showTweetsFeed();
+    await this.showPosts();
   }
-  private async showTweetsFeed(): Promise<void> {
+  private async showPosts(): Promise<void> {
     const logoutBtn = document.getElementById('logout-header') as HTMLElement;
     const currentUser = await this.userProfile.me();
     const tweets = await getTweetsBySubscriptions();
@@ -30,7 +30,7 @@ class MainPageController {
     postsContainer.classList.add('post-container');
     const main = document.querySelector('.main') as HTMLElement;
     main.append(postsContainer);
-    tweets.tweets.forEach((el: IUserTweet) => {
+    tweets.tweets.forEach(async (el: IUserTweet) => {
       // const thisUser = await getUserByName(el.user.username);
       const form = template.createPostForm(
         el.user.firstName,
@@ -60,10 +60,15 @@ class MainPageController {
         this.userProfile.editPost(event);
       };
 
+      const deleteTweet = (e: Event) => {
+        this.userProfile.deletePost(e);
+      };
+
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
       const postForms = document.querySelectorAll('.post-form') as NodeListOf<Element>;
       const editButtons = document.querySelectorAll('.edit-post') as NodeListOf<Element>;
       const saveButtons = document.querySelectorAll('.save-button') as NodeListOf<Element>;
+      const deleteButtons = document.querySelectorAll('.delete-post') as NodeListOf<Element>;
 
       removeAllEventListeners();
 
@@ -83,6 +88,10 @@ class MainPageController {
 
       saveButtons.forEach((btn: Element) => {
         addEventListener(btn, 'click', editPost);
+      });
+
+      deleteButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', deleteTweet);
       });
 
       const post = postsContainer.lastChild as HTMLElement;
