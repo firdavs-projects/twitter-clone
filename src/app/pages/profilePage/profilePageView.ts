@@ -63,6 +63,7 @@ class ProfilePageView {
         (e: Event) =>
           ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e),
         (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'post-form', e),
+        (e: Event) => ProfilePageView.eventCallback(logout, 'logout-header', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));

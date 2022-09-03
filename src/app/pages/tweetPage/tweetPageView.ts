@@ -6,6 +6,7 @@ import Tweet from '../../components/tweet/tweet';
 import UserProfile from '../../components/userProfile/userProfile';
 import { addTweet } from '../../components/createTweetForm/tweetForm';
 import { userProfile } from '../profilePage/profilePageView';
+import { logout } from '../../services/api';
 
 let tweetComponent: Tweet;
 
@@ -56,6 +57,7 @@ class TweetPageView {
         (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'edit-post', e),
         (e: Event) => TweetPageView.eventCallback(this.userProfile.editPost, 'save-button', e),
         (e: Event) => TweetPageView.eventCallback(tweetComponent.deletePost.bind(tweetComponent), 'delete-post', e),
+        (e: Event) => TweetPageView.eventCallback(logout, 'logout-header', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));
