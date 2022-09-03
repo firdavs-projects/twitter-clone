@@ -1,3 +1,10 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
 .h-full {
   min-height: 100vh !important;
 }
@@ -98,16 +105,22 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 10px;
   width: 30vw;
-  margin: 0 auto;
+  margin-left: auto;
   padding: 8px;
+}
+
+@media (max-width: 768px) {
+  #formElem{
+    width: 100%;
+  }
 }
 
 .btn-tweet {
   width: 90px;
-  margin: auto auto;
+  /*margin: auto auto;*/
   height: 30px;
   font-size: 14px;
   border-radius: 5px;
@@ -130,14 +143,15 @@
   color: black;
   position: relative;
   width: 100px;
-
+  margin-left: 5px;
+  margin-right: 10px;
 }
 
 .fileInput+label::after {
   position: absolute;
   content: url('./assets/img/up.png');
-  left: 73%;
-  bottom: 0%;
+  right: 0;
+  bottom: 0;
 
 }
 
@@ -455,8 +469,8 @@ path {
 }
 
 @media screen and (max-width: 726px) {
-  .fileInput+label::after {
-    left: 70%;
-    bottom: -45%;
-  }
+  /*.fileInput+label::after {*/
+  /*  left: 70%;*/
+  /*  bottom: -45%;*/
+  /*}*/
 }

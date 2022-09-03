@@ -6,8 +6,9 @@ export const showModal = () => {
 
 export const addTweet = (id?: string) => {
   const btnTweet = document.querySelector('.btn-tweet') as HTMLButtonElement;
+  const textarea = document.getElementById('tweet-textarea') as HTMLInputElement;
   const addTweetListener = async () => {
-    console.log('Post tweet...');
+    console.log('Try post the tweet...');
 
     const formData = new FormData();
     const file = (document.getElementById('tweet-file') as HTMLInputElement).files![0];
@@ -16,12 +17,19 @@ export const addTweet = (id?: string) => {
       formData.append('commentToTweetId', id);
     }
 
+    if (!text.length) {
+      console.log('input field is empty');
+      textarea.classList.add('is-invalid');
+      return;
+    }
     formData.append('text', text);
     formData.append('file', file);
     try {
       const data = await addNewTweet(formData);
       if (data.tweet) {
         console.log('tweet was created...');
+        textarea.classList.remove('is-invalid');
+        textarea.value = ``;
       }
     } catch (error) {
       console.log(error);

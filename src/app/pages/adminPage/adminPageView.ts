@@ -1,11 +1,12 @@
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
+import adminPanel from '../../components/adminPannel/adminPanel';
 import Node from '../../components/Node';
-import { addTweet } from '../../components/createTweetForm/tweetForm';
-import auth from '../../components/auth/auth';
-import { addEventListener } from '../../services/eventListener';
+import Button from '../../components/Button';
+import authManager from '../../services/authManager';
+import Router from '../../router/router';
 
-class MainPageView {
+class AdminPageView {
   private rootNode: HTMLElement;
 
   constructor() {
@@ -16,7 +17,6 @@ class MainPageView {
     this.rootNode.textContent = '';
 
     this.rootNode.append(header.getTemplate());
-    addTweet();
 
     this.createMainLayout();
 
@@ -24,17 +24,9 @@ class MainPageView {
   }
 
   private createMainLayout() {
-    // const logoutBtn = document.getElementById('logout') as HTMLElement;
-    // addEventListener(logoutBtn, 'click', auth.logout);
-
     const main = new Node(this.rootNode, 'main', 'main');
-    main.node.insertAdjacentHTML(
-      'beforeend',
-      `   
-                <div class="post-container"></div>
-            `
-    );
+    main.node.append(adminPanel.getTemplate());
   }
 }
 
-export default MainPageView;
+export default AdminPageView;

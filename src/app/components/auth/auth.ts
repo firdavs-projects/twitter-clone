@@ -84,13 +84,12 @@ class Auth {
     }
     return this.rootNode;
   }
-  public async logout() {
-    console.log('logout ...');
-    localStorage.removeItem('token'); // remove on logout
-    authManager.navigate('/login');
-    console.log('logout...');
-    window.location.reload();
-  }
+  // public async logout() {
+  //   console.log('logout ...')
+  //   localStorage.removeItem('token'); // remove on logout
+  //   authManager.navigate('/login');
+  //   window.location.reload();
+  // }
 }
 
 export default new Auth();

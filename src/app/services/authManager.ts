@@ -1,11 +1,14 @@
 import Config from '../router/config';
 import router from '../router/router';
 import { RouteOption } from './types';
+import { parseJwt } from './decoder';
+import { ADMIN } from './constants';
 
 export class AuthManager {
   private config: Config;
 
   private isLogin: boolean;
+  private isPrivate: boolean;
 
   private router;
 
@@ -13,13 +16,22 @@ export class AuthManager {
     this.router = router;
     this.config = new Config();
     this.isLogin = isLogin;
+    this.isPrivate = false;
   }
 
   public navigate(path?: string | undefined): void {
     this.checkAuth();
+    this.checkRole();
     if (path) {
       this.router.navigate(path);
     }
+  }
+
+  private checkRole(): void {
+    const token = localStorage.getItem('token');
+    const payload = token ? parseJwt(token) : null;
+    this.isPrivate = payload?.role === ADMIN;
+    this.setRouter();
   }
 
   private checkAuth(): void {
@@ -38,10 +50,14 @@ export class AuthManager {
     const routes = [] as RouteOption[];
 
     allRoutes.forEach((route) => {
-      if (route.isAuth === this.isLogin || route.isAuth === null) {
+      if (route.isPrivate && this.isPrivate) {
+        routes.push(route);
+      }
+      if ((route.isAuth === this.isLogin || route.isAuth === null) && !route.isPrivate) {
         routes.push(route);
       }
     });
+    console.log(routes);
 
     this.router.addAllPath(routes);
   }

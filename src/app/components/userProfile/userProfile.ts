@@ -12,12 +12,12 @@ import {
   saveProfileInfo,
   subscribe,
 } from '../../services/api';
-import { ApiMethods } from '../../services/constants';
+import { ADMIN, ApiMethods } from '../../services/constants';
 import { IUserInfo, IUserTweet, TLike } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
-import { addEventListener } from '../../services/eventListener';
-import auth from '../auth/auth';
+import { parseJwt } from '../../services/decoder';
+import { getLocalStorage } from '../../services/localStorage';
 
 const template = new UserProfileTemplates();
 
@@ -32,18 +32,23 @@ class UserProfile {
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
   }
 
+  async getMe(): Promise<IUserInfo> {
+    this._me = await getUser();
+    return this._me;
+  }
+
   async me(): Promise<IUserInfo> {
     if (this._me) {
       return this._me;
     }
-    this._me = await getUser();
-    return this._me;
+    return await this.getMe();
   }
 
   public async showPage(username?: string): Promise<void> {
     this.rootNode.innerHTML = template.createStructure(!username);
     await this.showUser(username);
     await this.showPosts(username);
+    await this.getMe();
     if (!username) {
       await this.showPopularUsers();
       this.modal = new bootstrap.Modal(<HTMLElement>document.getElementById('editBackdrop'));
@@ -54,6 +59,7 @@ class UserProfile {
     const container = document.querySelector('.user-container');
     container?.remove();
     const data = username ? await getUserByName(username) : await this.me();
+    const isAdmin = parseJwt(getLocalStorage()).role === ADMIN;
     (<HTMLElement>document.querySelector('.page-container')).innerHTML += template.createUser(
       data.firstName,
       data.lastName,
@@ -64,7 +70,8 @@ class UserProfile {
       data.avatar,
       data.subscriptions.length,
       data.followers.length,
-      !username
+      !username,
+      isAdmin
     );
   }
 

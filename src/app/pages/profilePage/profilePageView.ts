@@ -1,9 +1,10 @@
 import auth from '../../components/auth/auth';
 import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
-import { addTweet } from '../../components/modalForm/modalForm';
+import { addTweet } from '../../components/createTweetForm/tweetForm';
 import UserProfile from '../../components/userProfile/userProfile';
 import Router from '../../router/router';
+import { logout } from '../../services/api';
 import { removeAllEventListeners, addEventListener } from '../../services/eventListener';
 
 const userProfile = new UserProfile();
@@ -85,7 +86,8 @@ class ProfilePageView {
         (e: Event) =>
           ProfilePageView.eventCallback(userProfile.goAnotherUserPage.bind(userProfile), 'follower-form', e),
         (e: Event) => ProfilePageView.eventCallback(userProfile.goTweetPage.bind(userProfile), 'post-form', e),
-        (e: Event) => ProfilePageView.eventCallback(auth.logout.bind(auth), 'logout', e),
+        (e: Event) => ProfilePageView.eventCallback(logout, 'logout', e),
+        (e: Event) => ProfilePageView.eventCallback(logout, 'logout-header', e),
       ];
 
       clickListeners.forEach((callback) => addEventListener(document, 'click', callback));

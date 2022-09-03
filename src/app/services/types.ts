@@ -7,6 +7,7 @@ export type RouteOption = {
   callback: () => void;
   isAuth: boolean | null;
   withId: boolean;
+  isPrivate: boolean;
 };
 
 export type TAuthResult = {

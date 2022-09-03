@@ -8,6 +8,7 @@ export default function headerTemplate(): string {
       </ul>
       <ul class="nav">
         <li class="nav-item"><a href="#/profile" class="nav-link link-dark px-2">Profile</a></li>
+        <li class="nav-item logout-header" id="logout-header"><a href="javascript:" class="nav-link link-dark px-2">Logout</a></li>
       </ul>
     </div>
     </nav>
@@ -28,9 +29,9 @@ export default function headerTemplate(): string {
         </form>
         
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-        </form>
+<!--        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">-->
+<!--          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">-->
+<!--        </form>-->
       </div>
     </header>
   `;

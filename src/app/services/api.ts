@@ -4,9 +4,24 @@ import { routes } from './routes';
 import { ApiMethods } from './constants';
 import { getLocalStorage } from './localStorage';
 
-const logout = () => {
-  localStorage.clear();
-  window.location.reload();
+export const logout = async () => {
+  const token = getLocalStorage();
+
+  try {
+    const res = await fetch(routes.logout, {
+      method: ApiMethods.GET,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (res.ok) {
+      console.log('Logout...');
+      localStorage.clear();
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log('Something went wrong...');
+  }
 };
 
 export const getLogin = async (body: ILoginBody) =>
@@ -171,8 +186,8 @@ export const getTweetById = async (id: string) =>
         logout();
       }
       if (res.ok) {
-        const tweet: { tweet: IUserTweet } = await res.json();
-        resolve(tweet.tweet);
+        const tweet: IUserTweet = await res.json();
+        resolve(tweet);
       }
     } catch {
       reject();
