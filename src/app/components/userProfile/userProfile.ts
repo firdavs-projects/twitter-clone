@@ -82,6 +82,7 @@ class UserProfile {
   public async showPosts(username?: string): Promise<void> {
     const me = await this.me();
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
+    console.log(tweets);
     const container = document.querySelector('.post-container');
     container?.remove();
     const pageContainer = <HTMLElement>document.querySelector('.page-container');
