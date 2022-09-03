@@ -19,9 +19,9 @@ export const logout = async () => {
         if (res.ok) {
             console.log('Logout...')
             localStorage.clear();
-            loader.remove(now)
             window.location.reload();
         }
+        loader.remove(now)
     } catch (error) {
         loader.remove(now)
         console.log('Something went wrong...')
@@ -42,9 +42,9 @@ export const getLogin = async (body: ILoginBody) => new Promise<TAuthResult>(asy
         })
         if (res.ok) {
             const data: TAuthResult = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -64,9 +64,9 @@ export const getRegistration = async (body: IRegistrationBody) => new Promise<TA
         })
         if (res.ok) {
             const data: TAuthResult = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -85,14 +85,13 @@ export const getAllUserTweets = async () => new Promise<{ tweets: IUserTweet[] }
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const tweets: { tweets: IUserTweet[] } = await res.json();
-            loader.remove(now)
             resolve(tweets);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -111,14 +110,13 @@ export const getAllTweets = async () => new Promise<{ tweets: IUserTweet[] }>(as
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const tweets: { tweets: IUserTweet[] } = await res.json();
-            loader.remove(now)
             resolve(tweets);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -137,14 +135,13 @@ export const getTweetsByUsername = async (username: string) => new Promise<{ twe
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const tweets: { tweets: IUserTweet[] } = await res.json();
-            loader.remove(now)
             resolve(tweets);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -164,14 +161,13 @@ export const getTweetsBySubscriptions = () => new Promise<{ tweets: IUserTweet[]
             }
         });
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const tweets: { tweets: IUserTweet[] } = await res.json();
-            loader.remove(now)
             resolve(tweets);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -190,14 +186,13 @@ export const getUser = async () => new Promise<IUserInfo>(async (resolve, reject
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const user: IUserInfo = await res.json();
-            loader.remove(now)
             resolve(user);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -216,14 +211,13 @@ export const getUserByName = async (name: string) => new Promise<IUserInfo>(asyn
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const user: IUserInfo = await res.json();
-            loader.remove(now)
             resolve(user);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -242,14 +236,13 @@ export const deleteTweetByAdmin = async (id: string) => new Promise(async (resol
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -268,14 +261,13 @@ export const getTweetById = async (id: string) => new Promise<IUserTweet>(async 
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const tweet: IUserTweet = await res.json();
-            loader.remove(now)
             resolve(tweet);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -295,14 +287,13 @@ export const editPost = async (id: string, formData: FormData) => new Promise(as
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -321,14 +312,13 @@ export const deletePost = async (id: string) => new Promise(async (resolve, reje
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -348,14 +338,13 @@ export const saveProfileInfo = async (formData: FormData) => new Promise(async (
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -374,14 +363,13 @@ export const addLike = async (id: string) => new Promise(async (resolve, reject)
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -400,14 +388,13 @@ export const deleteLike = async (id: string) => new Promise(async (resolve, reje
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -427,14 +414,13 @@ export const addNewTweet = async (body: FormData) => new Promise<{ tweet: IUserT
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data: { tweet: IUserTweet } = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -453,14 +439,13 @@ export const getPopularUsers = async () => new Promise<IUserInfo[]>(async (resol
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data: IUserInfo[] = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -479,14 +464,13 @@ export const getAllUsers = async () => new Promise<IUserInfo[]>(async (resolve, 
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data: IUserInfo[] = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -505,14 +489,13 @@ export const blockUserByAdmin = async (id: string) => new Promise(async (resolve
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -531,14 +514,13 @@ export const unlockUserByAdmin = async (id: string) => new Promise(async (resolv
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -557,14 +539,13 @@ export const deleteUserByAdmin = async (id: string) => new Promise(async (resolv
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -583,14 +564,13 @@ export const getRoles = async () => new Promise<IRoles>(async (resolve, reject) 
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data: IRoles = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();
@@ -612,14 +592,13 @@ export const setUserRoleByAdmin = async (userId: string, body: { roleId: string 
                 },
             })
             if (res.status === 401) {
-                loader.remove(now)
                 logout();
             }
             if (res.ok) {
                 const data = await res.json();
-                loader.remove(now)
                 resolve(data);
             }
+            loader.remove(now)
         } catch {
             loader.remove(now)
             reject();
@@ -638,14 +617,13 @@ export const subscribe = async (id: string, method: string) => new Promise(async
             },
         })
         if (res.status === 401) {
-            loader.remove(now)
             logout();
         }
         if (res.ok) {
             const data = await res.json();
-            loader.remove(now)
             resolve(data);
         }
+        loader.remove(now)
     } catch {
         loader.remove(now)
         reject();

@@ -4,7 +4,7 @@ export default function headerTemplate(): string {
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
         <li class="nav-item"><a href="#/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="#/" class="nav-link link-dark px-2">About</a></li>
+<!--        <li class="nav-item"><a href="#/" class="nav-link link-dark px-2">About</a></li>-->
       </ul>
       <ul class="nav">
         <li class="nav-item"><a href="#/profile" class="nav-link link-dark px-2">Profile</a></li>
