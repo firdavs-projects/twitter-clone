@@ -9,9 +9,9 @@ class Header {
     this.rootNode = document.createElement('header');
   }
 
-  public getTemplate(): HTMLElement {
+  public getTemplate(page?: string): HTMLElement {
     this.rootNode.textContent = '';
-    this.rootNode.insertAdjacentHTML('afterbegin', headerTemplate());
+    this.rootNode.insertAdjacentHTML('afterbegin', headerTemplate(page));
     return this.rootNode;
   }
 }

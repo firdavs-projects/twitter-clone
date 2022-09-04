@@ -22,7 +22,7 @@ class TweetPageView {
   render(): void {
     this.rootNode.textContent = '';
 
-    this.rootNode.append(header.getTemplate());
+    this.rootNode.append(header.getTemplate('tweet-page'));
 
     this.createMainLayout();
 
@@ -45,7 +45,6 @@ class TweetPageView {
     const tweetId = Router.getRouteIdParam(window.location.href);
     removeAllEventListeners();
     if (tweetId) {
-      console.log('Its tweet page, check & get tweet by id');
       addTweet(tweetId);
       tweetComponent = new Tweet(tweetId);
       this.rootNode.append(tweetComponent.rootNode);

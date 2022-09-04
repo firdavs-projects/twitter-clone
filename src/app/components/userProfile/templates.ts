@@ -131,7 +131,8 @@ class UserProfileTemplates {
     comments?: string,
     image?: string | null,
     isMe?: boolean,
-    isLikedByMe?: boolean
+    isLikedByMe?: boolean,
+    commentToTweetId?: string
   ): string => {
     return `<div class="post-form" id="${id}">
         ${this.profileImage(avatar, name)}
@@ -142,6 +143,8 @@ class UserProfileTemplates {
             <div class="post-date">${date}</div>
           </a>
           <div class="post-text">${text}</div>
+          ${commentToTweetId && !window?.location?.hash.includes('tweet') 
+            ? `<div class="post-text"><a class="link-info" href="#/tweet/${commentToTweetId}"><small>... commented to tweet</small></a></div>` : ''}
           <div class="post-edit">
             <div class="edit-tweet-form">
               <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>

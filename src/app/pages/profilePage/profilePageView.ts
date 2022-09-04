@@ -8,7 +8,7 @@ import { removeAllEventListeners, addEventListener } from '../../services/eventL
 
 export const userProfile = new UserProfile();
 
-class ProfilePageView {
+export class ProfilePageView {
   private rootNode: HTMLElement;
 
   private userName: string;
@@ -102,5 +102,3 @@ class ProfilePageView {
     this.rootNode.append(footer.getTemplate());
   }
 }
-
-export default ProfilePageView;

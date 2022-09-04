@@ -12,7 +12,7 @@ class Tweet {
   private _tweet: IUserTweet | undefined;
   static counter = 0;
 
-  constructor(private _id: string) {
+  constructor(private readonly _id: string) {
     this.rootNode = document.createElement('main');
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
     this._id = _id;
@@ -35,7 +35,6 @@ class Tweet {
   public async showTweet(id: string): Promise<void> {
     const tweet = await this.tweet(id);
     const user = await userProfile.me();
-    console.log(user);
     const container = <HTMLElement>document.querySelector('.main-tweet');
     container.innerHTML = templateProfile.createPostForm(
       tweet.user.firstName,
@@ -74,7 +73,9 @@ class Tweet {
         el.likes.length !== 0 ? el.likes.length.toString() : '',
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
-        user._id === el.user._id
+        user._id === el.user._id,
+        false,
+        el?.commentToTweetId
       );
       const post = container.lastChild as HTMLElement;
       const likeImg = post.querySelector('.like-image') as HTMLElement;

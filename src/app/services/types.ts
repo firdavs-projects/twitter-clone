@@ -52,6 +52,7 @@ export interface IUserTweet {
   likes: TLike[];
   text: string;
   tweets: IUserTweet[];
+  commentToTweetId?: string;
   user: {
     _id: string;
     username: string;

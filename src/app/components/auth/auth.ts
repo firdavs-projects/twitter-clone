@@ -1,9 +1,10 @@
-import { createAuthError, loginTemplate } from './template';
+import { loginTemplate } from './template';
 import Button from '../Button';
 import authManager from '../../services/authManager';
 import Node from '../Node';
 import { getLogin, getRegistration } from '../../services/api';
 import { setLocalStorage } from '../../services/localStorage';
+import toast from "../toast/toast";
 
 class Auth {
   private rootNode: HTMLElement;
@@ -38,7 +39,6 @@ class Auth {
         const inputPassword = document.getElementById('password') as HTMLInputElement;
         const inputFirstName = document.getElementById('firstname') as HTMLInputElement;
         const inputLastName = document.getElementById('lastname') as HTMLInputElement;
-        const errorElement = document.getElementById('error-auth-message');
         try {
           const data = await getRegistration({
             username: inputUserName.value,
@@ -47,14 +47,12 @@ class Auth {
             lastName: inputLastName.value,
           });
 
-          if (data.token) {
+          if (data?.token) {
             setLocalStorage(data.token);
-            console.log(`user has been created`);
+            toast.show('User has been created')
             authManager.navigate('/');
           } else {
-            console.log('Incorrect data');
-            errorElement ? errorElement.remove() : null;
-            this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect data'));
+            toast.show('Incorrect data')
           }
         } catch (error) {
           console.log(error);
@@ -62,34 +60,26 @@ class Auth {
       });
     } else {
       btn.onclick(async () => {
-        console.log('logining...');
         const inputUserName = document.getElementById('username') as HTMLInputElement;
         const inputPassword = document.getElementById('password') as HTMLInputElement;
-        const errorElement = document.getElementById('error-auth-message');
         try {
-          const data = await getLogin({ username: inputUserName.value, password: inputPassword.value });
-          if (data.token) {
+          const data = await getLogin({ username: inputUserName.value, password: inputPassword.value })
+          if (data?.token) {
             setLocalStorage(data.token);
             authManager.navigate('/');
-            console.log(`login successful`);
+            toast.show('Login successful')
           } else {
-            console.log(`Incorrect username or password`);
-            errorElement ? errorElement.remove() : null;
-            this.rootNode.insertAdjacentHTML('beforeend', createAuthError('Incorrect username or password'));
+            toast.show('Incorrect username or password')
           }
         } catch (error) {
+          toast.show('Incorrect username or password')
           console.log(error);
         }
       });
     }
     return this.rootNode;
   }
-  // public async logout() {
-  //   console.log('logout ...')
-  //   localStorage.removeItem('token'); // remove on logout
-  //   authManager.navigate('/login');
-  //   window.location.reload();
-  // }
+
 }
 
 export default new Auth();

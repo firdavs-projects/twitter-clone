@@ -5,6 +5,14 @@
   justify-content: space-between;
 }
 
+.hide{
+  visibility: hidden!important;
+  width: 0!important;
+  height: 0!important;
+  position: absolute;
+  bottom: 0;
+}
+
 .badge{
   cursor: pointer;
 }
@@ -313,6 +321,10 @@ main{
   width: 70px;
 }
 
+.comment-image{
+  cursor: pointer;
+}
+
 .head-part {
   display: flex;
   justify-content: space-between;
@@ -339,7 +351,7 @@ main{
 }
 
 .user-data.another-user {
-  padding: 0;
+  padding: 0 25px;
 }
 
 .like-image {
