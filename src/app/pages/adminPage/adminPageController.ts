@@ -1,5 +1,4 @@
 import AdminPageView from './adminPageView';
-import authManager from '../../services/authManager';
 
 class AdminPageController {
   private view: AdminPageView;

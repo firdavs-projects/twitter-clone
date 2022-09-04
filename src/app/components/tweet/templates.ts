@@ -1,7 +1,3 @@
-import UserProfileTemplates from '../userProfile/templates';
-
-// const template = new UserProfileTemplates();
-
 class TweetTemplate {
   public createStructure = () => {
     return `<div class="tweets-container container d-flex flex-column">

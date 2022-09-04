@@ -1,4 +1,3 @@
-/* eslint-disable no-async-promise-executor */
 import { ILoginBody, IRegistrationBody, IRoles, IUserInfo, IUserTweet, TAuthResult } from './types';
 import { routes } from './routes';
 import { ApiMethods } from './constants';
@@ -18,18 +17,16 @@ export const logout = async () => {
       },
     });
     if (res.ok) {
-      console.log('Logout...');
       localStorage.clear();
       window.location.reload();
     }
     loader.remove(now);
   } catch (error) {
     loader.remove(now);
-    console.log('Something went wrong...');
   }
 };
 
-export const getLogin = async (body: ILoginBody) =>
+export const getLogin = (body: ILoginBody) =>
   new Promise<TAuthResult | null>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -46,11 +43,11 @@ export const getLogin = async (body: ILoginBody) =>
       loader.remove(now);
     } catch {
       loader.remove(now);
-      resolve(null);
+      reject(null);
     }
   });
 
-export const getRegistration = async (body: IRegistrationBody) =>
+export const getRegistration = (body: IRegistrationBody) =>
   new Promise<TAuthResult>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -71,7 +68,7 @@ export const getRegistration = async (body: IRegistrationBody) =>
     }
   });
 
-export const getAllUserTweets = async () =>
+export const getAllUserTweets = () =>
   new Promise<{ tweets: IUserTweet[] }>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -97,7 +94,7 @@ export const getAllUserTweets = async () =>
     }
   });
 
-export const getAllTweets = async () =>
+export const getAllTweets = () =>
   new Promise<{ tweets: IUserTweet[] }>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -123,7 +120,7 @@ export const getAllTweets = async () =>
     }
   });
 
-export const getTweetsByUsername = async (username: string) =>
+export const getTweetsByUsername = (username: string) =>
   new Promise<{ tweets: IUserTweet[] }>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -175,7 +172,7 @@ export const getTweetsBySubscriptions = () =>
     }
   });
 
-export const getUser = async () =>
+export const getUser = () =>
   new Promise<IUserInfo>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -201,7 +198,7 @@ export const getUser = async () =>
     }
   });
 
-export const getUserByName = async (name: string) =>
+export const getUserByName = (name: string) =>
   new Promise<IUserInfo>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -227,7 +224,7 @@ export const getUserByName = async (name: string) =>
     }
   });
 
-export const deleteTweetByAdmin = async (id: string) =>
+export const deleteTweetByAdmin = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -253,7 +250,7 @@ export const deleteTweetByAdmin = async (id: string) =>
     }
   });
 
-export const getTweetById = async (id: string) =>
+export const getTweetById = (id: string) =>
   new Promise<IUserTweet>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -279,7 +276,7 @@ export const getTweetById = async (id: string) =>
     }
   });
 
-export const editPost = async (id: string, formData: FormData) =>
+export const editPost = (id: string, formData: FormData) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -306,7 +303,7 @@ export const editPost = async (id: string, formData: FormData) =>
     }
   });
 
-export const deletePost = async (id: string) =>
+export const deletePost = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -332,7 +329,7 @@ export const deletePost = async (id: string) =>
     }
   });
 
-export const saveProfileInfo = async (formData: FormData) =>
+export const saveProfileInfo = (formData: FormData) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -359,7 +356,7 @@ export const saveProfileInfo = async (formData: FormData) =>
     }
   });
 
-export const addLike = async (id: string) =>
+export const addLike = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -385,7 +382,7 @@ export const addLike = async (id: string) =>
     }
   });
 
-export const deleteLike = async (id: string) =>
+export const deleteLike = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -411,7 +408,7 @@ export const deleteLike = async (id: string) =>
     }
   });
 
-export const addNewTweet = async (body: FormData) =>
+export const addNewTweet = (body: FormData) =>
   new Promise<{ tweet: IUserTweet }>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -438,7 +435,7 @@ export const addNewTweet = async (body: FormData) =>
     }
   });
 
-export const getPopularUsers = async () =>
+export const getPopularUsers = () =>
   new Promise<IUserInfo[]>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -464,7 +461,7 @@ export const getPopularUsers = async () =>
     }
   });
 
-export const getAllUsers = async () =>
+export const getAllUsers = () =>
   new Promise<IUserInfo[]>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -490,7 +487,7 @@ export const getAllUsers = async () =>
     }
   });
 
-export const blockUserByAdmin = async (id: string) =>
+export const blockUserByAdmin = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -516,7 +513,7 @@ export const blockUserByAdmin = async (id: string) =>
     }
   });
 
-export const unlockUserByAdmin = async (id: string) =>
+export const unlockUserByAdmin = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -542,7 +539,7 @@ export const unlockUserByAdmin = async (id: string) =>
     }
   });
 
-export const deleteUserByAdmin = async (id: string) =>
+export const deleteUserByAdmin = (id: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -568,7 +565,7 @@ export const deleteUserByAdmin = async (id: string) =>
     }
   });
 
-export const getRoles = async () =>
+export const getRoles = () =>
   new Promise<IRoles>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -594,7 +591,7 @@ export const getRoles = async () =>
     }
   });
 
-export const setUserRoleByAdmin = async (userId: string, body: { roleId: string }) =>
+export const setUserRoleByAdmin = (userId: string, body: { roleId: string }) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
@@ -622,7 +619,7 @@ export const setUserRoleByAdmin = async (userId: string, body: { roleId: string 
     }
   });
 
-export const subscribe = async (id: string, method: string) =>
+export const subscribe = (id: string, method: string) =>
   new Promise(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);

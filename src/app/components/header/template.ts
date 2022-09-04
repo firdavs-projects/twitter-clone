@@ -1,10 +1,9 @@
-export default function headerTemplate(page: string = ''): string {
+export default function headerTemplate(page = ''): string {
   return `
     <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
       <ul class="nav me-auto">
-        <li class="nav-item"><a href="#/" class="nav-link link-dark px-2 active" aria-current="page">Home</a></li>
-<!--        <li class="nav-item"><a href="#/" class="nav-link link-dark px-2">About</a></li>-->
+        <li class="nav-item"><a href="#/" class="nav-link link-dark px-2 active" aria-current="page">News</a></li>
       </ul>
       <ul class="nav">
         <li class="nav-item"><a href="#/profile" class="nav-link link-dark px-2">Profile</a></li>
@@ -26,17 +25,12 @@ export default function headerTemplate(page: string = ''): string {
                 class="form-control" 
                 id="tweet-textarea" 
                 rows="1" 
-                placeholder="${page === 'tweet-page' ? 'Leave your comment...' : 'What\'s happening?'}"
+                placeholder="${page === 'tweet-page' ? 'Leave your comment in this tweet...' : "What's happening?"}"
             ></textarea>
             <input class="fileInput" type="file" id="tweet-file">
             <label for="tweet-file">Add image</label>
             <button type="button" class="btn btn-primary btn-tweet">Tweet</button>
         </form>
-        
-
-<!--        <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">-->
-<!--          <input type="search" class="form-control" placeholder="Search..." aria-label="Search">-->
-<!--        </form>-->
       </div>
     </header>
   `;
