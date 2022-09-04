@@ -1,8 +1,8 @@
-import {IRoles, IUserInfo, IUserTweet} from "../../services/types";
-import {getDate} from "../../services/utils";
+import { IRoles, IUserInfo, IUserTweet } from '../../services/types';
+import { getDate } from '../../services/utils';
 
 export const adminTemplate = (): string => {
-    return `
+  return `
 <div class="container mb-auto overflow-auto">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -56,16 +56,11 @@ export const adminTemplate = (): string => {
     </div>
 </div>
 `;
-}
+};
 
-export const createUserRow = (
-    user: IUserInfo,
-    index: number,
-    roles: IRoles,
-    myId: string
-): string => (`
+export const createUserRow = (user: IUserInfo, index: number, roles: IRoles, myId: string): string => `
     <tr>
-      <th scope="row">${index+1}</th>
+      <th scope="row">${index + 1}</th>
       <td><a href="#/profile/${user.username}">@${user.username}</a></td>
       <td>${user.firstName}</td>
       <td>${user.lastName}</td>
@@ -74,32 +69,38 @@ export const createUserRow = (
       <td>${user.likedTweets.length}</td>
       <td>${getDate(user.date)}</td>
       <td>
-        <select class="form-select form-select-sm role-admin-user" data-id="${user._id}" aria-label=".form-select-sm" ${user._id === myId ? 'disabled' : ''}>
-          <option selected value="${user.role}">${roles.roles.find(r => r._id === user.role)?.role}</option>
-          ${roles.roles.filter(j=> j._id!== user.role).map(r => (`
+        <select class="form-select form-select-sm role-admin-user" data-id="${user._id}" aria-label=".form-select-sm" ${
+  user._id === myId ? 'disabled' : ''
+}>
+          <option selected value="${user.role}">${roles.roles.find((r) => r._id === user.role)?.role}</option>
+          ${roles.roles
+            .filter((j) => j._id !== user.role)
+            .map(
+              (r) => `
                <option value="${r._id}">${r.role}</option>
-          `))}
+          `
+            )}
         </select>
       </td>
-      <td>${user.blocked 
-        ? `<span class="badge bg-danger block-admin-user" data-id="${user._id}">Blocked</span>`
-        : `<span class="badge bg-success block-admin-user" data-id="${user._id}">Active</span>`}
+      <td>${
+        user.blocked
+          ? `<span class="badge bg-danger block-admin-user" data-id="${user._id}">Blocked</span>`
+          : `<span class="badge bg-success block-admin-user" data-id="${user._id}">Active</span>`
+      }
       </td>
       <td>
-        ${myId === user._id 
+        ${
+          myId === user._id
             ? ''
-            : `<span class="badge pointer-event bg-secondary delete-admin-user" data-id="${user._id}">Delete</span>`}
+            : `<span class="badge pointer-event bg-secondary delete-admin-user" data-id="${user._id}">Delete</span>`
+        }
       </td>
     </tr>
-`)
+`;
 
-
-export const createTweetRow = (
-    tweet: IUserTweet,
-    index: number,
-): string => (`
+export const createTweetRow = (tweet: IUserTweet, index: number): string => `
     <tr>
-      <th scope="row">${index+1}</th>
+      <th scope="row">${index + 1}</th>
       <td><a href="#/tweet/${tweet._id}">@${tweet.text}</a></td>
       <td><a href="#/profile/${tweet.user.username}">@${tweet.user.username}</a></td>
       <td>${tweet.user.firstName}</td>
@@ -111,4 +112,4 @@ export const createTweetRow = (
       
       <td><span class="badge pointer-event bg-danger delete-admin-tweet" data-id="${tweet._id}">Delete</span></td>
     </tr>
-`)
+`;

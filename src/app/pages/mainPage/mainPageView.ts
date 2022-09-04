@@ -3,8 +3,7 @@ import header from '../../components/header/header';
 import Node from '../../components/Node';
 import { addTweet } from '../../components/createTweetForm/tweetForm';
 import auth from '../../components/auth/auth';
-import { addEventListener } from "../../services/eventListener";
-
+import { addEventListener } from '../../services/eventListener';
 
 class MainPageView {
   private rootNode: HTMLElement;
@@ -26,7 +25,7 @@ class MainPageView {
 
   private createMainLayout() {
     const main = new Node(this.rootNode, 'main', 'main');
-    main.node.insertAdjacentHTML('beforeend',`<div class="post-container"></div>`);
+    main.node.insertAdjacentHTML('beforeend', `<div class="post-container"></div>`);
   }
 }
 

@@ -1,10 +1,10 @@
-import {getTweetsBySubscriptions, logout} from '../../services/api';
-import {IUserTweet} from '../../services/types';
+import { getTweetsBySubscriptions, logout, deletePost } from '../../services/api';
+import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
-import {addEventListener, removeAllEventListeners} from "../../services/eventListener";
-import auth from '../../components/auth/auth';
+import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
+import { userProfile } from '../profilePage/profilePageView';
 const template = new UserProfileTemplates();
 
 class MainPageController {
@@ -13,14 +13,14 @@ class MainPageController {
 
   constructor() {
     this.view = new MainPageView();
-    this.userProfile = new UserProfile();
+    this.userProfile = userProfile;
   }
 
   public async createPage() {
     this.view.render();
-    await this.showTweetsFeed();
+    await this.showPosts();
   }
-  private async showTweetsFeed(): Promise<void> {
+  private async showPosts(): Promise<void> {
     const logoutBtn = document.getElementById('logout-header') as HTMLElement;
     const currentUser = await this.userProfile.me();
     const tweets = await getTweetsBySubscriptions();
@@ -30,9 +30,9 @@ class MainPageController {
     postsContainer.classList.add('post-container');
     const main = document.querySelector('.main') as HTMLElement;
     main.append(postsContainer);
+
     if (tweets.tweets.length === 0) {
-      console.log(tweets)
-      postsContainer.innerHTML = template.tweetsNotFound()
+      postsContainer.innerHTML = template.tweetsNotFound();
     }
     tweets.tweets.forEach((el: IUserTweet) => {
       const form = template.createPostForm(
@@ -47,14 +47,32 @@ class MainPageController {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         el.user._id === currentUser?._id,
+        false,
+        el.commentToTweetId
       );
       postsContainer.innerHTML += form;
 
       const toggleLike = (event: Event) => {
         this.userProfile.toggleLike(event);
-      }
+      };
+
+      const goTweetPage = (event: Event) => {
+        this.userProfile.goTweetPage(event);
+      };
+
+      const editPost = (event: Event) => {
+        this.userProfile.editPost(event);
+      };
+
+      const deleteTweet = (e: Event) => {
+        this.userProfile.deletePost(e);
+      };
 
       const likeImgs = document.querySelectorAll('.like-image') as NodeListOf<Element>;
+      const postForms = document.querySelectorAll('.post-form') as NodeListOf<Element>;
+      const editButtons = document.querySelectorAll('.edit-post') as NodeListOf<Element>;
+      const saveButtons = document.querySelectorAll('.save-button') as NodeListOf<Element>;
+      const deleteButtons = document.querySelectorAll('.delete-post') as NodeListOf<Element>;
 
       removeAllEventListeners();
 
@@ -62,6 +80,22 @@ class MainPageController {
 
       likeImgs.forEach((img: Element, i) => {
         addEventListener(img, 'click', toggleLike);
+      });
+
+      postForms.forEach((form: Element) => {
+        addEventListener(form, 'click', goTweetPage);
+      });
+
+      editButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', editPost);
+      });
+
+      saveButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', editPost);
+      });
+
+      deleteButtons.forEach((btn: Element) => {
+        addEventListener(btn, 'click', deleteTweet);
       });
 
       const post = postsContainer.lastChild as HTMLElement;

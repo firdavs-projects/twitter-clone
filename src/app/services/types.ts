@@ -7,7 +7,7 @@ export type RouteOption = {
   callback: () => void;
   isAuth: boolean | null;
   withId: boolean;
-  isPrivate: boolean,
+  isPrivate: boolean;
 };
 
 export type TAuthResult = {
@@ -51,7 +51,8 @@ export interface IUserTweet {
   date: string;
   likes: TLike[];
   text: string;
-  tweets: string[];
+  tweets: IUserTweet[];
+  commentToTweetId?: string;
   user: {
     _id: string;
     username: string;
@@ -92,7 +93,7 @@ export interface IUserInfo {
   blocked?: boolean;
 }
 
-export interface IRole  {
+export interface IRole {
   role: string;
   _id: string;
   users: string[];

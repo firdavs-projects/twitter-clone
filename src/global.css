@@ -5,6 +5,14 @@
   justify-content: space-between;
 }
 
+.hide{
+  visibility: hidden!important;
+  width: 0!important;
+  height: 0!important;
+  position: absolute;
+  bottom: 0;
+}
+
 .badge{
   cursor: pointer;
 }
@@ -248,9 +256,31 @@ main{
 }
 
 .post-data {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 5px 10px;
+  color: inherit;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.post-data:hover {
+  color: inherit;
+}
+
+.data-part .post-data::after {
+  content: '';
+  position: absolute;
+  background: black;
+  left: 0;
+  bottom: 1px;
+  width: 0%;
+  height: 1px;
+}
+
+.post-data:hover:after {
+  width: 100%;
 }
 
 .user-name {
@@ -291,6 +321,10 @@ main{
   width: 70px;
 }
 
+.comment-image{
+  cursor: pointer;
+}
+
 .head-part {
   display: flex;
   justify-content: space-between;
@@ -317,7 +351,7 @@ main{
 }
 
 .user-data.another-user {
-  padding: 0;
+  padding: 0 25px;
 }
 
 .like-image {

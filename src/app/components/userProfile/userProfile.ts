@@ -6,44 +6,46 @@ import {
   editPost,
   getAllUserTweets,
   getPopularUsers,
+  getTweetById,
   getTweetsByUsername,
   getUser,
   getUserByName,
   saveProfileInfo,
   subscribe,
 } from '../../services/api';
-import {ADMIN, ApiMethods} from '../../services/constants';
-import {IUserInfo, IUserTweet, TLike} from '../../services/types';
+import { ADMIN, ApiMethods } from '../../services/constants';
+import { IUserInfo, IUserTweet, TLike } from '../../services/types';
 import Node from '../Node';
 import UserProfileTemplates from './templates';
-import {parseJwt} from "../../services/decoder";
-import {getLocalStorage} from "../../services/localStorage";
+import { parseJwt } from '../../services/decoder';
+import { getLocalStorage } from '../../services/localStorage';
+import toast from "../toast/toast";
 
 const template = new UserProfileTemplates();
 
 class UserProfile {
   public rootNode: HTMLElement;
   public modal: bootstrap.Modal | undefined;
-  public myId: string;
   private _me: IUserInfo | undefined;
   static counter = 0;
 
   constructor() {
     this.rootNode = document.createElement('main');
     this.rootNode.classList.add('user-profile', 'row', 'justify-content-center', 'container');
-    this.myId = '';
   }
 
   async getMe(): Promise<IUserInfo> {
     this._me = await getUser();
-    return this._me
+    return this._me;
   }
 
-  async me(reset: boolean = false): Promise<IUserInfo> {
+  async me(reset = false): Promise<IUserInfo> {
     if (reset) {
       return await this.getMe();
     }
-    if (this._me) return this._me;
+    if (this._me) {
+      return this._me;
+    }
     return await this.getMe();
   }
 
@@ -79,8 +81,9 @@ class UserProfile {
   }
 
   public async showPosts(username?: string): Promise<void> {
-    const me = await this.me()
+    const me = await this.me();
     const tweets = username ? await getTweetsByUsername(username) : await getAllUserTweets();
+    console.log(tweets);
     const container = document.querySelector('.post-container');
     container?.remove();
     const pageContainer = <HTMLElement>document.querySelector('.page-container');
@@ -100,7 +103,8 @@ class UserProfile {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         !username,
-          me.likedTweets.includes(el._id),
+        me.likedTweets.includes(el._id),
+        el.commentToTweetId
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
@@ -120,7 +124,7 @@ class UserProfile {
   }
 
   public async showPopularUsers() {
-    const me = await this.me()
+    const me = await this.me();
     const popularUsers = await getPopularUsers();
     const container = document.querySelector('.popular-user-container') as HTMLElement;
     container.innerHTML = '';
@@ -156,6 +160,10 @@ class UserProfile {
         formData.append('text', text);
         formData.append('file', file);
         await editPost(id, formData);
+        toast.show('Tweet updated successfully')
+        if (file !== undefined) {
+          (<HTMLImageElement>post.querySelector('.tweet-img img')).src = (await getTweetById(id)).image as string;
+        }
       } else {
         (<HTMLElement>input.parentElement).classList.add('was-validated');
       }
@@ -163,8 +171,10 @@ class UserProfile {
   }
 
   public async deletePost(e: Event) {
-    await deletePost((<HTMLElement>e.target).dataset.id as string);
-    await this.showPosts();
+    const btn = <HTMLElement>e.target;
+    await deletePost(btn.dataset.id as string);
+    toast.show('Tweet deleted successfully')
+    btn.closest('.post-form')?.remove();
   }
 
   public async editProfile(e: Event): Promise<void> {
@@ -191,8 +201,9 @@ class UserProfile {
         if ((formData.get('file') as File).name === '') {
           formData.delete('file');
         }
-        await saveProfileInfo(formData).then( async () => {
+        await saveProfileInfo(formData).then(async () => {
           this._me = undefined;
+          toast.show('Profile updated successfully')
           await this.showPage();
         });
       }
@@ -200,7 +211,7 @@ class UserProfile {
   }
 
   public async toggleLike(e: Event) {
-    const me = await this.me()
+    const me = await this.me();
     const id = (<HTMLElement>e.target).dataset.id as string;
     const likeImg = document.querySelector(`[data-id="${id}"].like-image`) as HTMLElement;
     const postForm = document.getElementById(id) as HTMLElement;
@@ -209,7 +220,7 @@ class UserProfile {
       likeImg.classList.remove('active');
       const newCounter = (Number(<string>likeCounter.innerHTML) - 1).toString();
       likeCounter.innerHTML = newCounter !== '0' ? newCounter : '';
-      this._me ? this._me.likedTweets = this._me?.likedTweets.filter(i => i !== id) : null;
+      this._me ? (this._me.likedTweets = this._me?.likedTweets.filter((i) => i !== id)) : null;
       await deleteLike(id);
     } else {
       likeImg.classList.add('active');
@@ -220,7 +231,6 @@ class UserProfile {
   }
 
   public async editStatus(e: Event) {
-    console.log('e')
     const input = document.querySelector('.status-input') as HTMLInputElement;
     const textEl = document.querySelector('.user-status') as HTMLElement;
     const container = <HTMLElement>input.parentElement;
@@ -235,6 +245,7 @@ class UserProfile {
         const formData = new FormData();
         formData.append('status', status);
         await saveProfileInfo(formData);
+        toast.show('Status updated successfully')
       } else {
         container.classList.add('was-validated');
       }
@@ -249,7 +260,7 @@ class UserProfile {
       return;
     }
     const me = await this.me();
-    const user = username ? await getUserByName(username) : me as IUserInfo;
+    const user = username ? await getUserByName(username) : (me as IUserInfo);
     const follows = document.querySelector('.follows-container') as HTMLElement;
     const switchBtns = document.querySelectorAll('.follow-button') as NodeListOf<HTMLElement>;
     switchBtns.forEach((btn) =>
@@ -274,9 +285,13 @@ class UserProfile {
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     const subscribeCounter = document.querySelector('[data-follows="subscriptions"] span') as HTMLElement;
     const allButtons = document.querySelectorAll(`[data-id="${id}"] .subscribe-btn`);
-    if (button.classList.contains('active') && id !== this.myId) {
+    if (button.classList.contains('active')) {
       try {
         await subscribe(id, ApiMethods.DELETE);
+        this._me?.subscriptions.splice(
+          this._me?.subscriptions.findIndex((el) => el._id === id),
+          1
+        );
         if (!username) {
           subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) - 1).toString();
         }
@@ -286,9 +301,10 @@ class UserProfile {
       } catch (error) {
         console.log(error);
       }
-    } else if (id !== this.myId) {
+    } else {
       try {
         await subscribe(id, ApiMethods.POST);
+        this._me = await getUser();
         if (!username) {
           subscribeCounter.innerHTML = (Number(<string>subscribeCounter.innerHTML) + 1).toString();
         }
@@ -299,20 +315,34 @@ class UserProfile {
         console.log(error);
       }
     }
-    await this.me(true)
+    await this.me(true);
   }
+
   public async goAnotherUserPage(e: Event) {
     const button = <HTMLElement>e.target;
     document.body.removeAttribute('style');
     const name = (<HTMLElement>button.closest('.follower-form')).dataset.name as string;
     const id = (<HTMLElement>button.closest('.follower-form')).dataset.id as string;
     if (!button.classList.contains('subscribe-btn')) {
-      if (id !== this.myId) {
+      if (id !== this._me?._id) {
         window.location.href = `#/profile/${name}`;
       } else {
         window.location.href = `#/profile/`;
       }
       document.querySelector('.modal-backdrop')?.remove();
+    }
+  }
+
+  public async goTweetPage(e: Event) {
+    const button = <HTMLElement>e.target;
+    const id = (<HTMLElement>button.closest('.post-form')).id;
+    if (
+      !button.classList.contains('like-image') &&
+      !button.closest('.dropdown-toggle') &&
+      !button.closest('.dropdown-menu') &&
+      !button.closest('.post-edit')
+    ) {
+      window.location.href = `#/tweet/${id}`;
     }
   }
 }
