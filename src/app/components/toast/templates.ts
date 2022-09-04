@@ -1,4 +1,4 @@
-export const getToast = (): string => (`
+export const getToast = (): string => `
 <button type="button" class="btn btn-primary hide" id="live-toast-btn">test</button>
 
 <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
@@ -16,4 +16,4 @@ export const getToast = (): string => (`
     </div>
   </div>
 </div>
-`)
+`;

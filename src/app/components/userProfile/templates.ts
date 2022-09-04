@@ -1,5 +1,3 @@
-// ${isMyProfile ? `<button id="logout" class="btn btn-outline-danger logout">Logout</button>` : ''}
-
 class UserProfileTemplates {
   public createStructure = (isMyProfile: boolean) => {
     return `
@@ -100,7 +98,8 @@ class UserProfileTemplates {
   };
 
   public editBody = () => {
-    return `<input type="file" class="form-control edit-image" name="file" id="profileImage">
+    return `
+    <input type="file" class="form-control edit-image" name="file" id="profileImage">
     <div class="form-floating edit-container">
       <input type="text" class="form-control edit-username" name="username" id="floatingUsername" placeholder="Username" minlength="3" maxlenght="40" required>
       <label for="floatingUsername">Username</label>
@@ -143,8 +142,11 @@ class UserProfileTemplates {
             <div class="post-date">${date}</div>
           </a>
           <div class="post-text">${text}</div>
-          ${commentToTweetId && !window?.location?.hash.includes('tweet') 
-            ? `<div class="post-text"><a class="link-info" href="#/tweet/${commentToTweetId}"><small>... commented to tweet</small></a></div>` : ''}
+          ${
+            commentToTweetId && !window?.location?.hash.includes('tweet')
+              ? `<div class="post-text"><a class="link-info" href="#/tweet/${commentToTweetId}"><small>... commented to tweet</small></a></div>`
+              : ''
+          }
           <div class="post-edit">
             <div class="edit-tweet-form">
               <textarea class="post-input form-control" minlength="3" maxlength="255" required></textarea>
@@ -157,7 +159,7 @@ class UserProfileTemplates {
             <img src="${!image ? (image = '#') : image}" alt="">
           </div>
           <div class="post-reactions">
-            ${this.createPostReactions(id, likes, comments, isLikedByMe)}
+            ${this.createPostReactions(id, likes, comments)}
           </div>
         </div>
         ${isMe ? this.postDropdown(id) : ''}
@@ -192,7 +194,7 @@ class UserProfileTemplates {
         </svg>`;
   };
 
-  public createPostReactions = (id: string, likes?: string, comments?: string, isLikedByMe?: boolean) => {
+  public createPostReactions = (id: string, likes?: string, comments?: string) => {
     return `<div class="like-container">
         ${this.likeSVG(id)}
         <div class="like-counter">${likes}</div>

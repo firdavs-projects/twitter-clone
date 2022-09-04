@@ -101,7 +101,7 @@ export const createUserRow = (user: IUserInfo, index: number, roles: IRoles, myI
 export const createTweetRow = (tweet: IUserTweet, index: number): string => `
     <tr>
       <th scope="row">${index + 1}</th>
-      <td><a href="#/tweet/${tweet._id}">@${tweet.text}</a></td>
+      <td><a href="#/tweet/${tweet._id}">${tweet.text}</a></td>
       <td><a href="#/profile/${tweet.user.username}">@${tweet.user.username}</a></td>
       <td>${tweet.user.firstName}</td>
       <td>${tweet.user.lastName}</td>

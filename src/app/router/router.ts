@@ -58,8 +58,6 @@ class Router implements IRouter {
   getRoute(): string {
     let route = '';
     const match = window.location.href.split('/#');
-    // .match(/#(.*)$/);
-    // console.log(match)
     route = match && match[1] ? match[1] : this.root;
 
     return this.getPath(route);
@@ -93,7 +91,6 @@ class Router implements IRouter {
     this.routes.some((route) => {
       if (this.current) {
         const match = this.current.includes(route.path);
-        // const m = this.current.match(route.path) as [];
         if (match) {
           const id = route.withId && this.getRouteIdParam(this.current);
           const currRoute = route.withId ? route.path + '/' + id : route.path;

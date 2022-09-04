@@ -137,7 +137,6 @@ main{
 
 .btn-tweet {
   width: 90px;
-  /*margin: auto auto;*/
   height: 30px;
   font-size: 14px;
   border-radius: 5px;
@@ -145,8 +144,8 @@ main{
 }
 
 .fileInput {
-  width: 0.1px;
-  height: 0.1px;
+  width: 0;
+  height: 0;
   opacity: 0;
   overflow: hidden;
   position: absolute;
@@ -155,7 +154,6 @@ main{
 
 .fileInput+label {
   font-size: 0.9em;
-  color: white;
   display: inline-block;
   color: black;
   position: relative;
@@ -275,7 +273,7 @@ main{
   background: black;
   left: 0;
   bottom: 1px;
-  width: 0%;
+  width: 0;
   height: 1px;
 }
 
@@ -449,7 +447,7 @@ path {
   background: #0d6efd;
   left: 0;
   bottom: -5px;
-  width: 0%;
+  width: 0;
   height: 2px;
   transition: width .3s ease-in-out
 }
@@ -494,11 +492,4 @@ path {
 
 .show-follows:not(.follow-button):hover {
   text-decoration: underline;
-}
-
-@media screen and (max-width: 726px) {
-  /*.fileInput+label::after {*/
-  /*  left: 70%;*/
-  /*  bottom: -45%;*/
-  /*}*/
 }

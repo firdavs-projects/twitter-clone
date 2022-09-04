@@ -1,7 +1,7 @@
 import footerTemplate from './template';
 
 class Footer {
-  private rootNode: HTMLElement;
+  private readonly rootNode: HTMLElement;
 
   constructor() {
     this.rootNode = document.createElement('footer');

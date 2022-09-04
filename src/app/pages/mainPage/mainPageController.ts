@@ -1,10 +1,11 @@
-import { getTweetsBySubscriptions, logout, deletePost } from '../../services/api';
+import { getTweetsBySubscriptions, logout } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
 import UserProfileTemplates from '../../components/userProfile/templates';
 import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
 import { userProfile } from '../profilePage/profilePageView';
+
 const template = new UserProfileTemplates();
 
 class MainPageController {
@@ -20,6 +21,7 @@ class MainPageController {
     this.view.render();
     await this.showPosts();
   }
+
   private async showPosts(): Promise<void> {
     const logoutBtn = document.getElementById('logout-header') as HTMLElement;
     const currentUser = await this.userProfile.me();
@@ -78,7 +80,7 @@ class MainPageController {
 
       addEventListener(logoutBtn, 'click', logout);
 
-      likeImgs.forEach((img: Element, i) => {
+      likeImgs.forEach((img: Element) => {
         addEventListener(img, 'click', toggleLike);
       });
 
