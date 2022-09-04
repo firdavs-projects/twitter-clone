@@ -1,4 +1,4 @@
-import { getTweetsBySubscriptions, logout, deletePost } from '../../services/api';
+import { getTweetsBySubscriptions, logout } from '../../services/api';
 import { IUserTweet } from '../../services/types';
 import MainPageView from './mainPageView';
 import UserProfile from '../../components/userProfile/userProfile';
@@ -78,7 +78,7 @@ class MainPageController {
 
       addEventListener(logoutBtn, 'click', logout);
 
-      likeImgs.forEach((img: Element, i) => {
+      likeImgs.forEach((img: Element) => {
         addEventListener(img, 'click', toggleLike);
       });
 

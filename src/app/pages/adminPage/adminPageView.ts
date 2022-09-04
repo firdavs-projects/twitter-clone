@@ -2,13 +2,10 @@ import footer from '../../components/footer/footer';
 import header from '../../components/header/header';
 import adminPanel from '../../components/adminPannel/adminPanel';
 import Node from '../../components/Node';
-import Button from '../../components/Button';
-import authManager from '../../services/authManager';
-import Router from '../../router/router';
 import { addEventListener, removeAllEventListeners } from '../../services/eventListener';
 
 class AdminPageView {
-  private rootNode: HTMLElement;
+  private readonly rootNode: HTMLElement;
 
   constructor() {
     this.rootNode = <HTMLElement>document.getElementById('app');

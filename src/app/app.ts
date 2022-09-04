@@ -1,7 +1,7 @@
 import { IApp } from './services/types';
 import authManager from './services/authManager';
 import loader from './components/loader/loader';
-import toast from "./components/toast/toast";
+import toast from './components/toast/toast';
 
 class App implements IApp {
   private static _instance: App;
