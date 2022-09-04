@@ -1,5 +1,4 @@
 import TweetPageView from './tweetPageView';
-import authManager from '../../services/authManager';
 
 class TweetPageController {
   private view: TweetPageView;

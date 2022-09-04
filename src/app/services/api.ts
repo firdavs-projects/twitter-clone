@@ -30,7 +30,7 @@ export const logout = async () => {
 };
 
 export const getLogin = async (body: ILoginBody) =>
-  new Promise<TAuthResult>(async (resolve, reject) => {
+  new Promise<TAuthResult | null>(async (resolve, reject) => {
     const now = Date.now();
     loader.push(now);
     try {
@@ -41,14 +41,12 @@ export const getLogin = async (body: ILoginBody) =>
           'Content-Type': 'application/json',
         },
       });
-      if (res.ok) {
-        const data: TAuthResult = await res.json();
-        resolve(data);
-      }
+      const data: TAuthResult = await res.json();
+      resolve(data);
       loader.remove(now);
     } catch {
       loader.remove(now);
-      reject();
+      resolve(null);
     }
   });
 
@@ -64,10 +62,8 @@ export const getRegistration = async (body: IRegistrationBody) =>
           'Content-Type': 'application/json',
         },
       });
-      if (res.ok) {
-        const data: TAuthResult = await res.json();
-        resolve(data);
-      }
+      const data: TAuthResult = await res.json();
+      resolve(data);
       loader.remove(now);
     } catch {
       loader.remove(now);

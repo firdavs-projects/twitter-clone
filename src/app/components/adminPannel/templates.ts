@@ -4,7 +4,6 @@ import { getDate } from '../../services/utils';
 export const adminTemplate = (): string => {
   return `
 <div class="container mb-auto overflow-auto">
->>>>>>> 9f633b7ce12a15377d9cf04149e81b7421282d0a
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="space" data-bs-toggle="tab" type="button" role="tab" disabled></button>

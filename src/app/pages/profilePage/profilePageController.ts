@@ -1,4 +1,4 @@
-import ProfilePageView from './profilePageView';
+import {ProfilePageView} from './profilePageView';
 
 class ProfilePageController {
   private view: ProfilePageView;

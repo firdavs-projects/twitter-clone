@@ -19,6 +19,7 @@ import Node from '../Node';
 import UserProfileTemplates from './templates';
 import { parseJwt } from '../../services/decoder';
 import { getLocalStorage } from '../../services/localStorage';
+import toast from "../toast/toast";
 
 const template = new UserProfileTemplates();
 
@@ -102,7 +103,8 @@ class UserProfile {
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
         !username,
-        me.likedTweets.includes(el._id)
+        me.likedTweets.includes(el._id),
+        el.commentToTweetId
       );
       postsContainer.innerHTML += form;
       const post = postsContainer.lastChild as HTMLElement;
@@ -158,6 +160,7 @@ class UserProfile {
         formData.append('text', text);
         formData.append('file', file);
         await editPost(id, formData);
+        toast.show('Tweet updated successfully')
         if (file !== undefined) {
           (<HTMLImageElement>post.querySelector('.tweet-img img')).src = (await getTweetById(id)).image as string;
         }
@@ -170,6 +173,7 @@ class UserProfile {
   public async deletePost(e: Event) {
     const btn = <HTMLElement>e.target;
     await deletePost(btn.dataset.id as string);
+    toast.show('Tweet deleted successfully')
     btn.closest('.post-form')?.remove();
   }
 
@@ -199,6 +203,7 @@ class UserProfile {
         }
         await saveProfileInfo(formData).then(async () => {
           this._me = undefined;
+          toast.show('Profile updated successfully')
           await this.showPage();
         });
       }
@@ -240,6 +245,7 @@ class UserProfile {
         const formData = new FormData();
         formData.append('status', status);
         await saveProfileInfo(formData);
+        toast.show('Status updated successfully')
       } else {
         container.classList.add('was-validated');
       }

@@ -1,4 +1,4 @@
-export default function headerTemplate(): string {
+export default function headerTemplate(page: string = ''): string {
   return `
     <nav class="py-2 bg-light border-bottom">
     <div class="container d-flex flex-wrap">
@@ -22,7 +22,12 @@ export default function headerTemplate(): string {
         </a>
 
         <form id="formElem">
-            <textarea class="form-control" id="tweet-textarea" rows="1" placeholder="What's happening?"></textarea>
+            <textarea 
+                class="form-control" 
+                id="tweet-textarea" 
+                rows="1" 
+                placeholder="${page === 'tweet-page' ? 'Leave your comment...' : 'What\'s happening?'}"
+            ></textarea>
             <input class="fileInput" type="file" id="tweet-file">
             <label for="tweet-file">Add image</label>
             <button type="button" class="btn btn-primary btn-tweet">Tweet</button>

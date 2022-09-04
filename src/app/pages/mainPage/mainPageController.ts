@@ -32,7 +32,6 @@ class MainPageController {
     main.append(postsContainer);
 
     if (tweets.tweets.length === 0) {
-      console.log(tweets);
       postsContainer.innerHTML = template.tweetsNotFound();
     }
     tweets.tweets.forEach((el: IUserTweet) => {
@@ -47,7 +46,9 @@ class MainPageController {
         el.likes.length !== 0 ? el.likes.length.toString() : '',
         el.tweets.length !== 0 ? el.tweets.length.toString() : '',
         el.image,
-        el.user._id === currentUser?._id
+        el.user._id === currentUser?._id,
+        false,
+        el.commentToTweetId
       );
       postsContainer.innerHTML += form;
 

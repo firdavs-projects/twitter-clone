@@ -12,6 +12,7 @@ import {
 import { IRoles, IUserInfo, IUserTweet } from '../../services/types';
 import { parseJwt } from '../../services/decoder';
 import { getLocalStorage } from '../../services/localStorage';
+import toast from "../toast/toast";
 
 class AdminPanel {
   private rootNode: HTMLElement;
@@ -79,6 +80,7 @@ class AdminPanel {
     const badge = <HTMLElement>e.target;
     const id = (<HTMLElement>badge.closest('.delete-admin-tweet')).dataset.id as string;
     await deleteTweetByAdmin(id);
+    toast.show('Tweet deleted successfully')
     await this.showTweets(true);
   }
 
@@ -90,6 +92,7 @@ class AdminPanel {
       return;
     }
     await deleteUserByAdmin(id);
+    toast.show('User deleted successfully')
     await this.showUsers(true);
   }
 
@@ -98,6 +101,7 @@ class AdminPanel {
     const userId = (<HTMLElement>select.closest('.role-admin-user')).dataset.id as string;
     const roleId = select.value;
     await setUserRoleByAdmin(userId, { roleId });
+    toast.show('User role updated successfully')
     await this.showUsers(true);
   }
 
@@ -111,8 +115,10 @@ class AdminPanel {
     }
     if (isActive) {
       await blockUserByAdmin(id);
+      toast.show('User blocked successfully')
     } else {
       await unlockUserByAdmin(id);
+      toast.show('User unlocked successfully')
     }
     await this.showUsers(true);
   }
