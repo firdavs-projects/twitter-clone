@@ -28,5 +28,6 @@ class Toast {
     return this._instance || (this._instance = new this());
   }
 }
+
 const toast = Toast.Instance;
 export default toast;

@@ -12,6 +12,7 @@ class Loader {
     this._loading.push(n);
     this.setLoader();
   }
+
   public remove(n: number) {
     this._loading = this._loading.filter((i) => i !== n);
     this.setLoader();
@@ -30,5 +31,6 @@ class Loader {
     return this._instance || (this._instance = new this());
   }
 }
+
 const loader = Loader.Instance;
 export default loader;
